@@ -34,7 +34,7 @@ public class AsciiMapReader {
     public AltitudeMap readWholeMap() throws FileNotFoundException {
         File file = new File(this.filename);
         String[] headers = new String[6];
-        double[][] altitudes = new double[3000][3000];
+        double[][] altitudes = new double[3001][3001];
         StringBuilder fileContents = new StringBuilder((int) file.length());
         Scanner scanner = new Scanner(new BufferedReader(new FileReader(file)));
         //String lineSeparator = System.getProperty("line.separator");
@@ -48,8 +48,8 @@ public class AsciiMapReader {
                 } else {
                     String line = scanner.nextLine();
                     String[] yValues = line.split(" ");
-                    for (int j = 0; j < yValues.length; j++) {
-                        altitudes[i - 6][j] = Double.parseDouble(yValues[j]);
+                    for (int j = 1; j < yValues.length; j++) {
+                        altitudes[i - 5][j] = Double.parseDouble(yValues[j]);
                     }
                 }
                 i++;
