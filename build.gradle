@@ -1,0 +1,53 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'jacoco'
+
+sourceCompatibility = '1.8'
+targetCompatibility = 1.8
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+project.ext {
+    junitVersion = '4.12'
+}
+
+
+repositories {
+    mavenCentral()
+    // You may define additional repositories, or even remove "mavenCentral()".
+    // Read more about repositories here:
+    //   http://www.gradle.org/docs/current/userguide/dependency_management.html#sec:repositories
+}
+
+dependencies {
+    // You can read more about how to add dependency here:
+    //   http://www.gradle.org/docs/current/userguide/dependency_management.html#sec:how_to_declare_your_dependencies
+    testCompile group: 'junit', name: 'junit', version: '4.10'
+}
+
+
+test {
+    testLogging.showStandardStreams = true
+    systemProperties System.getProperties()
+}
+
+mainClassName = 'controller.App'
+
+run {
+    standardInput = System.in
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'controller.App'
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+}
+
+check.dependsOn jacocoTestReport
+
