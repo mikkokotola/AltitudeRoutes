@@ -10,7 +10,9 @@ Sovellus käyttää lähdeaineistona Maanmittauslaitoksen avoimena datana tarjoa
 Toteutan sovelluksen HY:n tietojenkäsittelytieteen aineopintojen tietorakenteet ja algoritmit -harjoitustyönä 12/2017-1/2018.
 
 <strong>Dokumentit</strong>
-<a href="https://github.com/mikkokotola/AltitudeRoutes/blob/master/documentation/Maarittelydokumentti_Tiralabra_Kotola.pdf">Määrittelydokumentti</a>
+<ul>
+  <li><a href="https://github.com/mikkokotola/AltitudeRoutes/blob/master/documentation/Maarittelydokumentti_Tiralabra_Kotola.pdf">Määrittelydokumentti</a></li>
+</ul>
 
 <strong>Viikkoraportit</strong>
 <ul>
