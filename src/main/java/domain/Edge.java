@@ -28,10 +28,10 @@ import java.util.Objects;
 public class Edge {
     private Vertice from;
     private Vertice to;
-    private int weight;
+    private double weight;
     private long id;
 
-    public Edge(Vertice from,Vertice to, int weight) {
+    public Edge(Vertice from,Vertice to, double weight) {
         this.from = from;
         this.to = to;
         this.weight = weight;
@@ -50,11 +50,11 @@ public class Edge {
         return id;
     }
     
-    public long getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 

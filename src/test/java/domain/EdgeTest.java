@@ -31,15 +31,16 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class EdgeTest {
-
+    private double accuracy;
     private Vertice vertice1;
     private Vertice vertice2;
     private Edge edge;
 
     public EdgeTest() {
+        this.accuracy = 0.00001;
         vertice1 = new Vertice(100, 10, 15.00);
         vertice2 = new Vertice(101, 10, 15.45);
-        edge = new Edge(vertice1, vertice2, 5);
+        edge = new Edge(vertice1, vertice2, 5.0);
     }
 
     @BeforeClass
@@ -82,13 +83,13 @@ public class EdgeTest {
 
     @Test
     public void weightCorrect() {
-        assertTrue(edge.getWeight() == 5);
+        assertTrue(edge.getWeight() - 5.0 < accuracy);
     }
 
     @Test
     public void weightCorrectAfterSetting() {
         edge.setWeight(212);
-        assertTrue(edge.getWeight() == 212);
+        assertTrue(edge.getWeight() - 212 < accuracy);
     }
 
 }
