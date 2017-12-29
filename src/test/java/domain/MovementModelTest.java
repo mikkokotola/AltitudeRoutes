@@ -45,28 +45,34 @@ public class MovementModelTest {
     }
 
     @Test
-    public void defaultModelGetSpeedFactorImpassable() {
+    public void getSpeedFactorImpassableCorrect() {
         assertTrue(Math.abs(Double.MAX_VALUE - this.mmodel.getSpeedFactorImpassable()) < accuracy);
     }
 
     @Test
-    public void defaultModelGetSpeedFactorUphillSteep() {
+    public void getSpeedFactorUphillSteepCorrect() {
         assertTrue(Math.abs(0.5 - this.mmodel.getSpeedFactorUphillSteep()) < accuracy);
     }
 
     @Test
-    public void defaultModelGetSpeedFactorUphill() {
+    public void getSpeedFactorUphillCorrect() {
         assertTrue(Math.abs(0.9 - this.mmodel.getSpeedFactorUphill()) < accuracy);
     }
 
     @Test
-    public void defaultModelGetSpeedFactorDownhill() {
+    public void getSpeedFactorDownhillCorrect() {
         assertTrue(Math.abs(0.9 - this.mmodel.getSpeedFactorDownhill()) < accuracy);
     }
 
     @Test
-    public void defaultModelGetSpeedFactorDownhillSteep() {
+    public void getSpeedFactorDownhillSteepCorrect() {
         assertTrue(Math.abs(0.5 - this.mmodel.getSpeedFactorDownhillSteep()) < accuracy);
+    }
+    
+    @Test
+    public void defaultModelConstructorWorks() {
+        MovementModel dmodel = new MovementModel();
+        assertTrue(dmodel.getSpeedFactorDownhill() > 0);
     }
 
     @Test
