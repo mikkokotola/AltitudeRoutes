@@ -30,6 +30,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ *
+ * @author Mikko Kotola
+ */
 public class EdgeTest {
     private double accuracy;
     private Vertice vertice1;
@@ -76,20 +80,18 @@ public class EdgeTest {
         long id1 = vertice1.getId();
         long id2 = vertice2.getId();
         long expectedId = id1*9000000 + id2;
-        System.out.println("Expected id: " + expectedId);
-        System.out.println("Edge id: " + edge.getId());
         assertTrue(edge.getId() == expectedId);
     }
 
     @Test
     public void weightCorrect() {
-        assertTrue(edge.getWeight() - 5.0 < accuracy);
+        assertTrue(Math.abs(edge.getWeight() - 5.0) < accuracy);
     }
 
     @Test
     public void weightCorrectAfterSetting() {
         edge.setWeight(212);
-        assertTrue(edge.getWeight() - 212 < accuracy);
+        assertTrue(Math.abs(edge.getWeight() - 212) < accuracy);
     }
 
 }

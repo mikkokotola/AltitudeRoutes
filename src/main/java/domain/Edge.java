@@ -25,6 +25,10 @@ package domain;
 
 import java.util.Objects;
 
+/**
+ *
+ * @author Mikko Kotola
+ */
 public class Edge {
     private Vertice from;
     private Vertice to;
@@ -58,16 +62,4 @@ public class Edge {
         this.weight = weight;
     }
 
-//    @Override
-//    public int compareTo(Object o) {
-//        Edge other = (Edge) o;
-//        if (other.weight < this.weight) {
-//            return 1;
-//        } else if (other.weight > this.weight) {
-//            return -1;
-//        }
-//        return 0;
-//    }
-    
-    
 }

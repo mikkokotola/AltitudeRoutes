@@ -49,6 +49,7 @@ public class App {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        // Temporary, for testing the domain and io-classes.
         // Print a 50x50 map from the top left corner.
         for (int i = 1; i <= 50; i++) {
             for (int j = 1; j <= 50; j++) {
