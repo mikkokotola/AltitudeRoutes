@@ -18,3 +18,7 @@ Toteutan sovelluksen HY:n tietojenkäsittelytieteen aineopintojen tietorakenteet
 <ul>
   <li><a href="https://github.com/mikkokotola/AltitudeRoutes/blob/master/documentation/Vkoraportti1_Tiralabra_Kotola.pdf">Viikkoraportti 1</a></li>
 </ul>
+<ul>
+  <li><a href="https://github.com/mikkokotola/AltitudeRoutes/blob/master/documentation/Vkoraportti2_Tiralabra_Kotola.pdf">Viikkoraportti 2</a></li>
+</ul>
+
