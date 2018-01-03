@@ -87,7 +87,4 @@ public class AltitudeMap {
         this.altitudes[y][x] = newAltitude;
     }
     
-    
-    
-    
 }

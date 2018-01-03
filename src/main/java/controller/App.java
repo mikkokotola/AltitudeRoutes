@@ -24,6 +24,9 @@
 package controller;
 
 import altitudeMap.AltitudeMap;
+import domain.Graph;
+import domain.MovementModel;
+import domain.Vertice;
 import io.AsciiMapReader;
 import java.io.FileNotFoundException;
 import java.util.logging.Level;
@@ -39,6 +42,8 @@ public class App {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        // READ IN ALTITUDEMAP.
         //String filename = "src/main/resources/altitudefiles/M4313A.asc";
         String filename = "altitudefiles/M4313A.asc";
         AsciiMapReader asciiMapReader = new AsciiMapReader(filename);
@@ -49,14 +54,30 @@ public class App {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        // Temporary, for testing the domain and io-classes.
-        // Print a 50x50 map from the top left corner.
-        for (int i = 1; i <= 50; i++) {
-            for (int j = 1; j <= 50; j++) {
-                System.out.print(map.getAltitude(i, j));
-            }
-            System.out.println("");
-        }
+        // CREATE MOVEMENTMODEL.
+        MovementModel movementModel = new MovementModel();
+        
+        
+        // Temporary, print out AltitudeMapDetails
+        System.out.println("--------");
+        System.out.println("AltitudeMap Details:");
+        System.out.println("Cols " + map.getNcols());
+        System.out.println("Cols in elev:" + map.getAltitudes()[1].length);
+        System.out.println("Rows " + map.getNrows() );
+        System.out.println("Rows in elev:" + map.getAltitudes().length);
+        
+        // Temporary, for testing the formation of the Graph.
+        Graph graph = new Graph(map, movementModel, false);
+        Vertice vert = graph.getVertice(1, 1);
+        System.out.println("--------");
+        System.out.println("Vertice:");
+        System.out.println("x: " + vert.getX());
+        System.out.println("y: " + vert.getY());
+        System.out.println("z: " + vert.getZ());
+        System.out.println("Dist to start: " + vert.getDistToStart());
+        
+        // Test the Edgelists.
+        
     }
 
 }

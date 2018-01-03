@@ -26,7 +26,8 @@ package domain;
 import java.util.Objects;
 
 /**
- *
+ * Edge belongs to a graph. An edge connects two vertices and has a weight
+ * attribute.
  * @author Mikko Kotola
  */
 public class Edge {
