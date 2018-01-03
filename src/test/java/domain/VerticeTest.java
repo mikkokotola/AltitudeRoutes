@@ -113,18 +113,19 @@ public class VerticeTest {
 
     @Test
     public void edgeListIsEmpty() {
-        assertTrue(vertice.getEdges().isEmpty());
+        assertTrue(vertice.getNumberOfEdges() == 0);
     }
 
     @Test
     public void edgeListCorrectWhenSet() {
-        HashMap<Long, Edge> edges = new HashMap<>();
+        Edge[] edges = new Edge[1];
+        //HashMap<Long, Edge> edges = new HashMap<>();
         Vertice newVertice = new Vertice(4, 5, 121.00);
         Edge newEdge = new Edge(this.vertice, newVertice, 9);
         Long newEdgeId = newEdge.getId();
-        edges.put(newEdgeId, newEdge);
+        edges[0] = newEdge;
         vertice.setEdges(edges);
-        assertTrue(vertice.getEdges().containsKey(newEdgeId));
+        assertTrue(vertice.getEdges()[0].getId() == newEdgeId);
     }
 
     @Test
@@ -133,17 +134,7 @@ public class VerticeTest {
         Edge newEdge = new Edge(this.vertice, newVertice, 9);
         Long newEdgeId = newEdge.getId();
         vertice.addEdge(newEdge);
-        assertTrue(vertice.getEdges().containsKey(newEdgeId));
-    }
-
-    @Test
-    public void edgeRemovedCorrectly() {
-        Vertice newVertice = new Vertice(4, 5, 121.00);
-        Edge newEdge = new Edge(this.vertice, newVertice, 9);
-        Long newEdgeId = newEdge.getId();
-        vertice.addEdge(newEdge);
-        vertice.removeEdge(newEdgeId);
-        assertTrue(vertice.getEdges().isEmpty());
+        assertTrue(vertice.getEdges()[0].getId() == newEdgeId);
     }
 
     @Test

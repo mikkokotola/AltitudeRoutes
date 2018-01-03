@@ -22,8 +22,9 @@ public class Vertice implements Comparable {
     private long distToStart;
     private Vertice path;
 
-    private HashMap<Long, Edge> edges;
-
+    private Edge[] edges;
+    private int numberOfEdges;
+    
     Vertice(int x, int y, double z) {
         this.x = x;
         this.y = y;
@@ -33,7 +34,10 @@ public class Vertice implements Comparable {
         this.distToStart = Long.MAX_VALUE;
         this.path = null;
 
-        this.edges = new HashMap<>();
+        this.edges = new Edge[4];
+        this.numberOfEdges = 0;
+        
+        //this.edges = new HashMap<>();
     }
 
     public int getX() {
@@ -72,22 +76,32 @@ public class Vertice implements Comparable {
         this.path = path;
     }
 
-    public HashMap<Long, Edge> getEdges() {
+    public Edge[] getEdges() {
         return edges;
     }
 
-    public void setEdges(HashMap<Long, Edge> edges) {
+    public void setEdges(Edge[] edges) {
         this.edges = edges;
     }
 
-    public void addEdge(Edge edge) {
-        this.edges.put(edge.getId(), edge);
+    public int getNumberOfEdges() {
+        return numberOfEdges;
     }
 
-    public void removeEdge(Long edgeId) {
-        this.edges.remove(edgeId);
+    public void setNumberOfEdges(int numberOfEdges) {
+        this.numberOfEdges = numberOfEdges;
     }
- 
+
+    /**
+     * Adds an edge to the vertice's edgelist. Returns true if addition is
+     * successful. The method does not check if the edge is already on the
+     * edgelist so doubles are possible.
+     */
+    public void addEdge(Edge edge) {
+        edges[numberOfEdges] = edge;
+        numberOfEdges++;
+    }
+
     @Override
     public int compareTo(Object o) {
         Vertice other = (Vertice) o;
