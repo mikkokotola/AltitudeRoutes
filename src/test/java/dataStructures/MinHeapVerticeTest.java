@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2017 .
+ * Copyright 2018 .
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package domain;
+package dataStructures;
 
+import domain.Vertice;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -32,66 +33,54 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Mikko Kotola
+ * @author mkotola
  */
-public class EdgeTest {
-    private double accuracy;
-    private Vertice vertice1;
-    private Vertice vertice2;
-    private Edge edge;
-
-    public EdgeTest() {
-        this.accuracy = 0.00001;
+public class MinHeapVerticeTest {
+    private Vertice vert;
+    private MinHeapVertice heapVert;
+    
+    public MinHeapVerticeTest() {
     }
-
+    
     @BeforeClass
     public static void setUpClass() {
     }
-
+    
     @AfterClass
     public static void tearDownClass() {
     }
-
+    
     @Before
     public void setUp() {
-        vertice1 = new Vertice(100, 10, 15.00);
-        vertice2 = new Vertice(101, 10, 15.45);
-        edge = new Edge(vertice1, vertice2, 5.0);
+        vert = new Vertice(3, 5, 120.00);
+        vert.setDistToStart(55.0);
+        heapVert = new MinHeapVertice(vert.getKey(), vert);
     }
-
+    
     @After
     public void tearDown() {
     }
 
     @Test
-    public void fromCorrect() {
-        long id1 = vertice1.getId();
-        assertTrue(edge.getFrom().getId() == id1);
+    public void getKeyCorrect() {
+        assertTrue(heapVert.getKey() == 55.0);
+    }
+    
+    @Test
+    public void setKeyCorrect() {
+        heapVert.setKey(44.0);
+        assertTrue(heapVert.getKey() == 44.0);
     }
 
     @Test
-    public void toCorrect() {
-        long id2 = vertice2.getId();
-        assertTrue(edge.getTo().getId() == id2);
+    public void getVerticeCorrect() {
+        assertTrue(heapVert.getVertice().getId() == vert.getId());
     }
-
+    
     @Test
-    public void idCorrect() {
-        long id1 = vertice1.getId();
-        long id2 = vertice2.getId();
-        long expectedId = id1*9000000 + id2;
-        assertTrue(edge.getId() == expectedId);
+    public void setVerticeCorrect() {
+        vert = new Vertice(4, 6, 100.00);
+        heapVert.setVertice(vert);
+        assertTrue(heapVert.getVertice().getId() == vert.getId());
     }
-
-    @Test
-    public void weightCorrect() {
-        assertTrue(Math.abs(edge.getWeight() - 5.0) < accuracy);
-    }
-
-    @Test
-    public void weightCorrectAfterSetting() {
-        edge.setWeight(212);
-        assertTrue(Math.abs(edge.getWeight() - 212) < accuracy);
-    }
-
 }

@@ -40,8 +40,13 @@ public class VerticeEstimatedTest {
     private double accuracy;
 
     public VerticeEstimatedTest() {
-        verticeEst = new VerticeEstimated(3, 5, 120.00);
+        
         this.accuracy = 0.00001;
+    }
+
+    @Before
+    public void setUp() {
+        verticeEst = new VerticeEstimated(3, 5, 120.00);
     }
 
     @Test
@@ -53,6 +58,11 @@ public class VerticeEstimatedTest {
     public void distToGoalCorrectAfterSetting() {
         verticeEst.setDistToGoal(18.0);
         assertTrue(verticeEst.getDistToGoal() == 18.0);
+    }
+
+    @Test
+    public void keyCorrect() {
+        assertTrue(verticeEst.getKey() == Double.MAX_VALUE);
     }
 
     @Test

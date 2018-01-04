@@ -88,6 +88,12 @@ public class VerticeTest {
     }
 
     @Test
+    public void heapRefCorrectAfterSet() {
+        vertice.setHeapRef(16);
+        assertTrue(vertice.getHeapRef() == 16);
+    }
+
+    @Test
     public void distToStartCorrect() {
         assertTrue(vertice.getDistToStart() == Double.MAX_VALUE);
     }
@@ -96,6 +102,11 @@ public class VerticeTest {
     public void distToStartCorrectAfterChange() {
         vertice.setDistToStart(16.0);
         assertTrue(vertice.getDistToStart() == 16.0);
+    }
+
+    @Test
+    public void keyCorrect() {
+        assertTrue(vertice.getKey() == Double.MAX_VALUE);
     }
 
     @Test

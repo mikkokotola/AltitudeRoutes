@@ -28,6 +28,14 @@ public class VerticeEstimated extends Vertice {
     public void setDistToGoal(double distToGoal) {
         this.distToGoal = distToGoal;
     }
+
+    @Override
+    public double getKey() {
+        if (this.distToGoal == Double.MAX_VALUE || this.getDistToStart() == Double.MAX_VALUE) {
+            return Double.MAX_VALUE;
+        }
+        return this.getDistToStart() + this.distToGoal;
+    }
     
     @Override
     public int compareTo(Object o) {

@@ -31,23 +31,105 @@ import domain.MovementModel;
 import domain.Vertice;
 import io.AsciiMapReader;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import ui.ConsoleUI;
 
-/** App. The main controller class.
+/**
+ * App. The main controller class.
  *
  * @author Mikko Kotola
  */
 public class App {
-    
-     /**
+
+    /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
+        ConsoleUI ui = new ConsoleUI();
+
+        ui.print("* Welcome to AltitudeMaps *");
+        ui.print("");
+        ui.print("The application uses location data produced by the National Land Survey of Finland (Maanmittauslaitoksen maastotietokannan 12/2017 aineistoa).");
+        ui.print("");
+        ui.print("Reading in AltitudeMap...");
+
         // READ IN ALTITUDEMAP.
         //String filename = "src/main/resources/altitudefiles/M4313A.asc";
         String filename = "altitudefiles/M4313A.asc";
+        AltitudeMap map = readInMapFromAscii(filename);
+
+        // CREATE MOVEMENTMODEL.
+        MovementModel movementModel = new MovementModel();
+
+        ui.print("Creating graph...");
+        // CREATE GRAPH.
+        Graph graph = new Graph(map, movementModel, false);
+
+        // Test finding a simple shortest route.
+        Dijkstra dijkstra = new Dijkstra(graph);
+        String routeAlgorithmName = "Dijkstra";
+
+        // Print out AltitudeMapDetails
+        ui.print("--------");
+        ui.print("AltitudeMap Details:");
+        ui.print("File: " + filename);
+        ui.print("Cols " + map.getNcols());
+        ui.print("Rows " + map.getNrows());
+        ui.print("--------");
+
+        // Set the start and goal coordinates here.
+        ui.print("");
+        ui.print("Enter x-coordinate of start: (1-3000)");
+        int startX = readCoordinate(ui);
+        ui.print("Enter y-coordinate of start: (1-3000");
+        int startY = readCoordinate(ui);
+        ui.print("Enter x-coordinate of goal: (1-3000)");
+        int goalX = readCoordinate(ui);
+        ui.print("Enter y-coordinate of goal: (1-3000");
+        int goalY = readCoordinate(ui);
+
+        ui.print("--------");
+        ui.print("* Shortest route *");
+        ui.print("From: (" + startX + ", " + startY + ")");
+        ui.print("To: (" + goalX + ", " + goalY + ")");
+        ui.print("Route algorithm: " + routeAlgorithmName);
+        ui.print("Searching...");
+        dijkstra.runShortestRouteFind(graph.getVertice(startX, startY), graph.getVertice(goalX, goalY));
+        double lengthOfShortestPath = dijkstra.returnLengthOfShortestRoute();
+        ArrayList<Vertice> shortestPath = dijkstra.returnShortestPath();
+        ui.print("");
+        ui.print("Result:");
+        ui.print("Length of shortest path: " + lengthOfShortestPath);
+        for (int i = 0; i < shortestPath.size(); i++) {
+            Vertice v = shortestPath.get(i);
+            ui.print("(" + v.getX() + ", " + v.getY() + ", " + v.getZ() + "), cumulative distance from start " + v.getDistToStart());
+
+        }
+
+    }
+
+    private static int readCoordinate(ConsoleUI ui) {
+        int number = -1;
+        while (true) {
+            try {
+                number = Integer.parseInt(ui.readLine());
+            } catch(NumberFormatException e) {
+                System.out.println("Not a valid integer, enter an integer in the range 1-3000.");
+            }
+            
+            if (number < 1 || number > 3000) {
+                ui.print("Not a valid coordinate, enter an integer in the range 1-3000.");
+            } else {
+                break;
+            }
+        }
+
+        return number;
+    }
+
+    private static AltitudeMap readInMapFromAscii(String filename) {
         AsciiMapReader asciiMapReader = new AsciiMapReader(filename);
         AltitudeMap map = null;
         try {
@@ -55,54 +137,7 @@ public class App {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        // CREATE MOVEMENTMODEL.
-        MovementModel movementModel = new MovementModel();
-        
-        
-        // Temporary, print out AltitudeMapDetails
-        System.out.println("--------");
-        System.out.println("AltitudeMap Details:");
-        System.out.println("Cols " + map.getNcols());
-        System.out.println("Cols in elev:" + map.getAltitudes()[1].length);
-        System.out.println("Rows " + map.getNrows() );
-        System.out.println("Rows in elev:" + map.getAltitudes().length);
-        
-        // Temporary, for testing the formation of the Graph.
-        Graph graph = new Graph(map, movementModel, false);
-        Vertice vert = graph.getVertice(2, 2);
-        System.out.println("--------");
-        System.out.println("Vertice:");
-        System.out.println("x: " + vert.getX());
-        System.out.println("y: " + vert.getY());
-        System.out.println("z: " + vert.getZ());
-        System.out.println("Dist to start: " + vert.getDistToStart());
-        
-        // Test the Edgelists.
-        Edge[] edges = vert.getEdges();
-        for (int i = 0; i < vert.getNumberOfEdges(); i++) {
-            Vertice from = edges[i].getFrom();
-            Vertice to = edges[i].getTo();
-            double weight = edges[i].getWeight();
-            System.out.println("---");
-            System.out.println("Edge " + i);
-            System.out.println("From " + from.getX() + ", " + from.getY());
-            System.out.println("To " + to.getX() + ", " + to.getY());
-            System.out.println("Weight " + weight);
-        }
-        
-        // Test finding a simple shortest route.
-        Dijkstra dijkstra = new Dijkstra(graph);
-        dijkstra.runShortestRouteFind(graph.getVertice(1, 1), graph.getVertice(6, 1));
-        System.out.println("---");
-        System.out.println("Shortest route:");
-        
-        
-        System.out.println("V (6,1): dist " + graph.getVertice(6, 1).getDistToStart() + ", path " + graph.getVertice(6, 1).getPath().getX() + ", " + graph.getVertice(6, 1).getPath().getY());
-        System.out.println("V (3,1): dist " + graph.getVertice(3, 1).getDistToStart() + ", path " + graph.getVertice(3, 1).getPath().getX() + ", " + graph.getVertice(3, 1).getPath().getY());
-        System.out.println("V (2,1): dist " + graph.getVertice(2, 1).getDistToStart() + ", path " + graph.getVertice(2, 1).getPath().getX() + ", " + graph.getVertice(2, 1).getPath().getY());
-        System.out.println("V (1,1): dist " + graph.getVertice(1, 1).getDistToStart());
-        
+        return map;
     }
 
 }

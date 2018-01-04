@@ -18,6 +18,7 @@ public class Vertice implements Comparable {
     private int y;
     private double z;
     private long id;
+    private int heapRef;
 
     private double distToStart;
     private Vertice path;
@@ -25,11 +26,12 @@ public class Vertice implements Comparable {
     private Edge[] edges;
     private int numberOfEdges;
     
-    Vertice(int x, int y, double z) {
+    public Vertice(int x, int y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
         this.id = (x * 3000) + y;
+        this.heapRef = -1;
 
         this.distToStart = Double.MAX_VALUE;
         this.path = null;
@@ -56,6 +58,14 @@ public class Vertice implements Comparable {
 
     public long getId() {
         return id;
+    }
+
+    public int getHeapRef() {
+        return heapRef;
+    }
+
+    public void setHeapRef(int heapRef) {
+        this.heapRef = heapRef;
     }
 
     public double getDistToStart() {
@@ -99,6 +109,10 @@ public class Vertice implements Comparable {
         numberOfEdges++;
     }
 
+    public double getKey() {
+        return this.distToStart;
+    }
+    
     @Override
     public int compareTo(Object o) {
         Vertice other = (Vertice) o;
@@ -129,6 +143,4 @@ public class Vertice implements Comparable {
         return true;
     }
     
-    
-
 }

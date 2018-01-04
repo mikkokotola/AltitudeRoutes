@@ -40,8 +40,24 @@ public class MovementModelTest {
     private double accuracy;
 
     public MovementModelTest() {
-        this.mmodel = new MovementModel(0.5, 0.9, 0.9, 0.5, 2.0, 2.0, Double.MAX_VALUE);
         this.accuracy = 0.00001;
+    }
+
+    @BeforeClass
+    public static void setUpClass() {
+    }
+
+    @AfterClass
+    public static void tearDownClass() {
+    }
+
+    @Before
+    public void setUp() {
+        this.mmodel = new MovementModel(0.5, 0.9, 0.9, 0.5, 2.0, 2.0, Double.MAX_VALUE);
+    }
+
+    @After
+    public void tearDown() {
     }
 
     @Test

@@ -1,17 +1,23 @@
 package domain;
 
+import dataStructures.MinHeap;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 public class Dijkstra {
 
     private Graph graph;
-    private PriorityQueue heap;
+    //private PriorityQueue<Vertice> heap;
+    private MinHeap heap;
     private boolean[][] takenOut;
-
+    
+    private Vertice start;
+    private Vertice goal;
+    
     public Dijkstra(Graph graph) {
         this.graph = graph;
-        this.heap = new PriorityQueue();
+        //this.heap = new PriorityQueue();
+        this.heap = new MinHeap();
         this.takenOut = new boolean[graph.vertices.length][graph.vertices[0].length];
     }
 
@@ -31,14 +37,17 @@ public class Dijkstra {
     }
 
     public void runShortestRouteFind(Vertice start, Vertice goal) {
+        this.start = start;
+        this.goal = goal;
         initialiseSingleSource(start);
         for (int i = 1; i < graph.vertices.length; i++) {
             for (int j = 1; j < graph.vertices[0].length; j++) {
-                heap.add(graph.vertices[i][j]);
+                heap.insert(graph.vertices[i][j]);
             }
         }
         
-        while (!heap.isEmpty()) {
+        
+        while (heap.size() > 0) {
             Vertice vert = (Vertice) heap.poll();
             if (takenOut[vert.getY()][vert.getX()]) {
                 continue;
@@ -50,7 +59,12 @@ public class Dijkstra {
                 relax(edges[i]);
                 Vertice to = edges[i].getTo();
                 if (to.getDistToStart() < oldDistance) {
-                    heap.add(to);
+                    if (to.getHeapRef() == -1) {
+                        heap.insert(to);
+                    } else {
+                        heap.decreaseKey(to, to.getKey());
+                    }
+                    
                 }
                 // Stop when goal vertice found and the edge leading to it
                 // relaxed for the first time.
@@ -62,11 +76,23 @@ public class Dijkstra {
     }
 
     public double returnLengthOfShortestRoute() {
-        return 0;
+        return goal.getDistToStart();
     }
 
-    public ArrayList<Vertice> returnShortestRouteVertices() {
-        return new ArrayList<>();
+    public ArrayList<Vertice> returnShortestPath() {
+        ArrayList<Vertice> route = new ArrayList<>();
+        route.add(goal);
+        Vertice x = goal.getPath();
+        while (x.getId() != start.getId()) {
+            route.add(x);
+            x = x.getPath();
+        }
+        
+        ArrayList<Vertice> routeToReturn = new ArrayList<>();
+        for (int i = route.size()-1; i >= 0 ; i--) {
+            routeToReturn.add(route.get(i));
+        }
+        return routeToReturn;
     }
 
 }
