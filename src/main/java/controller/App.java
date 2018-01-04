@@ -50,15 +50,17 @@ public class App {
         ConsoleUI ui = new ConsoleUI();
 
         ui.print("");
-        ui.print("* Welcome to AltitudeMaps *");
+        ui.print("* Welcome to AltitudeRoutes *");
         ui.print("");
         ui.print("The application uses location data produced by the National Land Survey of Finland (Maanmittauslaitoksen maastotietokannan 12/2017 aineistoa).");
-        ui.print("");
-        ui.print("Reading in AltitudeMap...");
-
+        
         // READ IN ALTITUDEMAP.
         //String filename = "src/main/resources/altitudefiles/M4313A.asc";
         String filename = "altitudefiles/M4313A.asc";
+        ui.print("");
+        ui.print("Selected map file: " + filename);
+        ui.print("Reading in AltitudeMap...");
+
         AltitudeMap map = readInMapFromAscii(filename);
 
         // CREATE MOVEMENTMODEL.
