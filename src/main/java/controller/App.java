@@ -49,6 +49,7 @@ public class App {
     public static void main(String[] args) {
         ConsoleUI ui = new ConsoleUI();
 
+        ui.print("");
         ui.print("* Welcome to AltitudeMaps *");
         ui.print("");
         ui.print("The application uses location data produced by the National Land Survey of Finland (Maanmittauslaitoksen maastotietokannan 12/2017 aineistoa).");
@@ -107,6 +108,8 @@ public class App {
             ui.print("(" + v.getX() + ", " + v.getY() + ", " + v.getZ() + "), cumulative distance from start " + v.getDistToStart());
 
         }
+        ui.print("");
+        ui.print("* Thank you, run again! *");
 
     }
 

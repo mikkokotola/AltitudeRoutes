@@ -38,7 +38,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * AsciiMapReader. Use to read a 3000x3000 ascii grid map from a file into
+ * AsciiMapReader. Use to read an ascii grid map from a file into
  * memory.
  *
  * @author Mikko Kotola
@@ -52,24 +52,32 @@ public class AsciiMapReader {
     }
 
     /**
-     * readWholeMap reads the whole 3000x3000 altitudemap
-     * into memory. It returns a 3000x3000 AltitudeMap.
+     * ReadWholeMap reads the whole altitudemap into memory.
+     * 
+     * @return AltitudeMap is an object representation of the ascii map.
      *
      */
     public AltitudeMap readWholeMap() throws FileNotFoundException {
         File file = new File(this.filename);
         String[] headers = new String[6];
-        double[][] altitudes = new double[3001][3001];
+        double[][] altitudes = null;
         StringBuilder fileContents = new StringBuilder((int) file.length());
         Scanner scanner = new Scanner(new BufferedReader(new FileReader(file)));
-        //String lineSeparator = System.getProperty("line.separator");
 
+        int nrows = -1;
+        int ncols = -1;
         try {
             int i = 0;
             while (scanner.hasNextLine()) {
                 if (i < 6) {
                     headers[i] = scanner.nextLine();
-
+                    if (i == 1) {
+                        ncols = Integer.parseInt(headers[0].substring(headers[0].length() - 4));
+                    } else if (i == 2) {
+                        nrows = Integer.parseInt(headers[1].substring(headers[0].length() - 4));
+                        altitudes = new double[nrows+1][ncols+1];
+                    }
+                
                 } else {
                     String line = scanner.nextLine();
                     String[] yValues = line.split(" ");
@@ -84,8 +92,7 @@ public class AsciiMapReader {
             scanner.close();
         }
 
-        int ncols = Integer.parseInt(headers[0].substring(headers[0].length() - 4));
-        int nrows = Integer.parseInt(headers[1].substring(headers[0].length() - 4));;
+        
         String[] xllCornerHeader = headers[2].split(" ");
         double xllcorner = Double.parseDouble(xllCornerHeader[xllCornerHeader.length - 1]);
         String[] yllCornerHeader = headers[3].split(" ");

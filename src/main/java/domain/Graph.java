@@ -65,9 +65,9 @@ public class Graph {
             for (int j = 1; j < map.getAltitudes()[0].length; j++) {
                 Vertice newV;
                 if (estimated) {
-                    newV = new VerticeEstimated(j, i, map.getAltitude(j, i));
+                    newV = new VerticeEstimated(j, i, map.getAltitude(i, j));
                 } else {
-                    newV = new Vertice(j, i, map.getAltitude(j, i));
+                    newV = new Vertice(j, i, map.getAltitude(i, j));
                 }
                 vertices[i][j] = newV;
             }
@@ -102,7 +102,7 @@ public class Graph {
     }
 
     private void addEdgeToBelow(Vertice vertice) {
-        if (vertice.getY() < map.getNrows()-1) {
+        if (vertice.getY() < map.getNrows()) {
             Vertice neighbour = vertices[vertice.getY()+1][vertice.getX()];
             addEdge(vertice, neighbour);
         }
@@ -116,7 +116,7 @@ public class Graph {
     }
     
     private void addEdgeToRight(Vertice vertice) {
-        if (vertice.getX() < map.getNcols()-1) {
+        if (vertice.getX() < map.getNcols()) {
             Vertice neighbour = vertices[vertice.getY()][vertice.getX()+1];
             addEdge(vertice, neighbour);
         }
