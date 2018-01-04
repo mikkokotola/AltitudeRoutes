@@ -37,31 +37,32 @@ public class MovementModel {
     private double speedFactorDownhillSteep;
     private double speedFactorImpassable;
     private double mapCellSize;
+    private double basicSpeed;
+    private double impassableEdgeWeight;
 
     /**
      * Constructor with no parameters sets default values for the uphill and
-     * downhill speed factors and the map cell size to 2.0 metres.
+     * downhill speed factors and the map cell size to 2.0 metres. The basic
+     * speed is set to 2.0.
      */
     public MovementModel() {
         this.speedFactorUphillSteep = 0.3;
         this.speedFactorUphill = 0.7;
         this.speedFactorDownhill = 0.9;
         this.speedFactorDownhillSteep = 0.6;
-        this.speedFactorImpassable = Double.MAX_VALUE;
         this.mapCellSize = 2.0;
+        this.basicSpeed = 2.0;
+        this.impassableEdgeWeight = Double.MAX_VALUE;
     }
 
-    public MovementModel(double speedFactorUphillSteep, double speedFactorUphill, double speedFactorDownhill, double speedFactorDownhillSteep, double speedFactorImpassable, double mapCellSize) {
+    public MovementModel(double speedFactorUphillSteep, double speedFactorUphill, double speedFactorDownhill, double speedFactorDownhillSteep, double mapCellSize, double basicSpeed, double impassableEdgeWeight) {
         this.speedFactorUphillSteep = speedFactorUphillSteep;
         this.speedFactorUphill = speedFactorUphill;
         this.speedFactorDownhill = speedFactorDownhill;
         this.speedFactorDownhillSteep = speedFactorDownhillSteep;
-        this.speedFactorImpassable = speedFactorImpassable;
         this.mapCellSize = mapCellSize;
-    }
-
-    public double getSpeedFactorImpassable() {
-        return speedFactorImpassable;
+        this.basicSpeed = basicSpeed;
+        this.impassableEdgeWeight = impassableEdgeWeight;
     }
 
     public double getSpeedFactorUphillSteep() {
@@ -80,6 +81,18 @@ public class MovementModel {
         return speedFactorDownhillSteep;
     }
 
+    public double getBasicSpeed() {
+        return basicSpeed;
+    }
+
+    public double getImpassableEdgeWeight() {
+        return impassableEdgeWeight;
+    }
+    
+    public double getMapCellSize() {
+        return mapCellSize;
+    }
+
     /**
      * Returns the edge weight that corresponds to the movement model and the
      * altitudechange given as the parameter.
@@ -88,9 +101,9 @@ public class MovementModel {
         double steepness = altitudeChange / mapCellSize;
         double movementFactor;
         if (steepness > 1.5) {
-            return speedFactorImpassable;
+            return impassableEdgeWeight;
         } else if (steepness < -1.5) {
-            return speedFactorImpassable;
+            return impassableEdgeWeight;
         } else if (steepness < -0.7) {
             movementFactor = speedFactorDownhillSteep;
         } else if (steepness < -0.1) {
@@ -103,7 +116,7 @@ public class MovementModel {
             movementFactor = speedFactorUphillSteep;
         }
 
-        return mapCellSize * movementFactor;
+        return mapCellSize / (basicSpeed * movementFactor);
     }
 
 }

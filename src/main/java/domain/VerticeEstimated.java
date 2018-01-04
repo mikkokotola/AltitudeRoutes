@@ -14,26 +14,26 @@ package domain;
 
 public class VerticeEstimated extends Vertice {
 
-    private long distToGoal;
+    private double distToGoal;
 
     public VerticeEstimated(int x, int y, double z) {
         super(x, y, z);
-        this.distToGoal = Long.MAX_VALUE;
+        this.distToGoal = Double.MAX_VALUE;
     }
 
-    public long getDistToGoal() {
+    public double getDistToGoal() {
         return distToGoal;
     }
 
-    public void setDistToGoal(long distToGoal) {
+    public void setDistToGoal(double distToGoal) {
         this.distToGoal = distToGoal;
     }
     
     @Override
     public int compareTo(Object o) {
         VerticeEstimated other = (VerticeEstimated) o;
-        long thisEstimatedDistance = this.getDistToStart() + this.distToGoal;
-        long otherEstimatedDistance = other.getDistToStart() + other.distToGoal;
+        double thisEstimatedDistance = this.getDistToStart() + this.distToGoal;
+        double otherEstimatedDistance = other.getDistToStart() + other.distToGoal;
             
         if (otherEstimatedDistance  > thisEstimatedDistance) {
             return -1;

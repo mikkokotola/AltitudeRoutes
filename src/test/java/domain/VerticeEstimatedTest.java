@@ -37,20 +37,22 @@ import static org.junit.Assert.*;
 public class VerticeEstimatedTest {
 
     private VerticeEstimated verticeEst;
+    private double accuracy;
 
     public VerticeEstimatedTest() {
         verticeEst = new VerticeEstimated(3, 5, 120.00);
+        this.accuracy = 0.00001;
     }
 
     @Test
     public void getDistToGoalWorks() {
-        assertTrue(verticeEst.getDistToGoal() == Long.MAX_VALUE);
+        assertTrue(verticeEst.getDistToGoal() == Double.MAX_VALUE);
     }
 
     @Test
     public void distToGoalCorrectAfterSetting() {
-        verticeEst.setDistToGoal(18);
-        assertTrue(verticeEst.getDistToGoal() == 18);
+        verticeEst.setDistToGoal(18.0);
+        assertTrue(verticeEst.getDistToGoal() == 18.0);
     }
 
     @Test

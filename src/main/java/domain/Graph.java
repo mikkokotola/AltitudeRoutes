@@ -69,7 +69,7 @@ public class Graph {
                 } else {
                     newV = new Vertice(j, i, map.getAltitude(j, i));
                 }
-                vertices[j][i] = newV;
+                vertices[i][j] = newV;
             }
         }
         
@@ -127,7 +127,7 @@ public class Graph {
     private void addEdge(Vertice vertice, Vertice neighbour) {
         double altitudeChange = neighbour.getZ() - vertice.getZ();
         double edgeWeight = this.movementModel.calculateEdgeWeight(altitudeChange);
-        if (edgeWeight != this.movementModel.getSpeedFactorImpassable()) {
+        if (edgeWeight != this.movementModel.getImpassableEdgeWeight()) {
             vertice.addEdge(new Edge(vertice, neighbour, edgeWeight));
         }
     }

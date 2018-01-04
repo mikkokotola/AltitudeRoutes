@@ -19,7 +19,7 @@ public class Vertice implements Comparable {
     private double z;
     private long id;
 
-    private long distToStart;
+    private double distToStart;
     private Vertice path;
 
     private Edge[] edges;
@@ -31,13 +31,11 @@ public class Vertice implements Comparable {
         this.z = z;
         this.id = (x * 3000) + y;
 
-        this.distToStart = Long.MAX_VALUE;
+        this.distToStart = Double.MAX_VALUE;
         this.path = null;
 
         this.edges = new Edge[4];
         this.numberOfEdges = 0;
-        
-        //this.edges = new HashMap<>();
     }
 
     public int getX() {
@@ -60,11 +58,11 @@ public class Vertice implements Comparable {
         return id;
     }
 
-    public long getDistToStart() {
+    public double getDistToStart() {
         return distToStart;
     }
 
-    public void setDistToStart(long distToStart) {
+    public void setDistToStart(double distToStart) {
         this.distToStart = distToStart;
     }
 
@@ -93,9 +91,8 @@ public class Vertice implements Comparable {
     }
 
     /**
-     * Adds an edge to the vertice's edgelist. Returns true if addition is
-     * successful. The method does not check if the edge is already on the
-     * edgelist so doubles are possible.
+     * Adds an edge to the vertice's edgelist. The method does not check if 
+     * the edge is already on the edgelist so doubles are possible.
      */
     public void addEdge(Edge edge) {
         edges[numberOfEdges] = edge;
@@ -113,5 +110,25 @@ public class Vertice implements Comparable {
         }
         return 0;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Vertice other = (Vertice) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 
 }

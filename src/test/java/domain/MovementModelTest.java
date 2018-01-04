@@ -40,13 +40,8 @@ public class MovementModelTest {
     private double accuracy;
 
     public MovementModelTest() {
-        this.mmodel = new MovementModel(0.5, 0.9, 0.9, 0.5, Double.MAX_VALUE, 2.0);
+        this.mmodel = new MovementModel(0.5, 0.9, 0.9, 0.5, 2.0, 2.0, Double.MAX_VALUE);
         this.accuracy = 0.00001;
-    }
-
-    @Test
-    public void getSpeedFactorImpassableCorrect() {
-        assertTrue(Math.abs(Double.MAX_VALUE - this.mmodel.getSpeedFactorImpassable()) < accuracy);
     }
 
     @Test
@@ -70,6 +65,16 @@ public class MovementModelTest {
     }
     
     @Test
+    public void getBasicSpeedCorrect() {
+        assertTrue(Math.abs(2.0 - this.mmodel.getBasicSpeed()) < accuracy);
+    }
+    
+    @Test
+    public void getImpassableEdgeWeightCorrect() {
+        assertTrue(Math.abs(Double.MAX_VALUE - this.mmodel.getImpassableEdgeWeight()) < accuracy);
+    }
+    
+    @Test
     public void defaultModelConstructorWorks() {
         MovementModel dmodel = new MovementModel();
         assertTrue(dmodel.getSpeedFactorDownhill() > 0);
@@ -84,31 +89,31 @@ public class MovementModelTest {
     @Test
     public void steepDownhillCorrect() {
         double res = mmodel.calculateEdgeWeight(-2.0);
-        assertTrue(Math.abs(1.0 - res) < accuracy);
+        assertTrue(Math.abs(2.0 - res) < accuracy);
     }
 
     @Test
     public void downhillCorrect() {
         double res = mmodel.calculateEdgeWeight(-0.4);
-        assertTrue(Math.abs(1.8 - res) < accuracy);
+        assertTrue(Math.abs(1.11111111 - res) < accuracy);
     }
 
     @Test
     public void flatCorrect() {
         double res = mmodel.calculateEdgeWeight(0.0);
-        assertTrue(Math.abs(2.0 - res) < accuracy);
+        assertTrue(Math.abs(1.0 - res) < accuracy);
     }
 
     @Test
     public void uphillCorrect() {
         double res = mmodel.calculateEdgeWeight(0.5);
-        assertTrue(Math.abs(1.8 - res) < accuracy);
+        assertTrue(Math.abs(1.11111111 - res) < accuracy);
     }
 
     @Test
     public void steepUphillCorrect() {
         double res = mmodel.calculateEdgeWeight(1.6);
-        assertTrue(Math.abs(1.0 - res) < accuracy);
+        assertTrue(Math.abs(2.0 - res) < accuracy);
     }
 
     @Test

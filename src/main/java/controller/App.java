@@ -24,6 +24,8 @@
 package controller;
 
 import altitudeMap.AltitudeMap;
+import domain.Dijkstra;
+import domain.Edge;
 import domain.Graph;
 import domain.MovementModel;
 import domain.Vertice;
@@ -68,7 +70,7 @@ public class App {
         
         // Temporary, for testing the formation of the Graph.
         Graph graph = new Graph(map, movementModel, false);
-        Vertice vert = graph.getVertice(1, 1);
+        Vertice vert = graph.getVertice(2, 2);
         System.out.println("--------");
         System.out.println("Vertice:");
         System.out.println("x: " + vert.getX());
@@ -77,6 +79,29 @@ public class App {
         System.out.println("Dist to start: " + vert.getDistToStart());
         
         // Test the Edgelists.
+        Edge[] edges = vert.getEdges();
+        for (int i = 0; i < vert.getNumberOfEdges(); i++) {
+            Vertice from = edges[i].getFrom();
+            Vertice to = edges[i].getTo();
+            double weight = edges[i].getWeight();
+            System.out.println("---");
+            System.out.println("Edge " + i);
+            System.out.println("From " + from.getX() + ", " + from.getY());
+            System.out.println("To " + to.getX() + ", " + to.getY());
+            System.out.println("Weight " + weight);
+        }
+        
+        // Test finding a simple shortest route.
+        Dijkstra dijkstra = new Dijkstra(graph);
+        dijkstra.runShortestRouteFind(graph.getVertice(1, 1), graph.getVertice(6, 1));
+        System.out.println("---");
+        System.out.println("Shortest route:");
+        
+        
+        System.out.println("V (6,1): dist " + graph.getVertice(6, 1).getDistToStart() + ", path " + graph.getVertice(6, 1).getPath().getX() + ", " + graph.getVertice(6, 1).getPath().getY());
+        System.out.println("V (3,1): dist " + graph.getVertice(3, 1).getDistToStart() + ", path " + graph.getVertice(3, 1).getPath().getX() + ", " + graph.getVertice(3, 1).getPath().getY());
+        System.out.println("V (2,1): dist " + graph.getVertice(2, 1).getDistToStart() + ", path " + graph.getVertice(2, 1).getPath().getX() + ", " + graph.getVertice(2, 1).getPath().getY());
+        System.out.println("V (1,1): dist " + graph.getVertice(1, 1).getDistToStart());
         
     }
 

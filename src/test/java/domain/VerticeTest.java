@@ -89,13 +89,13 @@ public class VerticeTest {
 
     @Test
     public void distToStartCorrect() {
-        assertTrue(vertice.getDistToStart() == Long.MAX_VALUE);
+        assertTrue(vertice.getDistToStart() == Double.MAX_VALUE);
     }
 
     @Test
     public void distToStartCorrectAfterChange() {
-        vertice.setDistToStart(16);
-        assertTrue(vertice.getDistToStart() == 16);
+        vertice.setDistToStart(16.0);
+        assertTrue(vertice.getDistToStart() == 16.0);
     }
 
     @Test
@@ -112,8 +112,13 @@ public class VerticeTest {
     }
 
     @Test
-    public void edgeListIsEmpty() {
+    public void numberOfEdgesZero() {
         assertTrue(vertice.getNumberOfEdges() == 0);
+    }
+
+    @Test
+    public void edgeListIsEmpty() {
+        assertTrue(vertice.getEdges()[0] == null);
     }
 
     @Test
@@ -125,6 +130,7 @@ public class VerticeTest {
         Long newEdgeId = newEdge.getId();
         edges[0] = newEdge;
         vertice.setEdges(edges);
+        vertice.setNumberOfEdges(1);
         assertTrue(vertice.getEdges()[0].getId() == newEdgeId);
     }
 
