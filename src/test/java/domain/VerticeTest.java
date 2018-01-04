@@ -178,4 +178,16 @@ public class VerticeTest {
         assertTrue(vertice.compareTo(newVertice) == 0);
     }
 
+    @Test
+    public void equalsCorrectWhenEqual() {
+        Vertice newVertice = new Vertice(3, 5, 130.00);
+        assertTrue(vertice.equals(newVertice));
+    }
+    
+    @Test
+    public void equalsCorrectWhenNotEqual() {
+        Vertice newVertice = new Vertice(4, 5, 121.00);
+        assertTrue(!vertice.equals(newVertice));
+    }
+
 }

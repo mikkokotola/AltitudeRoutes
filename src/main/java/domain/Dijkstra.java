@@ -87,7 +87,7 @@ public class Dijkstra {
             route.add(x);
             x = x.getPath();
         }
-        
+        route.add(start);
         ArrayList<Vertice> routeToReturn = new ArrayList<>();
         for (int i = route.size()-1; i >= 0 ; i--) {
             routeToReturn.add(route.get(i));

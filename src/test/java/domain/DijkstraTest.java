@@ -24,6 +24,7 @@
 package domain;
 
 import altitudeMap.AltitudeMap;
+import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -97,4 +98,10 @@ public class DijkstraTest {
         assertTrue(res == movementModel.getImpassableEdgeWeight());
     }
 
+    @Test
+    public void shortestRouteLegCorrect() {
+        dijkstra.runShortestRouteFind(graph.getVertice(1, 1), graph.getVertice(3, 1));
+        ArrayList<Vertice> res = dijkstra.returnShortestPath();
+        assertTrue(res.get(1).getZ() - 123.060 < accuracy);
+    }
 }
