@@ -25,7 +25,6 @@ package searchAlgo;
 
 import graph.Graph;
 import graph.Vertice;
-import graph.VerticeEstimated;
 import searchAlgo.Dijkstra;
 
 /**

@@ -8,7 +8,8 @@ import java.util.Objects;
  * Vertice belongs to a graph. The graph edges are represented as attributes of
  * vertices (a list of edges starting at the vertice). The x and y coordinates
  * are in the attributes. The altitude of the vertice is saved as the z
- * coordinate. distToStart and path are used by pathfinding algorithms.
+ * coordinate. distToStart, distToGoal and path are used by pathfinding 
+ * algorithms.
  *
  * @author Mikko Kotola
  */
@@ -21,6 +22,7 @@ public class Vertice implements Comparable {
     private int heapRef;
 
     private double distToStart;
+    private double distToGoal;
     private Vertice path;
 
     private Edge[] edges;
@@ -34,6 +36,7 @@ public class Vertice implements Comparable {
         this.heapRef = -1;
 
         this.distToStart = Double.MAX_VALUE;
+        this.distToGoal = 0;
         this.path = null;
 
         this.edges = new Edge[4];
@@ -110,20 +113,21 @@ public class Vertice implements Comparable {
     }
 
     public double getKey() {
-        return this.distToStart;
+        return this.distToStart + this.distToGoal;
     }
-
+    
     /**
      * Not used for search algos that do not estimate distance to goal.
      */
     public double getDistToGoal() {
-        return -1;
+        return distToGoal;
     }
 
      /**
      * Not used for search algos that do not estimate distance to goal.
      */
     public void setDistToGoal(double distToGoal) {
+        this.distToGoal = distToGoal;
     }
 
     
@@ -131,9 +135,12 @@ public class Vertice implements Comparable {
     public int compareTo(Object o) {
         Vertice other = (Vertice) o;
 
-        if (other.distToStart > this.distToStart) {
+        double thisEstimatedDistance = this.getDistToStart() + this.distToGoal;
+        double otherEstimatedDistance = other.getDistToStart() + other.distToGoal;
+            
+        if (otherEstimatedDistance  > thisEstimatedDistance) {
             return -1;
-        } else if (other.distToStart < this.distToStart) {
+        } else if (otherEstimatedDistance  < thisEstimatedDistance) {
             return 1;
         }
         return 0;

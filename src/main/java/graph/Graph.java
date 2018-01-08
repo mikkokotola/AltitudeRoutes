@@ -64,12 +64,7 @@ public class Graph {
         // Create vertices.
         for (int i = 1; i < map.getAltitudes().length; i++) {
             for (int j = 1; j < map.getAltitudes()[0].length; j++) {
-                Vertice newV;
-                if (estimated) {
-                    newV = new VerticeEstimated(j, i, map.getAltitude(i, j)); 
-                } else {
-                    newV = new Vertice(j, i, map.getAltitude(i, j));
-                }
+                Vertice newV= new Vertice(j, i, map.getAltitude(i, j));
                 vertices[i][j] = newV;
             }
         }
