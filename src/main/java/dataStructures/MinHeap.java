@@ -23,7 +23,7 @@
  */
 package dataStructures;
 
-import domain.Vertice;
+import graph.Vertice;
 
 /**
  * MinHeap is a minimum heap for vertices. It supports the normal heap
@@ -37,8 +37,8 @@ public class MinHeap {
     private MinHeapVertice[] array;
     private int size;
 
-    public MinHeap() {
-        this.array = new MinHeapVertice[1000000];
+    public MinHeap(int initialSize) {
+        this.array = new MinHeapVertice[initialSize];
         this.size = 0;
     }
 

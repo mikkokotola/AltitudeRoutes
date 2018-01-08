@@ -21,8 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package domain;
+package graph;
 
+import movementModel.MovementModel;
 import altitudeMap.AltitudeMap;
 
 /**
@@ -65,7 +66,7 @@ public class Graph {
             for (int j = 1; j < map.getAltitudes()[0].length; j++) {
                 Vertice newV;
                 if (estimated) {
-                    newV = new VerticeEstimated(j, i, map.getAltitude(i, j));
+                    newV = new VerticeEstimated(j, i, map.getAltitude(i, j)); 
                 } else {
                     newV = new Vertice(j, i, map.getAltitude(i, j));
                 }

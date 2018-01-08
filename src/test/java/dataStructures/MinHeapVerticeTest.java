@@ -23,7 +23,7 @@
  */
 package dataStructures;
 
-import domain.Vertice;
+import graph.Vertice;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

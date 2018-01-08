@@ -21,8 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package domain;
+package graph;
 
+import graph.VerticeEstimated;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -51,13 +52,14 @@ public class VerticeEstimatedTest {
 
     @Test
     public void getDistToGoalWorks() {
-        assertTrue(verticeEst.getDistToGoal() == Double.MAX_VALUE);
+        assertTrue(verticeEst.getDistToGoal() == 0.0);
     }
 
     @Test
     public void distToGoalCorrectAfterSetting() {
+        verticeEst.setDistToStart(3.5);
         verticeEst.setDistToGoal(18.0);
-        assertTrue(verticeEst.getDistToGoal() == 18.0);
+        assertTrue(verticeEst.getDistToGoal() - 21.5 < accuracy);
     }
 
     @Test

@@ -1,26 +1,36 @@
-package domain;
+package searchAlgo;
 
 import dataStructures.MinHeap;
+import graph.Edge;
+import graph.Graph;
+import graph.Vertice;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
-public class Dijkstra {
+public class Dijkstra implements SearchAlgo {
 
-    private Graph graph;
+    String name;
+    Graph graph;
     //private PriorityQueue<Vertice> heap;
-    private MinHeap heap;
-    private boolean[][] takenOut;
+    MinHeap heap;
+    boolean[][] takenOut;
     
-    private Vertice start;
-    private Vertice goal;
+    Vertice start;
+    Vertice goal;
     
     public Dijkstra(Graph graph) {
+        name = "Dijkstra";
         this.graph = graph;
         //this.heap = new PriorityQueue();
-        this.heap = new MinHeap();
-        this.takenOut = new boolean[graph.vertices.length][graph.vertices[0].length];
+        this.heap = new MinHeap((int) (graph.getMap().getNcols()*graph.getMap().getNrows()*1.5));
+        this.takenOut = new boolean[graph.getVertices().length][graph.getVertices()[0].length];
     }
 
+    @Override
+    public String getName() {
+        return name;
+    }
+    
     public void initialiseSingleSource(Vertice vertice) {
         vertice.setDistToStart(0);
     }
@@ -36,13 +46,14 @@ public class Dijkstra {
         }
     }
 
+    @Override
     public void runShortestRouteFind(Vertice start, Vertice goal) {
         this.start = start;
         this.goal = goal;
         initialiseSingleSource(start);
-        for (int i = 1; i < graph.vertices.length; i++) {
-            for (int j = 1; j < graph.vertices[0].length; j++) {
-                heap.insert(graph.vertices[i][j]);
+        for (int i = 1; i < graph.getVertices().length; i++) {
+            for (int j = 1; j < graph.getVertices()[0].length; j++) {
+                heap.insert(graph.getVertices()[i][j]);
             }
         }
         
@@ -75,10 +86,12 @@ public class Dijkstra {
         }
     }
 
+    @Override
     public double returnLengthOfShortestRoute() {
         return goal.getDistToStart();
     }
 
+    @Override
     public ArrayList<Vertice> returnShortestPath() {
         ArrayList<Vertice> route = new ArrayList<>();
         route.add(goal);

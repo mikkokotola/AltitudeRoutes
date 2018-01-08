@@ -23,7 +23,7 @@
  */
 package dataStructures;
 
-import domain.Vertice;
+import graph.Vertice;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -58,7 +58,7 @@ public class MinHeapTest {
 
     @Before
     public void setUp() {
-        heap = new MinHeap();
+        heap = new MinHeap(3);
         vert = new Vertice(3, 5, 120.00);
         vert.setDistToStart(12.0);
         vert2 = new Vertice(4, 5, 120.00);

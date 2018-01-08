@@ -1,4 +1,4 @@
-package domain;
+package graph;
 
 /** VerticeEstimated belongs to a graph. It extends a simple vertice by including
  * distToGoal, which is an estimate of the distance to the goal used by
@@ -18,13 +18,15 @@ public class VerticeEstimated extends Vertice {
 
     public VerticeEstimated(int x, int y, double z) {
         super(x, y, z);
-        this.distToGoal = Double.MAX_VALUE;
+        this.distToGoal = 0;
     }
 
+    @Override
     public double getDistToGoal() {
         return distToGoal;
     }
 
+    @Override
     public void setDistToGoal(double distToGoal) {
         this.distToGoal = distToGoal;
     }

@@ -21,8 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package domain;
+package graph;
 
+import graph.Graph;
+import movementModel.MovementModel;
 import altitudeMap.AltitudeMap;
 import org.junit.After;
 import org.junit.AfterClass;

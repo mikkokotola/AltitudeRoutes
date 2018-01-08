@@ -21,8 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package domain;
+package graph;
 
+import graph.Vertice;
+import graph.Edge;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

@@ -21,9 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package domain;
+package searchAlgo;
 
+import graph.Vertice;
+import graph.Graph;
+import movementModel.MovementModel;
+import searchAlgo.Dijkstra;
 import altitudeMap.AltitudeMap;
+import graph.Graph;
+import graph.Vertice;
 import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -45,7 +51,6 @@ public class DijkstraTest {
 
     public DijkstraTest() {
         this.accuracy = 0.00001;
-
     }
 
     @BeforeClass
@@ -84,6 +89,11 @@ public class DijkstraTest {
     public void tearDown() {
     }
 
+    @Test
+    public void nameCorrect() {
+        assertTrue(dijkstra.getName() == "Dijkstra");
+    }
+    
     @Test
     public void possibleShortestRouteCorrect() {
         dijkstra.runShortestRouteFind(graph.getVertice(1, 1), graph.getVertice(3, 1));

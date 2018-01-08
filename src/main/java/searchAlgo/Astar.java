@@ -21,36 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package dataStructures;
+package searchAlgo;
 
+import graph.Graph;
 import graph.Vertice;
+import graph.VerticeEstimated;
+import searchAlgo.Dijkstra;
 
 /**
  *
- * @author Mikko Kotola
+ * @author mkotola
  */
-class MinHeapVertice {
-    private double key;
-    private Vertice vertice;
-
-    public MinHeapVertice(double key, Vertice vertice) {
-        this.key = key;
-        this.vertice = vertice;
+public class Astar extends Dijkstra {
+    
+    public Astar(Graph graph) {
+        super(graph);
+        this.name = "Astar";
+    }
+    
+    @Override
+    public void initialiseSingleSource(Vertice vertice) {
+        vertice.setDistToStart(0);
+        Vertice[][] vertices = this.graph.getVertices();
+        for (int i = 1; i <  vertices.length; i++) {
+            for (int j = 1; j < vertices[0].length; j++) {
+                estimateDistToGoal(vertices[i][j]);
+            }
+        }
     }
 
-    public double getKey() {
-        return key;
-    }
+    
+    /**
+     * Estimated a vertice's distance from the goal. Sets the estimate to the
+     * current manhattan distance between the parameter vertice and the goal
+     * vertice.
+     */
 
-    public void setKey(double key) {
-        this.key = key;
+    public void estimateDistToGoal(Vertice vertice) {
+        double distanceToGoal = (Math.abs(this.goal.getX()-vertice.getX()) 
+                + Math.abs(this.goal.getY()-vertice.getY()));
+        vertice.setDistToGoal(distanceToGoal);
     }
-
-    public Vertice getVertice() {
-        return vertice;
-    }
-
-    public void setVertice(Vertice vertice) {
-        this.vertice = vertice;
-    }
+    
 }

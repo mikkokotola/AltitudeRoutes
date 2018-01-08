@@ -1,4 +1,4 @@
-package domain;
+package graph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -112,6 +112,20 @@ public class Vertice implements Comparable {
     public double getKey() {
         return this.distToStart;
     }
+
+    /**
+     * Not used for search algos that do not estimate distance to goal.
+     */
+    public double getDistToGoal() {
+        return -1;
+    }
+
+     /**
+     * Not used for search algos that do not estimate distance to goal.
+     */
+    public void setDistToGoal(double distToGoal) {
+    }
+
     
     @Override
     public int compareTo(Object o) {

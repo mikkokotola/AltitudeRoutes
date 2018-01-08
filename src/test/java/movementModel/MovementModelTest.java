@@ -21,8 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package domain;
+package movementModel;
 
+import movementModel.MovementModel;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

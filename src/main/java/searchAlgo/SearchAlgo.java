@@ -21,36 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package dataStructures;
+package searchAlgo;
 
 import graph.Vertice;
+import java.util.ArrayList;
 
 /**
  *
- * @author Mikko Kotola
+ * @author mkotola
  */
-class MinHeapVertice {
-    private double key;
-    private Vertice vertice;
+public interface SearchAlgo {
 
-    public MinHeapVertice(double key, Vertice vertice) {
-        this.key = key;
-        this.vertice = vertice;
-    }
+    double returnLengthOfShortestRoute();
 
-    public double getKey() {
-        return key;
-    }
+    ArrayList<Vertice> returnShortestPath();
 
-    public void setKey(double key) {
-        this.key = key;
-    }
-
-    public Vertice getVertice() {
-        return vertice;
-    }
-
-    public void setVertice(Vertice vertice) {
-        this.vertice = vertice;
-    }
+    void runShortestRouteFind(Vertice start, Vertice goal);
+    
+    String getName();
+    
 }

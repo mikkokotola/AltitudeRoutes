@@ -6,15 +6,6 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
       <group>
         <file>file:/home/local/mkotola/AltitudeRoutes/src/main/java/domain/Graph.java</file>
-        <file>file:/home/local/mkotola/AltitudeRoutes/src/main/java/domain/Vertice.java</file>
-        <file>file:/home/local/mkotola/AltitudeRoutes/src/main/java/controller/App.java</file>
-        <file>file:/home/local/mkotola/AltitudeRoutes/src/main/java/domain/Dijkstra.java</file>
-      </group>
-    </open-files>
-    <editor-bookmarks lastBookmarkId="0" xmlns="http://www.netbeans.org/ns/editor-bookmarks/2"/>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-      <group>
-        <file>file:/home/local/mkotola/AltitudeRoutes/src/main/java/domain/Graph.java</file>
         <file>file:/home/local/mkotola/AltitudeRoutes/src/main/java/dataStructures/MinHeap.java</file>
         <file>file:/home/local/mkotola/AltitudeRoutes/src/main/java/domain/Vertice.java</file>
         <file>file:/home/local/mkotola/AltitudeRoutes/src/main/java/dataStructures/MinHeapVertice.java</file>
@@ -22,5 +13,6 @@
         <file>file:/home/local/mkotola/AltitudeRoutes/src/main/java/domain/Dijkstra.java</file>
       </group>
     </open-files>
+    <editor-bookmarks lastBookmarkId="0" xmlns="http://www.netbeans.org/ns/editor-bookmarks/2"/>
   </auxiliary>
 </gradle-project-properties>
