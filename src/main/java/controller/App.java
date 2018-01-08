@@ -31,12 +31,14 @@ import movementModel.MovementModel;
 import searchAlgo.SearchAlgo;
 import graph.Vertice;
 import io.AsciiMapReader;
+import io.ImageDrawer;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import searchAlgo.Astar;
 import ui.ConsoleUI;
+import ui.javaFXGUI;
 
 /**
  * App. The main controller class.
@@ -123,8 +125,26 @@ public class App {
         ui.print("");
         ui.print("Length of shortest path: " + lengthOfShortestPath);
         ui.print("");
+        
+        ui.print("Export map image (y/n)?");
+        String answer = ui.readLine();
+     
+        if (answer.equals("y")) {
+            ui.print("Exporting image to " + "testmap" + ".PNG ...");
+            drawMapImage(graph);
+        }
+        
         ui.print("* Thank you, run again! *");
 
+    }
+
+    private static void drawMapImage(Graph graph) {
+        ImageDrawer imDrawer= new ImageDrawer();
+ 
+        try {
+            imDrawer.draw(graph, "testmap");
+        } catch (Exception e) {
+        }
     }
 
     private static String readName(ConsoleUI ui) {
