@@ -24,9 +24,9 @@
 package searchAlgo;
 
 import altitudeMap.AltitudeMap;
+import dataStructures.DynamicList;
 import graph.Graph;
 import graph.Vertice;
-import java.util.ArrayList;
 import movementModel.MovementModel;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -96,13 +96,13 @@ public class AstarTest {
     public void impossibleRouteCorrect() {
         astar.runShortestRouteFind(graph.getVertice(1, 1), graph.getVertice(1, 2));
         double res = astar.returnLengthOfShortestRoute();
-        assertTrue(res == movementModel.getImpassableEdgeWeight());
+        assertTrue(res == -1);
     }
 
     @Test
     public void shortestRouteLegCorrect() {
         astar.runShortestRouteFind(graph.getVertice(1, 1), graph.getVertice(3, 1));
-        ArrayList<Vertice> res = astar.returnShortestPath();
+        DynamicList<Vertice> res = astar.returnShortestPath();
         assertTrue(res.get(1).getZ() - 123.060 < accuracy);
     }
     

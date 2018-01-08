@@ -23,6 +23,7 @@
  */
 package io;
 
+import dataStructures.DynamicList;
 import graph.Graph;
 import graph.Vertice;
 import java.awt.BasicStroke;
@@ -35,7 +36,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+
 
 import javax.imageio.ImageIO;
 
@@ -45,7 +46,7 @@ import javax.imageio.ImageIO;
  */
 public class ImageDrawer {
 
-    public void draw(Graph graph, ArrayList<Vertice> shortestPath, String filename) throws Exception {
+    public void draw(Graph graph, DynamicList<Vertice> shortestPath, String filename) throws Exception {
         try {
             int width = graph.getMap().getNcols(), height = graph.getMap().getNrows();
 

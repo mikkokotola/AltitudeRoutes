@@ -28,9 +28,9 @@ import graph.Graph;
 import movementModel.MovementModel;
 import searchAlgo.Dijkstra;
 import altitudeMap.AltitudeMap;
+import dataStructures.DynamicList;
 import graph.Graph;
 import graph.Vertice;
-import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -105,13 +105,13 @@ public class DijkstraTest {
     public void impossibleRouteCorrect() {
         dijkstra.runShortestRouteFind(graph.getVertice(1, 1), graph.getVertice(1, 2));
         double res = dijkstra.returnLengthOfShortestRoute();
-        assertTrue(res == movementModel.getImpassableEdgeWeight());
+        assertTrue(res == -1);
     }
 
     @Test
     public void shortestRouteLegCorrect() {
         dijkstra.runShortestRouteFind(graph.getVertice(1, 1), graph.getVertice(3, 1));
-        ArrayList<Vertice> res = dijkstra.returnShortestPath();
+        DynamicList<Vertice> res = dijkstra.returnShortestPath();
         assertTrue(res.get(1).getZ() - 123.060 < accuracy);
     }
 }

@@ -23,25 +23,25 @@
  */
 package ui;
 
-import java.util.ArrayList;
+import dataStructures.DynamicList;
 
 /**
  *  A stub UI for testing.
  * @author Mikko Kotola
  */
 public class StubUI implements UI {
-    private ArrayList<String> in;
-    private ArrayList<String> out;
+    private DynamicList<String> in;
+    private DynamicList<String> out;
     int outLine;
 
-    public StubUI(ArrayList<String> out) {
-        this.in = new ArrayList<>();
+    public StubUI(DynamicList<String> out) {
+        this.in = new DynamicList<>();
         this.out = out;
         outLine = -1;
     }
     public StubUI() {
-        this.in = new ArrayList<>();
-        this.out = new ArrayList<>();
+        this.in = new DynamicList<>();
+        this.out = new DynamicList<>();
         outLine = -1;
     }
     
@@ -66,19 +66,19 @@ public class StubUI implements UI {
         out.clear();
     }
 
-    public ArrayList<String> getIn() {
+    public DynamicList<String> getIn() {
         return in;
     }
 
-    public void setIn(ArrayList<String> in) {
+    public void setIn(DynamicList<String> in) {
         this.in = in;
     }
 
-    public ArrayList<String> getOut() {
+    public DynamicList<String> getOut() {
         return out;
     }
 
-    public void setOut(ArrayList<String> out) {
+    public void setOut(DynamicList<String> out) {
         this.out = out;
     }
 

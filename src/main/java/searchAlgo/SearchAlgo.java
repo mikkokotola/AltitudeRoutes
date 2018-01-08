@@ -23,6 +23,7 @@
  */
 package searchAlgo;
 
+import dataStructures.DynamicList;
 import graph.Vertice;
 import java.util.ArrayList;
 
@@ -42,7 +43,7 @@ public interface SearchAlgo {
      * Returns the shortest path as list Vertices starting from the start
      * vertice and ending at the goal vertice.
      */
-    ArrayList<Vertice> returnShortestPath();
+    DynamicList<Vertice> returnShortestPath();
 
     void runShortestRouteFind(Vertice start, Vertice goal);
 

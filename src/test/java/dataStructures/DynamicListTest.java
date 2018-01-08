@@ -21,36 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package controller;
+package dataStructures;
 
-import dataStructures.DynamicList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import ui.StubUI;
-import ui.UI;
 
 /**
  *
- * @author Mikko Kotola
+ * @author mkotola
  */
-public class AppTest {
-    private App app;
-    private StubUI stubUI;
-       
-    public AppTest() {
-        DynamicList<String> list = new DynamicList<>();
-        StubUI stubUI = new StubUI(list);
-        this.stubUI = stubUI;
-        this.app = new App(stubUI);
+public class DynamicListTest {
+    private DynamicList<Integer> list;
+    
+    public DynamicListTest() {
+        list = new DynamicList<>();
     }
     
     @BeforeClass
     public static void setUpClass() {
-        
     }
     
     @AfterClass
@@ -59,7 +51,7 @@ public class AppTest {
     
     @Before
     public void setUp() {
-        stubUI.clear();
+        list.clear();
     }
     
     @After
@@ -67,29 +59,32 @@ public class AppTest {
     }
 
     @Test
-    public void DijkstraTest() {
-        stubUI.addOutput("testMap3");
-        stubUI.addOutput("D");
-        stubUI.addOutput("16");
-        stubUI.addOutput("14");
-        stubUI.addOutput("16");
-        stubUI.addOutput("18");
-        stubUI.addOutput("n");
-        app.run();
-        assertTrue(stubUI.getIn().get(45).equals("Length of shortest path: 10.0"));
+    public void isEmptyWorks() {
+        assertTrue(list.isEmpty());
     }
     
     @Test
-    public void AstarTest() {
-        stubUI.addOutput("testMap3");
-        stubUI.addOutput("A");
-        stubUI.addOutput("16");
-        stubUI.addOutput("14");
-        stubUI.addOutput("16");
-        stubUI.addOutput("18");
-        stubUI.addOutput("n");
-        app.run();
-        assertTrue(stubUI.getIn().get(45).equals("Length of shortest path: 10.0"));
+    public void addWithIndexWorks() {
+        list.add(0, 36);
+        assertTrue(list.get(0) == 36);
+    }
+    
+    @Test
+    public void removeWorks() {
+        list.add(0, 36);
+        list.add(37);
+        list.add(38);
+        Integer removed = list.remove(0);
+        assertTrue(removed == 36);
+    }
+    
+    @Test
+    public void listSizeCorrectAfterRemove() {
+        list.add(0, 36);
+        list.add(37);
+        list.add(38);
+        list.remove(0);
+        assertTrue(list.size() == 2);
     }
     
 }

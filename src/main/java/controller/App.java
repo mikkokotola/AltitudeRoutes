@@ -24,6 +24,7 @@
 package controller;
 
 import altitudeMap.AltitudeMap;
+import dataStructures.DynamicList;
 import searchAlgo.Dijkstra;
 import graph.Edge;
 import graph.Graph;
@@ -33,7 +34,6 @@ import graph.Vertice;
 import io.AsciiMapReader;
 import io.ImageDrawer;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import searchAlgo.Astar;
@@ -89,6 +89,8 @@ public class App {
         // CREATE GRAPH.
         Graph graph = new Graph(map, movementModel, false);
 
+        DynamicList<Graph> list = new DynamicList<>();
+        
         // Test finding a simple shortest route.
         // Set the start and goal coordinates here.
         String algoName = readName(ui);
@@ -128,7 +130,7 @@ public class App {
         ui.print("Searching...");
         searchAlgo.runShortestRouteFind(graph.getVertice(startX, startY), graph.getVertice(goalX, goalY));
         double lengthOfShortestPath = searchAlgo.returnLengthOfShortestRoute();
-        ArrayList<Vertice> shortestPath = searchAlgo.returnShortestPath();
+        DynamicList<Vertice> shortestPath = searchAlgo.returnShortestPath();
         ui.print("");
         ui.print("Path:");
 
@@ -161,7 +163,7 @@ public class App {
 
     }
 
-    private static void drawMapImage(Graph graph, ArrayList<Vertice> shortestPath, String picFileName) {
+    private static void drawMapImage(Graph graph, DynamicList<Vertice> shortestPath, String picFileName) {
         ImageDrawer imDrawer = new ImageDrawer();
 
         try {
@@ -192,7 +194,9 @@ public class App {
         ui.print("");
         String fileName;
         while (true) {
-            ui.print("Enter filename (e.g. testMap3 without postfix (.asc); place file in the folder /altitudefiles):");
+            ui.print("Place file in the folder /altitudefiles .");
+            ui.print("Then enter filename (e.g. testMap3 or M4313A) without file postfix (.asc):");
+            
             fileName = ui.readLine();
             return fileName;
         }

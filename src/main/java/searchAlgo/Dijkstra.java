@@ -1,11 +1,11 @@
 package searchAlgo;
 
+import dataStructures.DynamicList;
 import dataStructures.MinHeap;
 import graph.Edge;
 import graph.Graph;
 import graph.Vertice;
-import java.util.ArrayList;
-import java.util.PriorityQueue;
+
 
 public class Dijkstra implements SearchAlgo {
 
@@ -95,10 +95,10 @@ public class Dijkstra implements SearchAlgo {
     }
 
     @Override
-    public ArrayList<Vertice> returnShortestPath() {
-        ArrayList<Vertice> route = new ArrayList<>();
-        ArrayList<Vertice> routeToReturn = new ArrayList<>();
-
+    public DynamicList<Vertice> returnShortestPath() {
+        DynamicList<Vertice> route = new DynamicList<>();
+        DynamicList<Vertice> routeToReturn = new DynamicList<>();
+        
         if (goal.getPath() != null) {
             route.add(goal);
             Vertice x = goal.getPath();
