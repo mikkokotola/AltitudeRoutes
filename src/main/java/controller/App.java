@@ -70,9 +70,11 @@ public class App {
         ui.print("The application uses location data produced by the National Land Survey of Finland (Maanmittauslaitoksen maastotietokannan 12/2017 aineistoa).");
 
         // READ IN ALTITUDEMAP.
+        // These can be used for testing.
         //String filename = "altitudefiles/M4313A.asc";
+        //String filename = "altitudefiles/testMap3.asc";        
         //String filename = "altitudefiles/testMap2.asc";
-        
+        //String filename = "altitudefiles/testMap3.asc";
         String filename = readFileName(ui);
         ui.print("");
         ui.print("Selected map file: " + filename);
@@ -129,20 +131,28 @@ public class App {
         ArrayList<Vertice> shortestPath = searchAlgo.returnShortestPath();
         ui.print("");
         ui.print("Path:");
-        for (int i = 0; i < shortestPath.size(); i++) {
-            Vertice v = shortestPath.get(i);
-            ui.print("(" + v.getX() + ", " + v.getY() + ", " + v.getZ() + "), cumulative distance from start " + v.getDistToStart());
 
+        if (lengthOfShortestPath > 0) {
+            for (int i = 0; i < shortestPath.size(); i++) {
+                Vertice v = shortestPath.get(i);
+                ui.print("(" + v.getX() + ", " + v.getY() + ", " + v.getZ() + "), cumulative distance from start " + v.getDistToStart());
+
+            }
+            ui.print("");
+            ui.print("Length of shortest path: " + lengthOfShortestPath);
+        } else if (lengthOfShortestPath == 0) {
+            ui.print("Length of shortest path: 0");
+        } else {
+            ui.print("No path found.");
         }
-        ui.print("");
-        ui.print("Length of shortest path: " + lengthOfShortestPath);
+
         ui.print("");
 
         ui.print("Export map image (y/n)?");
         String answer = ui.readLine();
 
         if (answer.equals("y")) {
-            String picFileName = filename + "_" + searchAlgo.getName() + "_" + startX + "-" + startY + "_" + goalX + "-" + goalY; 
+            String picFileName = filename + "_" + searchAlgo.getName() + "_" + startX + "-" + startY + "_" + goalX + "-" + goalY;
             ui.print("Exporting image to " + picFileName + ".PNG ...");
             drawMapImage(graph, shortestPath, picFileName);
         }

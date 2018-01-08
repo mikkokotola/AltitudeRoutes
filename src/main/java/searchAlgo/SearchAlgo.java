@@ -32,12 +32,20 @@ import java.util.ArrayList;
  */
 public interface SearchAlgo {
 
+    /**
+     * Returns the length of the shortest rout. Returns -1 if the route does 
+     * not exist.
+     */
     double returnLengthOfShortestRoute();
 
+    /**
+     * Returns the shortest path as list Vertices starting from the start
+     * vertice and ending at the goal vertice.
+     */
     ArrayList<Vertice> returnShortestPath();
 
     void runShortestRouteFind(Vertice start, Vertice goal);
-    
+
     String getName();
-    
+
 }
