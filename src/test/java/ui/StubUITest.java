@@ -21,45 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package searchAlgo;
+package ui;
 
-import graph.Graph;
-import graph.Vertice;
-import graph.VerticeEstimated;
-import searchAlgo.Dijkstra;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
- * @author mkotola
+ * @author Mikko Kotola
  */
-public class Astar extends Dijkstra {
+public class StubUITest {
     
-    public Astar(Graph graph) {
-        super(graph);
-        this.name = "Astar";
+    public StubUITest() {
     }
     
-    @Override
-    public void initialiseSingleSource(Vertice vertice) {
-        vertice.setDistToStart(0);
-        Vertice[][] vertices = this.graph.getVertices();
-        for (int i = 1; i <  vertices.length; i++) {
-            for (int j = 1; j < vertices[0].length; j++) {
-                estimateDistToGoal(vertices[i][j]);
-            }
-        }
+    @BeforeClass
+    public static void setUpClass() {
+    }
+    
+    @AfterClass
+    public static void tearDownClass() {
+    }
+    
+    @Before
+    public void setUp() {
+    }
+    
+    @After
+    public void tearDown() {
     }
 
-    
-    /**
-     * Estimated a vertice's distance from the goal. Sets the estimate to the
-     * current manhattan distance between the parameter vertice and the goal
-     * vertice.
-     */
-    public void estimateDistToGoal(Vertice vertice) {
-        double distanceToGoal = (Math.abs(this.goal.getX()-vertice.getX()) 
-                + Math.abs(this.goal.getY()-vertice.getY()));
-        vertice.setDistToGoal(distanceToGoal);
-    }
-    
+       
 }

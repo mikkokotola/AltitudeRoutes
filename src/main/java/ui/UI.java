@@ -21,45 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package searchAlgo;
-
-import graph.Graph;
-import graph.Vertice;
-import graph.VerticeEstimated;
-import searchAlgo.Dijkstra;
+package ui;
 
 /**
  *
- * @author mkotola
+ * @author Mikko Kotola
  */
-public class Astar extends Dijkstra {
-    
-    public Astar(Graph graph) {
-        super(graph);
-        this.name = "Astar";
-    }
-    
-    @Override
-    public void initialiseSingleSource(Vertice vertice) {
-        vertice.setDistToStart(0);
-        Vertice[][] vertices = this.graph.getVertices();
-        for (int i = 1; i <  vertices.length; i++) {
-            for (int j = 1; j < vertices[0].length; j++) {
-                estimateDistToGoal(vertices[i][j]);
-            }
-        }
-    }
+public interface UI {
 
-    
-    /**
-     * Estimated a vertice's distance from the goal. Sets the estimate to the
-     * current manhattan distance between the parameter vertice and the goal
-     * vertice.
-     */
-    public void estimateDistToGoal(Vertice vertice) {
-        double distanceToGoal = (Math.abs(this.goal.getX()-vertice.getX()) 
-                + Math.abs(this.goal.getY()-vertice.getY()));
-        vertice.setDistToGoal(distanceToGoal);
-    }
+    void print(String s);
+
+    String readLine();
     
 }

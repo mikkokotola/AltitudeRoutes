@@ -24,6 +24,7 @@
 package io;
 
 import graph.Graph;
+import graph.Vertice;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -34,6 +35,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -43,7 +45,7 @@ import javax.imageio.ImageIO;
  */
 public class ImageDrawer {
 
-    public void draw(Graph graph, String filename) throws Exception {
+    public void draw(Graph graph, ArrayList<Vertice> shortestPath, String filename) throws Exception {
         try {
             int width = graph.getMap().getNcols(), height = graph.getMap().getNrows();
 
@@ -53,12 +55,12 @@ public class ImageDrawer {
 
             Graphics2D graphic = bi.createGraphics();
 
-            Font font = new Font("TimesRoman", Font.BOLD, 20);
-            graphic.setFont(font);
-            String message = "www.java2s.com!";
-            FontMetrics fontMetrics = graphic.getFontMetrics();
-            int stringWidth = fontMetrics.stringWidth(message);
-            int stringHeight = fontMetrics.getAscent();
+            //Font font = new Font("TimesRoman", Font.BOLD, 20);
+            //graphic.setFont(font);
+            //String message = "www.java2s.com!";
+            //FontMetrics fontMetrics = graphic.getFontMetrics();
+            //int stringWidth = fontMetrics.stringWidth(message);
+            //int stringHeight = fontMetrics.getAscent();
             //graphic.setPaint(Color.black);
             graphic.setBackground(Color.BLACK);
 
@@ -75,24 +77,37 @@ public class ImageDrawer {
                     }
                 }
             }
-            
+
             double range = highest - lowest;
-            
-            
+
             for (int i = 1; i <= graph.getMap().getNcols(); i++) {
                 for (int j = 1; j <= graph.getMap().getNrows(); j++) {
-                    double toneVal = (highest-graph.getVertice(i, j).getZ())*(255/range);
-                    graphic.setColor(new Color(255, (int) Math.floor(255 - toneVal), 0));
-                    graphic.drawLine(i, j, i, j);
-                    
+                    if (graph.getVertice(i, j).getDistToStart() < Double.MAX_VALUE) {
+                        double toneVal = (highest - graph.getVertice(i, j).getZ()) * (255 / range);
+                        graphic.setColor(new Color((int) Math.floor(255 - toneVal), 0, 0));
+                    } else {
+                        double toneVal = (highest - graph.getVertice(i, j).getZ()) * (255 / range);
+                        graphic.setColor(new Color(255, (int) Math.floor(255 - toneVal), 0));
+                    }
+
+                    graphic.drawLine(i-1, j-1, i-1, j-1);
                 }
             }
+            
+            graphic.setColor(Color.cyan);
+            for (int k = 0; k < shortestPath.size(); k++) {
+                int i = shortestPath.get(k).getX();
+                int j = shortestPath.get(k).getY();
+                graphic.drawLine(i-1, j-1, i-1, j-1);
+                
+            }
+            
 
             //graphic.drawString(message, (width - stringWidth) / 2, height / 2 + stringHeight / 4);
             ImageIO.write(bi, "PNG", new File("images/" + filename + ".PNG"));
-            //ImageIO.write(bi, "JPEG", new File("yourImageName.JPG"));
-            //ImageIO.write(bi, "gif", new File("yourImageName.GIF"));
-            //ImageIO.write(bi, "BMP", new File("yourImageName.BMP"));
+            //ImageIO.write(bi, "JPEG", new File("images/" + filename + ".JPG"));
+            //ImageIO.write(bi, "gif", new File("images/" + filename + ".gif"));
+            //ImageIO.write(bi, "BMP", new File("images/" + filename + ".BMP"));
 
         } catch (IOException ie) {
             ie.printStackTrace();

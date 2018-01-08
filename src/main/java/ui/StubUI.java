@@ -23,27 +23,73 @@
  */
 package ui;
 
-import java.util.Scanner;
+import java.util.ArrayList;
 
 /**
- *
+ *  A stub UI for testing.
  * @author Mikko Kotola
  */
-public class ConsoleUI implements UI {
-    Scanner scanner;
+public class StubUI implements UI {
+    private ArrayList<String> in;
+    private ArrayList<String> out;
+    int outLine;
 
-    public ConsoleUI() {
-        scanner = new Scanner(System.in);
+    public StubUI(ArrayList<String> out) {
+        this.in = new ArrayList<>();
+        this.out = out;
+        outLine = -1;
     }
+    public StubUI() {
+        this.in = new ArrayList<>();
+        this.out = new ArrayList<>();
+        outLine = -1;
+    }
+    
     
     @Override
     public void print(String s) {
-        System.out.println(s);
+        in.add(s);
     }
-    
+
     @Override
     public String readLine() {
-        return scanner.nextLine();
+        outLine++;
+        return out.get(outLine);
     }
+    
+    public void addOutput(String output) {
+        out.add(output);
+    }
+    
+    public void clear() {
+        in.clear();
+        out.clear();
+    }
+
+    public ArrayList<String> getIn() {
+        return in;
+    }
+
+    public void setIn(ArrayList<String> in) {
+        this.in = in;
+    }
+
+    public ArrayList<String> getOut() {
+        return out;
+    }
+
+    public void setOut(ArrayList<String> out) {
+        this.out = out;
+    }
+
+    public int getOutLine() {
+        return outLine;
+    }
+
+    public void setOutLine(int outLine) {
+        this.outLine = outLine;
+    }
+    
+    
     
 }
