@@ -64,7 +64,7 @@ public class GraphTest {
         altitudes[3][2] = 120.300;
         AltitudeMap map = new AltitudeMap(ncols, nrows, xllcorner, yllcorner, cellsize, NODATA_value, altitudes);
         MovementModel movementModel = new MovementModel();
-        this.graph = new Graph(map, movementModel, false);
+        this.graph = new Graph(map, movementModel);
     }
 
     @BeforeClass

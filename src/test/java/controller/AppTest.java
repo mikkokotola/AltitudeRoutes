@@ -75,8 +75,9 @@ public class AppTest {
         stubUI.addOutput("16");
         stubUI.addOutput("18");
         stubUI.addOutput("n");
+        stubUI.addOutput("n");
         app.run();
-        assertTrue(stubUI.getIn().get(45).equals("Length of shortest path: 10.0"));
+        assertTrue(stubUI.getIn().get(36).equals("Length of shortest path: 10.0"));
     }
     
     @Test
@@ -88,8 +89,9 @@ public class AppTest {
         stubUI.addOutput("16");
         stubUI.addOutput("18");
         stubUI.addOutput("n");
+        stubUI.addOutput("n");
         app.run();
-        assertTrue(stubUI.getIn().get(45).equals("Length of shortest path: 10.0"));
+        assertTrue(stubUI.getIn().get(36).equals("Length of shortest path: 10.0"));
     }
     
 }

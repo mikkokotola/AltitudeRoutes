@@ -24,6 +24,7 @@
 package io;
 
 import altitudeMap.AltitudeMap;
+import controller.App;
 import java.io.BufferedReader;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
@@ -50,7 +51,7 @@ public class AsciiMapReader {
     public AsciiMapReader(String filename) {
         this.filename = filename;
     }
-
+    
     /**
      * ReadWholeMap reads the whole altitudemap into memory.
      * 

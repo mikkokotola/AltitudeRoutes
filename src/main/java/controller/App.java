@@ -36,6 +36,7 @@ import io.ImageDrawer;
 import java.io.FileNotFoundException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import performanceTesting.PerformanceTester;
 import searchAlgo.Astar;
 import ui.ConsoleUI;
 import ui.UI;
@@ -51,18 +52,29 @@ public class App {
     private UI ui;
 
     /**
-     * @param args the command line arguments
+     * Main method.
+     * @param args Does not take any command line arguments
      */
     public static void main(String[] args) {
         ConsoleUI ui = new ConsoleUI();
         App app = new App(ui);
         app.run();
+        
+        // RUN PERFORMANCE TEST ROUTINES
+        //PerformanceTester tester = new PerformanceTester();
+        //tester.runPerformanceTests();
+        
     }
 
     public App(UI ui) {
         this.ui = ui;
     }
 
+
+    
+    /**
+     * Runs the normal user interface routine.
+     */
     public void run() {
         ui.print("");
         ui.print("* Welcome to AltitudeRoutes *");
@@ -87,10 +99,10 @@ public class App {
 
         ui.print("Creating graph...");
         // CREATE GRAPH.
-        Graph graph = new Graph(map, movementModel, false);
+        Graph graph = new Graph(map, movementModel);
 
         DynamicList<Graph> list = new DynamicList<>();
-        
+
         // Test finding a simple shortest route.
         // Set the start and goal coordinates here.
         String algoName = readName(ui);
@@ -128,19 +140,29 @@ public class App {
         ui.print("To: (" + goalX + ", " + goalY + ")");
         ui.print("Route algorithm: " + routeAlgorithmName);
         ui.print("Searching...");
+        long timeStart = System.currentTimeMillis();
         searchAlgo.runShortestRouteFind(graph.getVertice(startX, startY), graph.getVertice(goalX, goalY));
+        long timeEnd = System.currentTimeMillis();
+        ui.print("Search complete");
+        ui.print("Running time of search: " + (timeEnd - timeStart) + "ms.");
         double lengthOfShortestPath = searchAlgo.returnLengthOfShortestRoute();
         DynamicList<Vertice> shortestPath = searchAlgo.returnShortestPath();
         ui.print("");
         ui.print("Path:");
 
+        String answer;
         if (lengthOfShortestPath > 0) {
-            for (int i = 0; i < shortestPath.size(); i++) {
-                Vertice v = shortestPath.get(i);
-                ui.print("(" + v.getX() + ", " + v.getY() + ", " + v.getZ() + "), cumulative distance from start " + v.getDistToStart());
+            ui.print("Print shortest path as vertice list (y/n)?");
+            answer = ui.readLine();
+            if (answer.equals("y") || answer.equals("yes")) {
+                for (int i = 0; i < shortestPath.size(); i++) {
+                    Vertice v = shortestPath.get(i);
+                    ui.print("(" + v.getX() + ", " + v.getY() + ", " + v.getZ() + "), cumulative distance from start " + v.getDistToStart());
 
+                }
+                ui.print("");
             }
-            ui.print("");
+
             ui.print("Length of shortest path: " + lengthOfShortestPath);
         } else if (lengthOfShortestPath == 0) {
             ui.print("Length of shortest path: 0");
@@ -151,9 +173,9 @@ public class App {
         ui.print("");
 
         ui.print("Export map image (y/n)?");
-        String answer = ui.readLine();
+        answer = ui.readLine();
 
-        if (answer.equals("y")) {
+        if (answer.equals("y") || answer.equals("yes")) {
             String picFileName = filename + "_" + searchAlgo.getName() + "_" + startX + "-" + startY + "_" + goalX + "-" + goalY;
             ui.print("Exporting image to " + picFileName + ".PNG ...");
             drawMapImage(graph, shortestPath, picFileName);
@@ -172,6 +194,17 @@ public class App {
         }
     }
 
+    public static AltitudeMap readInMapFromAscii(String filename) {
+        AsciiMapReader asciiMapReader = new AsciiMapReader(filename);
+        AltitudeMap map = null;
+        try {
+            map = asciiMapReader.readWholeMap();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return map;
+    }
+    
     private static String readName(UI ui) {
         ui.print("");
         String algoName;
@@ -196,7 +229,7 @@ public class App {
         while (true) {
             ui.print("Place file in the folder /altitudefiles .");
             ui.print("Then enter filename (e.g. testMap3 or M4313A) without file postfix (.asc):");
-            
+
             fileName = ui.readLine();
             return fileName;
         }
@@ -221,15 +254,6 @@ public class App {
         return number;
     }
 
-    private static AltitudeMap readInMapFromAscii(String filename) {
-        AsciiMapReader asciiMapReader = new AsciiMapReader(filename);
-        AltitudeMap map = null;
-        try {
-            map = asciiMapReader.readWholeMap();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return map;
-    }
+    
 
 }

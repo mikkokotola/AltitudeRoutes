@@ -45,22 +45,20 @@ public class Graph {
      * Sets up a graph with a defined AltitudeMap and MovementModel. The graph 
      * edges are represented as attributes of vertices. The first parameter is 
      * the source AltitudeMap. The second parameter is the MovementModel, which
-     * is used to define the edges (traversability and weight). The third 
-     * parameter is a boolean value indicating if the map is to
-     * support goal-estimated shortest route searches (e.g. A*) 
-     * (estimated = true) or only plain Dijkstra-type searches 
-     * (estimated = false).  
+     * is used to define the edges (traversability and weight). The graph
+     * supports both start- and goal-estimated shortest route searches (e.g. A*) 
+     * and plain start-estimated Dijkstra-type searches.  
      */
 
-    public Graph(AltitudeMap map, MovementModel movementModel, boolean estimated) {
+    public Graph(AltitudeMap map, MovementModel movementModel) {
         this.map = map;
         this.movementModel = movementModel;
         this.vertices = new Vertice[map.getNrows()+1][map.getNcols()+1];
-        createVerticeGraphFromMap(estimated);
+        createVerticeGraphFromMap();
     }
 
     // Constructor's utility method.
-    private void createVerticeGraphFromMap(boolean estimated) {
+    private void createVerticeGraphFromMap() {
         // Create vertices.
         for (int i = 1; i < map.getAltitudes().length; i++) {
             for (int j = 1; j < map.getAltitudes()[0].length; j++) {
@@ -128,10 +126,18 @@ public class Graph {
         }
     }
 
+    /**
+     * Returns the AltitudeMap that the graph has been created from.
+     * @return AltitudeMap The AltitudeMap that the graph has been created from
+     */
     public AltitudeMap getMap() {
         return map;
     }
 
+    /**
+     * Returns the MovementModel associated with the graph. 
+     * @return MovementModel MovementModel used in creating the graph from a map
+     */
     public MovementModel getMovementModel() {
         return movementModel;
     }
@@ -142,6 +148,22 @@ public class Graph {
 
     public Vertice getVertice(int x, int y) {
         return vertices[y][x];
+    }
+    
+    /**
+     * Resets the graph. A reset graph is in the same state as a new map
+     * created from a given map. This enables consecutive searches to be
+     * performed without creating a new graph.
+     */
+    public void resetGraph() {
+        for (int i = 1; i < map.getAltitudes().length; i++) {
+            for (int j = 1; j < map.getAltitudes()[0].length; j++) {
+                vertices[i][j].setDistToStart(Double.MAX_VALUE);
+                vertices[i][j].setDistToGoal(0);
+                vertices[i][j].setPath(null);
+                vertices[i][j].setHeapRef(-1);
+            }
+        }
     }
     
 }

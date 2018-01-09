@@ -54,7 +54,8 @@ jacocoTestReport {
     		fileTree(dir: it, exclude: [
     			'**/controller**',
     			'**/ui**',
-    			'**/io**'
+    			'**/io**',
+    			'**/performanceTesting**'
     		])
     	})
     }

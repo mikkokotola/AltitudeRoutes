@@ -29,7 +29,7 @@ import searchAlgo.Dijkstra;
 
 /**
  *
- * @author mkotola
+ * @author Mikko Kotola
  */
 public class Astar extends Dijkstra {
     
