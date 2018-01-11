@@ -37,23 +37,26 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-
 import javax.imageio.ImageIO;
 import searchAlgo.SearchAlgo;
 
 /**
  * ImageDrawer draws images of the maps and the performed searches.
- * 
+ *
  * @author Mikko Kotola
- * 
- * @param graph The graph used in the search
- * @param searchAlgo The search algorithm used
- * @param filename The name of the file to which the image is to be written
- * 
  */
 public class ImageDrawer {
 
-    public void draw(Graph graph, DynamicList<Vertice> shortestPath, String filename) throws Exception {
+    /**
+     * Draws an image of the parameter graph including search information: 
+     * opened and investigated vertices and shortest route.
+     *
+     * @param graph The graph used in the search
+     * @param shortestPath The shortest path to be drawn
+     * @param filename The name of the file to which the image is to be written
+     *
+     */
+    public void draw(Graph graph, DynamicList<Vertice> shortestPath, String filename) {
         try {
             int width = graph.getMap().getNcols(), height = graph.getMap().getNrows();
 
@@ -63,6 +66,7 @@ public class ImageDrawer {
 
             Graphics2D graphic = bi.createGraphics();
 
+            // Parameters for writing text if needed.
             //Font font = new Font("TimesRoman", Font.BOLD, 20);
             //graphic.setFont(font);
             //String message = "www.java2s.com!";
@@ -90,33 +94,32 @@ public class ImageDrawer {
 
             for (int i = 1; i <= graph.getMap().getNcols(); i++) {
                 for (int j = 1; j <= graph.getMap().getNrows(); j++) {
-                    double toneVal = (highest - graph.getVertice(i, j).getZ()) * (255 / range);
+                    // The higher the point, the smaller the toneval
+                    double toneVal = (highest - graph.getVertice(i, j).getZ()) * (235 / range);
                     if (graph.getVertice(i, j).getHeapRef() == -2) {
-                        graphic.setColor(new Color((int) Math.floor(255 - toneVal), 0, 0));
+                        // Found and investigated vertices get values in the dark range. Lowest points get darkest colors.
+                        graphic.setColor(new Color((int) Math.floor(245 - toneVal), 0, 0));
                     } else if (graph.getVertice(i, j).getHeapRef() > 0) {
-                        //double toneVal = (highest - graph.getVertice(i, j).getZ()) * (255 / range);
-                        graphic.setColor(new Color(0, 200, (int) Math.floor(255 - toneVal)));
-                    
+                        // Found but not investigated vertices get values in the blue-green tones. Lowest points get greenest colors.
+                        graphic.setColor(new Color(0, 150, (int) Math.floor(245 - toneVal)));
                     } else {
-                        //double toneVal = (highest - graph.getVertice(i, j).getZ()) * (255 / range);
-                        graphic.setColor(new Color(255, (int) Math.floor(255 - toneVal), 0));
+                        // Not found vertices get colors in the yellow-red tones. Lowest points get reddest colors.
+                        graphic.setColor(new Color(245, (int) Math.floor(245 - toneVal), 0));
                     }
 
-                    graphic.drawLine(i-1, j-1, i-1, j-1);
+                    graphic.drawLine(i - 1, j - 1, i - 1, j - 1);
                 }
             }
-            
+
             graphic.setColor(Color.cyan);
             for (int k = 0; k < shortestPath.size(); k++) {
                 int i = shortestPath.get(k).getX();
                 int j = shortestPath.get(k).getY();
-                graphic.drawLine(i-1, j-1, i-1, j-1);
-                
-            }
-            
+                graphic.drawLine(i - 1, j - 1, i - 1, j - 1);
 
-            //graphic.drawString(message, (width - stringWidth) / 2, height / 2 + stringHeight / 4);
-            //String filenameStripped = filename.substring(0, filename.indexOf("."));
+            }
+
+            // Alternative picture formats.
             ImageIO.write(bi, "PNG", new File("images/" + filename + ".PNG"));
             //ImageIO.write(bi, "JPEG", new File("images/" + filename + ".JPG"));
             //ImageIO.write(bi, "gif", new File("images/" + filename + ".gif"));

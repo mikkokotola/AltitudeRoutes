@@ -48,6 +48,9 @@ public class Graph {
      * is used to define the edges (traversability and weight). The graph
      * supports both start- and goal-estimated shortest route searches (e.g. A*) 
      * and plain start-estimated Dijkstra-type searches.  
+     * 
+     * @param map The source AltitudeMap for the graph
+     * @param movementModel The source MovementModel for the graph
      */
 
     public Graph(AltitudeMap map, MovementModel movementModel) {
@@ -168,6 +171,8 @@ public class Graph {
     /**
      * Counts the number of vertices opened by a search. The counting is done
      * by counting the vertices that have a path value that is not null.
+     * 
+     * @return int The number of vertices opened during a search (path not null)
      */
     public int countOpened() {
         int count = 0;

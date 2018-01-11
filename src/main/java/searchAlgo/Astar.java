@@ -59,6 +59,8 @@ public class Astar extends Dijkstra {
      * Estimated a vertice's distance from the goal. Sets the estimate to the
      * current manhattan distance between the parameter vertice and the goal
      * vertice.
+     * 
+     * @param vertice The vertice for which the goal distance is to be estimated
      */
     public void estimateDistToGoal(Vertice vertice) {
         double distanceToGoal = (Math.abs(this.goal.getX()-vertice.getX()) 

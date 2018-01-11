@@ -56,6 +56,8 @@ public class AsciiMapReader {
      * ReadWholeMap reads the whole altitudemap into memory.
      * 
      * @return AltitudeMap is an object representation of the ascii map.
+     * @throws FileNotFoundException Throws a an exception if the file
+     * with the given file name is not found.
      *
      */
     public AltitudeMap readWholeMap() throws FileNotFoundException {

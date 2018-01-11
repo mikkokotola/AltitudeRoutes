@@ -34,21 +34,42 @@ import java.util.ArrayList;
 public interface SearchAlgo {
 
     /**
-     * Returns the length of the shortest rout. Returns -1 if the route does 
+     * Returns the length of the shortest route. Returns -1 if the route does 
      * not exist.
+     * 
+     * @return double The length of the shortest route, -1 if no route exists
      */
     double returnLengthOfShortestRoute();
 
     /**
      * Returns the shortest path as list Vertices starting from the start
      * vertice and ending at the goal vertice.
+     * 
+     * @return DynamicList The shortest path vertices as a DynamicList
      */
     DynamicList<Vertice> returnShortestPath();
 
+    /**
+     * Runs the find sequence to search the graph for a shortest route from
+     * vertice start to vertice goal.
+     * 
+     * @param start The start vertice
+     * @param goal The goal vertice
+     */
     void runShortestRouteFind(Vertice start, Vertice goal);
 
+    /**
+     * Returns the search algorithm name as a string.
+     * 
+     * @return String The name of the search algorithm
+     */
     String getName();
     
+    /**
+     * Returns the current heap size of the search algorithm.
+     * 
+     * @return int Current size of heap of search algorithm
+     */
     int heapSize();
 
 }

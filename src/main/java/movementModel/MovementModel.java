@@ -96,6 +96,11 @@ public class MovementModel {
     /**
      * Returns the edge weight that corresponds to the movement model and the
      * altitudechange given as the parameter.
+     * 
+     * @param altitudeChange The altitude change for which edge weight is to
+     * be calculated
+     * 
+     * @return double The calculated edge weight
      */
     public double calculateEdgeWeight(double altitudeChange) {
         double steepness = altitudeChange / mapCellSize;

@@ -62,8 +62,10 @@ public class DynamicList<E> {
      * subsequent elements to the right (adds one to their indices). 
      * List size grows by one.
      * 
+     * @param index The index of the list where the object is to be inserted
+     * @param object The object to be inserted
      */
-    public void add(int index, E e) {
+    public void add(int index, E object) {
         if (size == elements.length) {
             grow();
         }
@@ -72,26 +74,29 @@ public class DynamicList<E> {
         for (int i = index; i < size-1; i++) {
             elements[i+1] = elements[i];
         }
-        elements[index] = e;
+        elements[index] = object;
     }
        
     /**
      * Returns but does not remove the element at the given index. Throws an
      * IndexOutOfBoundsException if the index is not valid.
      *  
-     * @param i Index of the element to be returned.
+     * @param index Index of the element to be returned.
      * @return E The object found at the parameter index.
      */
-    public E get(int i) {
-        if (i < 0 || i >= size) {
-            throw new IndexOutOfBoundsException("Index: " + i + ", list minimum index 0, maximum index " + (size - 1));
+    public E get(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", list minimum index 0, maximum index " + (size - 1));
         }
-        return (E) elements[i];
+        return (E) elements[index];
     }
 
     /**
      * Removes the element at the given index. Shifts any subsequent elements 
      * to the left (subtracts one from their indices).
+     * 
+     * @param index The index of the element to be removed
+     * @return E The object found and removed from the index
      */
     public E remove(int index) {
         if (index < 0 || index >= size) {

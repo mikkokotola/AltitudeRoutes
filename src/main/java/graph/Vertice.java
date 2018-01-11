@@ -105,6 +105,8 @@ public class Vertice implements Comparable {
     /**
      * Adds an edge to the vertice's edgelist. The method does not check if 
      * the edge is already on the edgelist so doubles are possible.
+     * 
+     * @param edge The edge to be added 
      */
     public void addEdge(Edge edge) {
         edges[numberOfEdges] = edge;
@@ -117,6 +119,8 @@ public class Vertice implements Comparable {
     
     /**
      * Not used for search algos that do not estimate distance to goal.
+     * 
+     * @return double The distance to goal of the vertice
      */
     public double getDistToGoal() {
         return distToGoal;
@@ -124,6 +128,8 @@ public class Vertice implements Comparable {
 
      /**
      * Not used for search algos that do not estimate distance to goal.
+     * 
+     * @param distToGoal The distance to goal to be set for the vertice
      */
     public void setDistToGoal(double distToGoal) {
         this.distToGoal = distToGoal;

@@ -25,22 +25,22 @@ package controller;
 
 import altitudeMap.AltitudeMap;
 import dataStructures.DynamicList;
-import searchAlgo.Dijkstra;
-import graph.Edge;
-import graph.Graph;
-import movementModel.MovementModel;
 import searchAlgo.SearchAlgo;
+import searchAlgo.Dijkstra;
+import searchAlgo.Astar;
+import graph.Graph;
 import graph.Vertice;
+import graph.Edge;
+import movementModel.MovementModel;
 import io.AsciiMapReader;
 import io.ImageDrawer;
 import java.io.FileNotFoundException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import performanceTesting.PerformanceTester;
-import searchAlgo.Astar;
 import ui.ConsoleUI;
 import ui.UI;
-import ui.javaFXGUI;
+
 
 /**
  * App. The main controller class.
@@ -61,7 +61,10 @@ public class App {
         App app = new App(ui);
         app.run();
 
-        // RUN PERFORMANCE TEST ROUTINES
+        // RUN PERFORMANCE TEST ROUTINES. 
+        // Uncomment the first line and the test routine you wish to run.
+        // To go straight to the performance testing, comment the 3 lines above.
+        
         //PerformanceTester tester = new PerformanceTester();
         //tester.runPerformanceTests();
         //tester.runPerformanceTests2();
@@ -242,7 +245,7 @@ public class App {
         }
     }
 
-    public AltitudeMap readInMapFromAscii(String filename) {
+    private AltitudeMap readInMapFromAscii(String filename) {
         AsciiMapReader asciiMapReader = new AsciiMapReader(filename);
         AltitudeMap map = null;
         try {

@@ -164,7 +164,6 @@ public class AltitudeMap {
      * @param x X-coordinate of point
      * @param newAltitude New altitude in meters
      * 
-     * @return double Altitude of point y-x in meters
      */
     public void setAltitude(int y, int x, double newAltitude) {
         this.altitudes[y][x] = newAltitude;

@@ -39,14 +39,14 @@ public class MinHeap {
 
     /**
      * Creates a new MinHeap with initial backing array size given as parameter.
-     * 
+     *
      * @param initialSize Initial size of heap array.
      */
     public MinHeap(int initialSize) {
         this.array = new MinHeapVertice[initialSize];
         this.size = 0;
     }
-    
+
     /**
      * Creates a new MinHeap with initial backing array size 10.
      */
@@ -54,7 +54,7 @@ public class MinHeap {
         this.array = new MinHeapVertice[10];
         this.size = 0;
     }
-    
+
     /**
      * Resets the heap to size 0 and an empty backing array size 10.
      */
@@ -67,7 +67,6 @@ public class MinHeap {
      * Inserts the specified element into this priority queue.
      *
      * @param vertice The vertice to be inserted
-     * @param key The priority of the vertice
      */
     public void insert(Vertice vertice) {
         double key = vertice.getKey();
@@ -221,11 +220,17 @@ public class MinHeap {
     }
 
     private void reduceArraySize() {
-        MinHeapVertice[] newArray = new MinHeapVertice[array.length / 2];
-        for (int i = 1; i <= size; i++) {
-            newArray[i] = array[i];
-        }
-        array = newArray;
+        if (size > 10) {
+            MinHeapVertice[] newArray = new MinHeapVertice[array.length / 2];
+            for (int i = 1; i <= size; i++) {
+                newArray[i] = array[i];
+            }
+            array = newArray;
+        } 
+//        else {
+//            array = new MinHeapVertice[1];
+//        }
+
     }
 
 }

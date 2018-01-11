@@ -228,16 +228,23 @@ public class PerformanceTester {
     /**
      * Run a single performance test with the given parameters.
      *
+     * @param searchAlgo The search algorithm to be used
+     * @param graph The graph of the search
+     * @param startX Start point x coordinate
+     * @param startY Start point y coordinate
+     * @param goalX Goal point x coordinate
+     * @param goalY Goal point y coordinate
+     
      * @return long Milliseconds to perform the shortest path search
      */
-    public long runPerformanceTest(SearchAlgo searchAlgo, Graph graph, int xStart, int yStart, int xGoal, int yGoal) {
+    public long runPerformanceTest(SearchAlgo searchAlgo, Graph graph, int startX, int startY, int goalX, int goalY) {
         long timeStart = System.currentTimeMillis();
-        searchAlgo.runShortestRouteFind(graph.getVertice(xStart, yStart), graph.getVertice(xGoal, yGoal));
+        searchAlgo.runShortestRouteFind(graph.getVertice(startX, startY), graph.getVertice(goalX, goalY));
         long timeEnd = System.currentTimeMillis();
         return (timeEnd - timeStart);
     }
-
-    public static AltitudeMap readInMapFromAscii(String filename) {
+    
+    private static AltitudeMap readInMapFromAscii(String filename) {
         AsciiMapReader asciiMapReader = new AsciiMapReader(filename);
         AltitudeMap map = null;
         try {
