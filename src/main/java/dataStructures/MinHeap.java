@@ -37,8 +37,29 @@ public class MinHeap {
     private MinHeapVertice[] array;
     private int size;
 
+    /**
+     * Creates a new MinHeap with initial backing array size given as parameter.
+     * 
+     * @param initialSize Initial size of heap array.
+     */
     public MinHeap(int initialSize) {
         this.array = new MinHeapVertice[initialSize];
+        this.size = 0;
+    }
+    
+    /**
+     * Creates a new MinHeap with initial backing array size 10.
+     */
+    public MinHeap() {
+        this.array = new MinHeapVertice[10];
+        this.size = 0;
+    }
+    
+    /**
+     * Resets the heap to size 0 and an empty backing array size 10.
+     */
+    public void reset() {
+        this.array = new MinHeapVertice[10];
         this.size = 0;
     }
 

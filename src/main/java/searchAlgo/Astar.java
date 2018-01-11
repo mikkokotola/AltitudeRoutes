@@ -28,7 +28,9 @@ import graph.Vertice;
 import searchAlgo.Dijkstra;
 
 /**
- *
+ * The A* search algorithm. Performs shortest route searches on the given graph.
+ * Uses goal-distance estimation to direct the search.
+ * 
  * @author Mikko Kotola
  */
 public class Astar extends Dijkstra {
@@ -41,6 +43,9 @@ public class Astar extends Dijkstra {
     @Override
     public void initialiseSingleSource(Vertice vertice) {
         vertice.setDistToStart(0);
+        heap.reset();
+        this.takenOut = new boolean[graph.getVertices().length][graph.getVertices()[0].length];
+        
         Vertice[][] vertices = this.graph.getVertices();
         for (int i = 1; i <  vertices.length; i++) {
             for (int j = 1; j < vertices[0].length; j++) {

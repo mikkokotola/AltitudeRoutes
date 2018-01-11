@@ -22,8 +22,8 @@ public class Dijkstra implements SearchAlgo {
         name = "Dijkstra";
         this.graph = graph;
         //this.heap = new PriorityQueue();
-        this.heap = new MinHeap((int) (graph.getMap().getNcols() * graph.getMap().getNrows() * 1.5));
-        this.takenOut = new boolean[graph.getVertices().length][graph.getVertices()[0].length];
+        //this.heap = new MinHeap((int) (graph.getMap().getNcols() * graph.getMap().getNrows() * 1.5));
+        this.heap = new MinHeap();
     }
 
     @Override
@@ -33,6 +33,13 @@ public class Dijkstra implements SearchAlgo {
 
     public void initialiseSingleSource(Vertice vertice) {
         vertice.setDistToStart(0);
+        heap.reset();
+        this.takenOut = new boolean[graph.getVertices().length][graph.getVertices()[0].length];
+//        for (int i = 0; i < takenOut.length; i++) {
+//            for (int j = 0; j < takenOut[0].length; j++) {
+//                takenOut[i][j] = false;
+//            }
+//        }
     }
 
     public void relax(Edge edge) {
