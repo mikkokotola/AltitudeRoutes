@@ -39,10 +39,17 @@ import java.io.IOException;
 
 
 import javax.imageio.ImageIO;
+import searchAlgo.SearchAlgo;
 
 /**
- *
+ * ImageDrawer draws images of the maps and the performed searches.
+ * 
  * @author Mikko Kotola
+ * 
+ * @param graph The graph used in the search
+ * @param searchAlgo The search algorithm used
+ * @param filename The name of the file to which the image is to be written
+ * 
  */
 public class ImageDrawer {
 
@@ -83,11 +90,15 @@ public class ImageDrawer {
 
             for (int i = 1; i <= graph.getMap().getNcols(); i++) {
                 for (int j = 1; j <= graph.getMap().getNrows(); j++) {
-                    if (graph.getVertice(i, j).getDistToStart() < Double.MAX_VALUE) {
-                        double toneVal = (highest - graph.getVertice(i, j).getZ()) * (255 / range);
+                    double toneVal = (highest - graph.getVertice(i, j).getZ()) * (255 / range);
+                    if (graph.getVertice(i, j).getHeapRef() == -2) {
                         graphic.setColor(new Color((int) Math.floor(255 - toneVal), 0, 0));
+                    } else if (graph.getVertice(i, j).getHeapRef() > 0) {
+                        //double toneVal = (highest - graph.getVertice(i, j).getZ()) * (255 / range);
+                        graphic.setColor(new Color(0, 200, (int) Math.floor(255 - toneVal)));
+                    
                     } else {
-                        double toneVal = (highest - graph.getVertice(i, j).getZ()) * (255 / range);
+                        //double toneVal = (highest - graph.getVertice(i, j).getZ()) * (255 / range);
                         graphic.setColor(new Color(255, (int) Math.floor(255 - toneVal), 0));
                     }
 

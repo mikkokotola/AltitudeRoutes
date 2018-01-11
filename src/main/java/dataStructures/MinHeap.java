@@ -154,6 +154,7 @@ public class MinHeap {
             reduceArraySize();
         }
         heapify(1);
+        top.getVertice().setHeapRef(-2);
         return top.getVertice();
     }
 
@@ -188,7 +189,7 @@ public class MinHeap {
      */
     public boolean decreaseKey(Vertice vertice, double newKey) {
         int i = vertice.getHeapRef();
-        if (i == -1) {
+        if (i == -1 || i == -2) {
             return false;
         }
 

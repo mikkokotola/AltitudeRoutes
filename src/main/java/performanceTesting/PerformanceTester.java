@@ -55,7 +55,7 @@ public class PerformanceTester {
         int startY = 500;
         int goalX = 1000;
         int goalY = 1000;
-        int timesToRun = 7;
+        int timesToRun = 10;
 
         runPerformanceTests(filename, movementModel, startX, startY, goalX, goalY, timesToRun);
     }
