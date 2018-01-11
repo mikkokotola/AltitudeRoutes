@@ -44,7 +44,7 @@ public class Astar extends Dijkstra {
     public void initialiseSingleSource(Vertice vertice) {
         vertice.setDistToStart(0);
         heap.reset();
-        this.takenOut = new boolean[graph.getVertices().length][graph.getVertices()[0].length];
+        //this.takenOut = new boolean[graph.getVertices().length][graph.getVertices()[0].length];
         
         Vertice[][] vertices = this.graph.getVertices();
         for (int i = 1; i <  vertices.length; i++) {

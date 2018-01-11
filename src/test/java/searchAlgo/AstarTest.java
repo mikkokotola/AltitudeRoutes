@@ -75,7 +75,7 @@ public class AstarTest {
         altitudes[3][1] = 123.055;
         altitudes[3][2] = 122.200;
         altitudes[3][3] = 120.300;
-        AltitudeMap map = new AltitudeMap(ncols, nrows, xllcorner, yllcorner, cellsize, NODATA_value, altitudes);
+        AltitudeMap map = new AltitudeMap("testmap.asc", ncols, nrows, xllcorner, yllcorner, cellsize, NODATA_value, altitudes);
         movementModel = new MovementModel();
         graph = new Graph(map, movementModel);
         astar = new Astar(graph);

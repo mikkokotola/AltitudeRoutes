@@ -6,23 +6,29 @@ import graph.Edge;
 import graph.Graph;
 import graph.Vertice;
 
-
+/**
+ * Dijkstra's algorithm for shortest route finding. Uses a custom-made MinHeap
+ * as a support data structure.
+ *
+ * @author Mikko Kotola
+ */
 public class Dijkstra implements SearchAlgo {
 
     String name;
     Graph graph;
-    //private PriorityQueue<Vertice> heap;
     MinHeap heap;
-    boolean[][] takenOut;
 
     Vertice start;
     Vertice goal;
 
+    /**
+     * Initialise search algorithm with a graph. 
+     * 
+     * @param graph The graph to be searched 
+     */
     public Dijkstra(Graph graph) {
         name = "Dijkstra";
         this.graph = graph;
-        //this.heap = new PriorityQueue();
-        //this.heap = new MinHeap((int) (graph.getMap().getNcols() * graph.getMap().getNrows() * 1.5));
         this.heap = new MinHeap();
     }
 
@@ -31,18 +37,12 @@ public class Dijkstra implements SearchAlgo {
         return name;
     }
 
-    public void initialiseSingleSource(Vertice vertice) {
+    void initialiseSingleSource(Vertice vertice) {
         vertice.setDistToStart(0);
         heap.reset();
-        this.takenOut = new boolean[graph.getVertices().length][graph.getVertices()[0].length];
-//        for (int i = 0; i < takenOut.length; i++) {
-//            for (int j = 0; j < takenOut[0].length; j++) {
-//                takenOut[i][j] = false;
-//            }
-//        }
     }
 
-    public void relax(Edge edge) {
+    void relax(Edge edge) {
         Vertice from = edge.getFrom();
         Vertice to = edge.getTo();
         double weight = edge.getWeight();
@@ -53,24 +53,22 @@ public class Dijkstra implements SearchAlgo {
         }
     }
 
+    /**
+     * Execute shortest route search from start vertice to goal vertice. 
+     *
+     * @param start The start Vertice
+     * @param goal The goal Vertice
+     */
     @Override
     public void runShortestRouteFind(Vertice start, Vertice goal) {
         this.start = start;
         this.goal = goal;
 
         initialiseSingleSource(start);
-        for (int i = 1; i < graph.getVertices().length; i++) {
-            for (int j = 1; j < graph.getVertices()[0].length; j++) {
-                heap.insert(graph.getVertices()[i][j]);
-            }
-        }
+        heap.insert(start);
 
         while (heap.size() > 0) {
             Vertice vert = (Vertice) heap.poll();
-            if (takenOut[vert.getY()][vert.getX()]) {
-                continue;
-            }
-            takenOut[vert.getY()][vert.getX()] = true;
             Edge[] edges = vert.getEdges();
             for (int i = 0; i < vert.getNumberOfEdges(); i++) {
                 double oldDistance = edges[i].getTo().getDistToStart();
@@ -93,6 +91,11 @@ public class Dijkstra implements SearchAlgo {
         }
     }
 
+    /**
+     * Returns the length of the shortest path from an executed search. 
+     *
+     * @return double The length of the shortest path from start to goal
+     */
     @Override
     public double returnLengthOfShortestRoute() {
         if (goal.getDistToStart() == Double.MAX_VALUE) {
@@ -101,11 +104,18 @@ public class Dijkstra implements SearchAlgo {
         return goal.getDistToStart();
     }
 
+    /**
+     * Returns the shortest path of an executed search as a DynamicList of
+     * Vertices.
+     *
+     * @return DynamicList A DynamicList with shortest path vertices from start 
+     * to goal.
+     */
     @Override
     public DynamicList<Vertice> returnShortestPath() {
         DynamicList<Vertice> route = new DynamicList<>();
         DynamicList<Vertice> routeToReturn = new DynamicList<>();
-        
+
         if (goal.getPath() != null) {
             route.add(goal);
             Vertice x = goal.getPath();
@@ -114,7 +124,7 @@ public class Dijkstra implements SearchAlgo {
                 x = x.getPath();
             }
             route.add(start);
-            
+
             for (int i = route.size() - 1; i >= 0; i--) {
                 routeToReturn.add(route.get(i));
             }
@@ -123,4 +133,13 @@ public class Dijkstra implements SearchAlgo {
         return routeToReturn;
     }
 
+    /**
+     * Returns the current size of the heap associated with the search. 
+     *
+     * @return int Heap size
+     */
+    @Override
+    public int heapSize() {
+        return heap.size();
+    }
 }

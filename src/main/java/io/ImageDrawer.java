@@ -105,6 +105,7 @@ public class ImageDrawer {
             
 
             //graphic.drawString(message, (width - stringWidth) / 2, height / 2 + stringHeight / 4);
+            //String filenameStripped = filename.substring(0, filename.indexOf("."));
             ImageIO.write(bi, "PNG", new File("images/" + filename + ".PNG"));
             //ImageIO.write(bi, "JPEG", new File("images/" + filename + ".JPG"));
             //ImageIO.write(bi, "gif", new File("images/" + filename + ".gif"));

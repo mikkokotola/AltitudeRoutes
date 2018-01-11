@@ -165,5 +165,22 @@ public class Graph {
             }
         }
     }
+    /**
+     * Counts the number of vertices opened by a search. The counting is done
+     * by counting the vertices that have a path value that is not null.
+     */
+    public int countOpened() {
+        int count = 0;
+        for (int i = 1; i < map.getAltitudes().length; i++) {
+            for (int j = 1; j < map.getAltitudes()[0].length; j++) {
+                if (vertices[i][j].getPath() != null) {
+                    count++;
+                }
+                
+            }
+        }
+        return count;
+    }
+    
     
 }

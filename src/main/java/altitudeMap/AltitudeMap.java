@@ -29,6 +29,7 @@ package altitudeMap;
  * @author Mikko Kotola
  */
 public class AltitudeMap {
+    private String filename;
     private int ncols;
     private int nrows;
     private double xllcorner;
@@ -37,7 +38,8 @@ public class AltitudeMap {
     private double NODATA_value;
     private double[][] altitudes;
 
-    public AltitudeMap(int ncols, int nrows, double xllcorner, double yllcorner, double cellsize, double NODATA_value, double[][] altitudes) {
+    public AltitudeMap(String filename, int ncols, int nrows, double xllcorner, double yllcorner, double cellsize, double NODATA_value, double[][] altitudes) {
+        this.filename = filename;
         this.ncols = ncols;
         this.nrows = nrows;
         this.xllcorner = xllcorner;
@@ -47,6 +49,11 @@ public class AltitudeMap {
         this.altitudes = altitudes;
     }
 
+    public String getFilename() {
+        return filename;
+    }
+
+    
     public int getNcols() {
         return ncols;
     }

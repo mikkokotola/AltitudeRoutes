@@ -48,5 +48,7 @@ public interface SearchAlgo {
     void runShortestRouteFind(Vertice start, Vertice goal);
 
     String getName();
+    
+    int heapSize();
 
 }

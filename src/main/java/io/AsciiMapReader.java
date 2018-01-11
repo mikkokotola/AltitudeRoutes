@@ -103,7 +103,9 @@ public class AsciiMapReader {
         String[] NODATA_valueHeader = headers[5].split(" ");
         double NODATA_value = Double.parseDouble(NODATA_valueHeader[NODATA_valueHeader.length - 1]);
 
-        AltitudeMap altitudeMap = new AltitudeMap(ncols, nrows, xllcorner, yllcorner, cellsize, NODATA_value, altitudes);
+        //String filenameWithoutPostFix = filename.substring(0, filename.indexOf('.'));
+        String filenameWithoutPath = filename.substring(filename.indexOf('/')+1);
+        AltitudeMap altitudeMap = new AltitudeMap(filenameWithoutPath, ncols, nrows, xllcorner, yllcorner, cellsize, NODATA_value, altitudes);
 
         return altitudeMap;
 

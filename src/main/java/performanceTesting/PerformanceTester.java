@@ -55,7 +55,7 @@ public class PerformanceTester {
         int startY = 500;
         int goalX = 1000;
         int goalY = 1000;
-        int timesToRun = 5;
+        int timesToRun = 7;
 
         runPerformanceTests(filename, movementModel, startX, startY, goalX, goalY, timesToRun);
     }
@@ -74,6 +74,10 @@ public class PerformanceTester {
      *
      */
     public void runPerformanceTests(String filename, MovementModel movementModel, int startX, int startY, int goalX, int goalY, int timesToRun) {
+        System.out.println("");
+        System.out.println("* AltitudeRoutes / Performance testing *");
+        System.out.println("");
+        System.out.println("Running performance tests, this might take several minutes...");
         AltitudeMap map = readInMapFromAscii("altitudefiles/" + filename + ".asc");
         Graph graph = new Graph(map, movementModel);
 
@@ -83,65 +87,108 @@ public class PerformanceTester {
 
         // Number of algos in use.
         int numberOfAlgos = searchAlgos.size();
-        // Create resulttimes lists, one for each searchAlgo.
+        
+        
         DynamicList<DynamicList<Long>> resultTimes = new DynamicList<>();
+        DynamicList<DynamicList<Integer>> resultOpened = new DynamicList<>();
+        DynamicList<DynamicList<Integer>> resultInvestigated = new DynamicList<>();
 
-        DynamicList<Long> sums = new DynamicList<>();
+        long[] timeSums = new long[numberOfAlgos];
+        int[] openedSums = new int[numberOfAlgos];
+        //int[] investigatedSums = new int[numberOfAlgos];
         DynamicList<Long> fastest = new DynamicList<>();
         DynamicList<Long> slowest = new DynamicList<>();
+        DynamicList<Long> most = new DynamicList<>();
+        DynamicList<Long> least = new DynamicList<>();
         for (int i = 0; i < numberOfAlgos; i++) {
             resultTimes.add(new DynamicList<>());
-            sums.add(0l);
+            resultOpened.add(new DynamicList<>());
+            resultInvestigated.add(new DynamicList<>());
+            timeSums[i] = 0l;
         }
 
         // Run a performance test a number of time for each searchalgo on the list.
-        for (int i = 1; i <= timesToRun; i++) {
+        for (int i = 0; i < timesToRun; i++) {
             for (int j = 0; j < numberOfAlgos; j++) {
                 graph.resetGraph();
                 resultTimes.get(j).add((Long) runPerformanceTest(searchAlgos.get(j), graph, startX, startY, goalX, goalY));
+                int opened = graph.countOpened();
+                resultOpened.get(j).add(opened);
+                resultInvestigated.get(j).add(opened-searchAlgos.get(j).heapSize());
             }
         }
 
-        // Sum up the result times per algorithm and record fastest and slowest time per algo
+        // Sum up the result times and opened vertices per algorithm and record fastest and slowest time per algo
         for (int i = 0; i < numberOfAlgos; i++) {
             long fastestTime = Long.MAX_VALUE;
             long slowestTime = -1;
+            long leastVert = Long.MAX_VALUE;
+            long mostVert = -1;
             for (int j = 0; j < timesToRun; j++) {
                 long currentRes = resultTimes.get(i).get(j);
-                sums.add(i, sums.get(i) + currentRes);
+                timeSums[i] += currentRes;
                 if (currentRes > slowestTime) {
                     slowestTime = currentRes;
-                } else if (currentRes < fastestTime) {
+                }
+                if (currentRes < fastestTime) {
                     fastestTime = currentRes;
                 }
+                int currentOpened = resultOpened.get(i).get(j);
+                openedSums[i] += currentOpened;
+                if (currentOpened > mostVert) {
+                    mostVert = currentOpened;
+                }
+                if (currentOpened < leastVert) {
+                    leastVert = currentOpened;
+                }
+//                int currentInvestigated = resultInvestigated.get(i).get(j);
+//                investigatedSums[i] += currentInvestigated;
             }
             fastest.add(fastestTime);
             slowest.add(slowestTime);
+            most.add(mostVert);
+            least.add(leastVert);
         }
 
         // Print performance test results to console
-        System.out.println("Map: " + filename);;
+        System.out.println("");
+        System.out.println("* Performance test results *");
+        System.out.println("Map: " + filename);
         System.out.println("Start point (X,Y): " + startX + ", " + startY);
         System.out.println("Goal point (X,Y): " + goalX + ", " + goalY);
         System.out.println("Runs: " + timesToRun);
 
         for (int i = 0; i < numberOfAlgos; i++) {
             System.out.println("Algorithm " + (i + 1) + ": " + searchAlgos.get(i).getName());
-            System.out.println("  Average running time: " + (double) sums.get(i) / resultTimes.get(i).size() + " ms");
-            System.out.println("  Median running time: " + median(resultTimes.get(i)) + " ms");
+            System.out.println("  Average running time: " + (double) timeSums[i] / resultTimes.get(i).size() + " ms");
+            System.out.println("  Median running time: " + medianLong(resultTimes.get(i)) + " ms");
             System.out.println("  Slowest running time: " + slowest.get(i) + " ms");
             System.out.println("  Fastest running time: " + fastest.get(i) + " ms");
+            //System.out.println("  Average opened vertices: " + (double) openedSums[i] / resultOpened.get(i).size());
+            System.out.println("  Median opened vertices: " + medianInt(resultOpened.get(i)));
+            //System.out.println("  Most opened vertices: " + most.get(i));
+            //System.out.println("  Least opened vertices: " + least.get(i));
+            System.out.println("  Median investigated vertices: " + medianInt(resultInvestigated.get(i)));
+            
 
         }
 
     }
 
-    private double median(DynamicList<Long> resultTimes) {
-        if (resultTimes.size() % 2 == 0) {
-            return ((resultTimes.get((int) Math.floor(resultTimes.size() / 2)) + resultTimes.get((int) Math.ceil(resultTimes.size() / 2))) / 2);
+    private double medianLong(DynamicList<Long> result) {
+        if (result.size() % 2 == 0) {
+            return ((result.get((int) Math.floor(result.size() / 2)) + result.get((int) Math.ceil(result.size() / 2))) / 2);
         }
 
-        return (resultTimes.get((int) Math.floor(resultTimes.size() / 2)));
+        return (result.get((int) Math.floor(result.size() / 2)));
+    }
+    
+    private double medianInt(DynamicList<Integer> result) {
+        if (result.size() % 2 == 0) {
+            return ((result.get((int) Math.floor(result.size() / 2)) + result.get((int) Math.ceil(result.size() / 2))) / 2);
+        }
+
+        return (result.get((int) Math.floor(result.size() / 2)));
     }
 
     /**

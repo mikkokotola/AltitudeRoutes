@@ -62,7 +62,7 @@ public class GraphTest {
         altitudes[3][0] = 123.055;
         altitudes[3][1] = 122.200;
         altitudes[3][2] = 120.300;
-        AltitudeMap map = new AltitudeMap(ncols, nrows, xllcorner, yllcorner, cellsize, NODATA_value, altitudes);
+        AltitudeMap map = new AltitudeMap("testmap.asc", ncols, nrows, xllcorner, yllcorner, cellsize, NODATA_value, altitudes);
         MovementModel movementModel = new MovementModel();
         this.graph = new Graph(map, movementModel);
     }
