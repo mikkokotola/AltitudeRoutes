@@ -51,8 +51,8 @@ public class MinHeap {
     public void insert(Vertice vertice) {
         double key = vertice.getKey();
         MinHeapVertice heapVert = new MinHeapVertice(key, vertice);
-        if (size == array.length -1) {
-            growArray();
+        if (size == array.length - 1) {
+            growArraySize();
         }
         size++;
         int i = size;
@@ -81,7 +81,7 @@ public class MinHeap {
         int l = left(i);
         int r = right(i);
         int smallest;
-        
+
         if (r <= size) {
             if (array[l].getKey() < array[r].getKey()) {
                 smallest = l;
@@ -92,8 +92,8 @@ public class MinHeap {
                 exchangeHeapVertices(i, smallest);
                 heapify(smallest);
             }
-                
-        } else if (l == size && array[i].getKey()>array[l].getKey()) {
+
+        } else if (l == size && array[i].getKey() > array[l].getKey()) {
             exchangeHeapVertices(i, l);
         }
 
@@ -129,6 +129,9 @@ public class MinHeap {
         MinHeapVertice top = array[1];
         array[1] = array[size];
         size--;
+        if (size < array.length / 2.5) {
+            reduceArraySize();
+        }
         heapify(1);
         return top.getVertice();
     }
@@ -146,7 +149,7 @@ public class MinHeap {
         if (i == -1) {
             return false;
         }
-        
+
         if (newKey > array[i].getKey()) {
             array[i].setKey(newKey);
             heapify(i);
@@ -167,7 +170,7 @@ public class MinHeap {
         if (i == -1) {
             return false;
         }
-        
+
         if (newKey < array[i].getKey()) {
             array[i].setKey(newKey);
             while (i > 1 && array[parent(i)].getKey() > array[i].getKey()) {
@@ -186,12 +189,21 @@ public class MinHeap {
     public int size() {
         return size;
     }
-    
-    private void growArray() {
-        MinHeapVertice[] newArray = new MinHeapVertice[size*2];
-        for (int i = 0; i <= size; i++) {
+
+    private void growArraySize() {
+        MinHeapVertice[] newArray = new MinHeapVertice[size * 2];
+        for (int i = 1; i <= size; i++) {
             newArray[i] = array[i];
         }
         array = newArray;
     }
+
+    private void reduceArraySize() {
+        MinHeapVertice[] newArray = new MinHeapVertice[array.length / 2];
+        for (int i = 1; i <= size; i++) {
+            newArray[i] = array[i];
+        }
+        array = newArray;
+    }
+
 }

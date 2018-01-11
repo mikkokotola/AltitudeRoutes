@@ -73,11 +73,6 @@ public class MinHeapTest {
     }
 
     @Test
-    public void testSomeMethod() {
-
-    }
-
-    @Test
     public void heapSizeCorrectWhenEmpty() {
         assertTrue(heap.size() == 0);
     }
