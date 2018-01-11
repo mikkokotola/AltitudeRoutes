@@ -7,6 +7,13 @@ AltitudeRoutes on sovellus lyhimmän reitin etsimiseen maaston korkeusmallissa. 
 
 Sovellus käyttää lähdeaineistona Maanmittauslaitoksen avoimena datana tarjoamia 2 metrin resoluutiolla toteutettuja korkeusmalleja, jotka sisältävä 3000 x 3000 -resoluutioisen korkeusmallin 6 km x 6 km -maastoalueesta (Maanmittauslaitoksen Maastotietokannan 12/2017 aineistoa). 
 
+Sovellukseen voi hakea lähdeaineistoksi Maanmittauslaitoksen 2 m korkeusmallitiedostoja (.asc):
+* Mene <a href="https://tiedostopalvelu.maanmittauslaitos.fi/tp/kartta">MML:n avoimien aineistojen tiedostopalveluun</a>
+* Etsi kartalta haluamasi alue
+* Klikkaa vasemmasta valikosta Korkeusmalli -> Korkeusmalli 2 m
+* Klikkaa haluamaasi korkeusmalliruutua kartalta
+* Tilaa ja lataa tiedosto ilmaiseksi ohjeiden mukaan (edellyttää nimen ja s-postiosoitteen antamisen)
+
 Toteutan sovelluksen HY:n tietojenkäsittelytieteen aineopintojen tietorakenteet ja algoritmit -harjoitustyönä 12/2017-1/2018.
 
 <strong>Dokumentit</strong>
@@ -19,14 +26,10 @@ Toteutan sovelluksen HY:n tietojenkäsittelytieteen aineopintojen tietorakenteet
 <strong>Viikkoraportit</strong>
 <ul>
   <li><a href="https://github.com/mikkokotola/AltitudeRoutes/blob/master/documentation/Vkoraportti1_Tiralabra_Kotola.pdf">Viikkoraportti 1</a></li>
-</ul>
-<ul>
+
   <li><a href="https://github.com/mikkokotola/AltitudeRoutes/blob/master/documentation/Vkoraportti2_Tiralabra_Kotola.pdf">Viikkoraportti 2</a></li>
-</ul>
-<ul>
   <li><a href="https://github.com/mikkokotola/AltitudeRoutes/blob/master/documentation/Vkoraportti3_Tiralabra_Kotola.pdf">Viikkoraportti 3</a></li>
-</ul>
-<ul>
   <li><a href="https://github.com/mikkokotola/AltitudeRoutes/blob/master/documentation/Vkoraportti4_Tiralabra_Kotola.pdf">Viikkoraportti 4</a></li>
+  <li><a href="https://github.com/mikkokotola/AltitudeRoutes/blob/master/documentation/Vkoraportti5_Tiralabra_Kotola.pdf">Viikkoraportti 5</a></li>
 </ul>
 
