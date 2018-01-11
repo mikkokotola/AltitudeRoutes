@@ -62,11 +62,33 @@ public class DynamicListTest {
     public void isEmptyWorks() {
         assertTrue(list.isEmpty());
     }
+
+    @Test
+    public void isEmptyWorksWhenNotEmpty() {
+        list.add(35);
+        assertTrue(!list.isEmpty());
+    }
     
     @Test
     public void addWithIndexWorks() {
         list.add(0, 36);
         assertTrue(list.get(0) == 36);
+    }
+
+    @Test
+    public void growsWhenAddWithIndexRequires() {
+        list.add(0, 41);
+        list.add(0, 42);
+        list.add(0, 43);
+        list.add(0, 44);
+        list.add(0, 45);
+        list.add(0, 46);
+        list.add(0, 47);
+        list.add(0, 48);
+        list.add(0, 49);
+        list.add(0, 50);
+        list.add(0, 51);
+        assertTrue(list.arrayLength() == 20);
     }
     
     @Test

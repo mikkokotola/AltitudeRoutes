@@ -125,6 +125,14 @@ public class DynamicList<E> {
     }
 
     /**
+     * Returns the length of the backing array.
+     * @return int Returns the length of the backing array
+     */
+    int arrayLength() {
+        return this.elements.length;
+    }
+    
+    /**
      * Returns the number of elements on the list.
      * @return boolean Returns true if the size of the list is zero.
      */
