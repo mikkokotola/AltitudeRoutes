@@ -157,6 +157,32 @@ public class AltitudeMap {
         return altitudes[y][x];
     }
 
+     /**
+     * Returns a single map-specific x value that corresponds to a longitude
+     * coordinate (coordinate system etrs-tm35fin 
+     * https://fi.wikipedia.org/wiki/ETRS-TM35FIN).
+     * 
+     * @param xCoordinate X-coordinate of point in etrs-tm35fin
+     * 
+     * @return int X coordinate value on the map (0,0) is top left corner
+     */
+    public int getXbyCoordinates(double xCoordinate) {
+        return ((int)((xCoordinate - xllcorner)/cellsize));
+    }
+    
+    /**
+     * Returns a single map-specific x value that corresponds to a longitude
+     * coordinate (coordinate system etrs-tm35fin 
+     * https://fi.wikipedia.org/wiki/ETRS-TM35FIN).
+     * 
+     * @param yCoordinate Y-coordinate of point in etrs-tm35fin
+     * 
+     * @return int Y coordinate value on the map (0,0) is top left corner
+     */
+    public int getYbyCoordinates(double yCoordinate) {
+        return (nrows-((int)((yCoordinate - yllcorner)/cellsize)));
+    }
+    
     /**
      * Sets the altitude value of a y-x point on the map.
      * 

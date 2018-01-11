@@ -132,4 +132,15 @@ public class AltitudeMapTest {
         assertTrue(map.getAltitude(3, 2) - 250.000 < accuracy);
     }
     
+    @Test
+    public void getXbyCoordinatesCorrect() {
+        assertTrue(map.getXbyCoordinates(4.500) == 2);
+    }
+    
+    @Test
+    public void getYbyCoordinatesCorrect() {
+        assertTrue(map.getYbyCoordinates(2.500) == 2);
+    }
+    
+    
 }

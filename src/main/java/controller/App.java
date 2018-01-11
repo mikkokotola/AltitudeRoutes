@@ -41,7 +41,6 @@ import performanceTesting.PerformanceTester;
 import ui.ConsoleUI;
 import ui.UI;
 
-
 /**
  * App. The main controller class.
  *
@@ -64,7 +63,6 @@ public class App {
         // RUN PERFORMANCE TEST ROUTINES. 
         // Uncomment the first line and the test routine you wish to run.
         // To go straight to the performance testing, comment the 3 lines above.
-        
         //PerformanceTester tester = new PerformanceTester();
         //tester.runPerformanceTests();
         //tester.runPerformanceTests2();
@@ -97,18 +95,43 @@ public class App {
 
                 printMapDetails(map);
 
-                ui.print("");
-                ui.print("Enter x-coordinate of start: (1-" + map.getNcols() + ")");
-                int startX = readCoordinate(ui, map.getNcols());
-                ui.print("Enter y-coordinate of start: (1-" + map.getNrows() + ")");
-                int startY = readCoordinate(ui, map.getNrows());
-                ui.print("Enter x-coordinate of goal: (1-" + map.getNcols() + ")");
-                int goalX = readCoordinate(ui, map.getNcols());
-                ui.print("Enter y-coordinate of goal: (1-" + map.getNrows() + ")");
-                int goalY = readCoordinate(ui, map.getNrows());
+                String coordinateSystem = readCoordinateSystem();
+
+                int xLowerLimit = 0;
+                int xHigherLimit = 0;
+                int yLowerLimit = 0;
+                int yHigherLimit = 0;
+                
+                if (coordinateSystem.equals("etrsTm35Fin")) {
+                    xLowerLimit = (int) Math.ceil(map.getXllcorner());
+                    xHigherLimit = (int) Math.floor(map.getXllcorner() + map.getNcols()*2);
+                    yLowerLimit = (int) Math.ceil(map.getYllcorner());
+                    yHigherLimit = (int) Math.floor(map.getYllcorner() + map.getNrows()*2);
+                } else if (coordinateSystem.equals("mapSpecific")) {
+                    xLowerLimit = 0;
+                    xHigherLimit = map.getNcols();
+                    yLowerLimit = 0;
+                    yHigherLimit = map.getNrows();
+                }
+                ui.print("Enter x-coordinate of start: (" + xLowerLimit + "-" + xHigherLimit + ")");
+                int startX = readCoordinate(ui, xLowerLimit, xHigherLimit);
+                ui.print("Enter y-coordinate of start: (" + yLowerLimit + "-" + yHigherLimit + ")");
+                int startY = readCoordinate(ui, yLowerLimit, yHigherLimit);
+                ui.print("Enter x-coordinate of goal: (" + xLowerLimit + "-" + xHigherLimit + ")");
+                int goalX = readCoordinate(ui, xLowerLimit, xHigherLimit);
+                ui.print("Enter y-coordinate of goal: (" + yLowerLimit + "-" + yHigherLimit + ")");
+                int goalY = readCoordinate(ui, yLowerLimit, yHigherLimit);
 
                 printSearchDetails(startX, startY, goalX, goalY, routeAlgorithmName);
 
+                // Coordinate conversion if needed.
+                if (coordinateSystem.equals("etrsTm35Fin")) {
+                    startX = map.getXbyCoordinates(startX);
+                    startY = map.getYbyCoordinates(startY);
+                    goalX = map.getXbyCoordinates(goalX);
+                    goalY = map.getYbyCoordinates(goalY);
+                }
+                
                 long timeStart = System.currentTimeMillis();
                 searchAlgo.runShortestRouteFind(graph.getVertice(startX, startY), graph.getVertice(goalX, goalY));
                 long timeEnd = System.currentTimeMillis();
@@ -127,6 +150,24 @@ public class App {
 
         ui.print("* Thank you, run again! *");
 
+    }
+
+    private String readCoordinateSystem() {
+        String coordinateSystem = null;
+        while (true) {
+            ui.print("");
+            ui.print("Enter start and goal coordinates in M = map-specific values or E = etrs-tm35fin coordinate system?");
+            coordinateSystem = ui.readLine();
+            if (coordinateSystem.toLowerCase().equals("m")) {
+                ui.print("Map-specific selected.");
+                return ("mapSpecific");
+            } else if (coordinateSystem.toLowerCase().equals("e")) {
+                ui.print("ETRS-TM35FIN selected.");
+                return ("etrsTm35Fin");
+            } else {
+                ui.print("Not a valid coordinate system value.");
+            }
+        }
     }
 
     private void printSearchDetails(int startX, int startY, int goalX, int goalY, String routeAlgorithmName) {
@@ -173,11 +214,12 @@ public class App {
         }
         int opened = graph.countOpened();
         ui.print("Vertices opened during search: " + opened);
-        ui.print("Vertices investigated during search: " + (opened-searchAlgo.heapSize()));
-        
+        ui.print("Vertices investigated during search: " + (opened - searchAlgo.heapSize()));
+
     }
 
     private void printMapDetails(AltitudeMap map) {
+        ui.print("");
         ui.print("--------");
         ui.print("AltitudeMap Details:");
         ui.print("File: " + map.getFilename());
@@ -188,7 +230,7 @@ public class App {
 
     private SearchAlgo readAlgo(Graph graph) {
         SearchAlgo searchAlgo = null;
-         String algoName = null;
+        String algoName = null;
         while (true) {
             ui.print("");
             ui.print("Enter search algorithm (D = Dijkstra, A = Astar):");
@@ -231,8 +273,9 @@ public class App {
                 ui.print("No map entered, quitting.");
                 return null;
             }
-            ui.print("");
+            
             ui.print("Selected map file: " + fileName);
+            ui.print("");
             ui.print("Reading in AltitudeMap...");
 
             AltitudeMap map = readInMapFromAscii("altitudefiles/" + fileName + ".asc");
@@ -256,17 +299,17 @@ public class App {
         return map;
     }
 
-    private static int readCoordinate(UI ui, int size) {
+    private static int readCoordinate(UI ui, int lowerLimit, int higherLimit) {
         int number = -1;
         while (true) {
             try {
                 number = Integer.parseInt(ui.readLine());
             } catch (NumberFormatException e) {
-                ui.print("Not a valid integer, enter an integer in the range 1-" + size + ".");
+                ui.print("Not a valid integer, enter an integer in the range " + lowerLimit + "-" + higherLimit + ".");
             }
 
-            if (number < 1 || number > size) {
-                ui.print("Not a valid coordinate, enter an integer in the range 1-" + size + ".");
+            if (number < lowerLimit || number > higherLimit) {
+                ui.print("Not a valid coordinate, enter an integer in the range " + lowerLimit + "-" + higherLimit + ".");
             } else {
                 break;
             }
