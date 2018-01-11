@@ -45,7 +45,7 @@ public class PerformanceTester {
 
     /**
      * Runs the default performance tests. Map 4313A, default MovementModel,
-     * start (500, 500), goal (1000, 1000), times to run 5. Uses all algorithms
+     * start (500, 500), goal (1000, 1000), times to run 10. Uses all algorithms
      * available. Prints out the results in the console.
      */
     public void runPerformanceTests() {
@@ -55,6 +55,40 @@ public class PerformanceTester {
         int startY = 500;
         int goalX = 1000;
         int goalY = 1000;
+        int timesToRun = 10;
+
+        runPerformanceTests(filename, movementModel, startX, startY, goalX, goalY, timesToRun);
+    }
+    
+    /**
+     * Runs the second set of default performance tests. Map 4313A, default MovementModel,
+     * start (700, 1500), goal (1500, 50), times to run 10. Uses all algorithms
+     * available. Prints out the results in the console.
+     */
+    public void runPerformanceTests2() {
+        String filename = "M4313A";
+        MovementModel movementModel = new MovementModel();
+        int startX = 700;
+        int startY = 1500;
+        int goalX = 1500;
+        int goalY = 50;
+        int timesToRun = 10;
+
+        runPerformanceTests(filename, movementModel, startX, startY, goalX, goalY, timesToRun);
+    }
+    
+    /**
+     * Runs the third set of default performance tests. Map 4313A, default MovementModel,
+     * start (100, 2900), goal (2900, 100), times to run 10. Uses all algorithms
+     * available. Prints out the results in the console.
+     */
+    public void runPerformanceTests3() {
+        String filename = "M4313A";
+        MovementModel movementModel = new MovementModel();
+        int startX = 100;
+        int startY = 2900;
+        int goalX = 2900;
+        int goalY = 100;
         int timesToRun = 10;
 
         runPerformanceTests(filename, movementModel, startX, startY, goalX, goalY, timesToRun);

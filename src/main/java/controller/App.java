@@ -64,6 +64,8 @@ public class App {
         // RUN PERFORMANCE TEST ROUTINES
         //PerformanceTester tester = new PerformanceTester();
         //tester.runPerformanceTests();
+        //tester.runPerformanceTests2();
+        //tester.runPerformanceTests3();
     }
 
     public App(UI ui) {
