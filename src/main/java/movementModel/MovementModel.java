@@ -43,14 +43,14 @@ public class MovementModel {
     /**
      * Constructor with no parameters sets default values for the uphill and
      * downhill speed factors and the map cell size to 2.0 metres. The basic
-     * speed is set to 2.0.
+     * speed is set to 2.0 (a rough equivalent of meters per second).
      */
-    public MovementModel() {
+    public MovementModel(double mapCellSize) {
         this.speedFactorUphillSteep = 0.3;
         this.speedFactorUphill = 0.7;
         this.speedFactorDownhill = 0.9;
         this.speedFactorDownhillSteep = 0.6;
-        this.mapCellSize = 2.0;
+        this.mapCellSize = mapCellSize;
         this.basicSpeed = 2.0;
         this.impassableEdgeWeight = Double.MAX_VALUE;
     }
@@ -100,7 +100,7 @@ public class MovementModel {
      * @param altitudeChange The altitude change for which edge weight is to
      * be calculated
      * 
-     * @return double The calculated edge weight
+     * @return double The calculated edge weight (rough equivalent of meters/sec)
      */
     public double calculateEdgeWeight(double altitudeChange) {
         double steepness = altitudeChange / mapCellSize;

@@ -78,14 +78,14 @@ public class AsciiMapReader {
                         ncols = Integer.parseInt(headers[0].substring(headers[0].length() - 4));
                     } else if (i == 2) {
                         nrows = Integer.parseInt(headers[1].substring(headers[0].length() - 4));
-                        altitudes = new double[nrows+1][ncols+1];
+                        altitudes = new double[nrows][ncols];
                     }
                 
                 } else {
                     String line = scanner.nextLine();
                     String[] yValues = line.split(" ");
                     for (int j = 1; j < yValues.length; j++) {
-                        altitudes[i - 5][j] = Double.parseDouble(yValues[j]);
+                        altitudes[i - 6][j - 1] = Double.parseDouble(yValues[j]);
                     }
                 }
                 i++;

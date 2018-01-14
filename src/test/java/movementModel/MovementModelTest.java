@@ -93,7 +93,7 @@ public class MovementModelTest {
     
     @Test
     public void defaultModelConstructorWorks() {
-        MovementModel dmodel = new MovementModel();
+        MovementModel dmodel = new MovementModel(2.0);
         assertTrue(dmodel.getSpeedFactorDownhill() > 0);
     }
 

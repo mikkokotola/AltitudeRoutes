@@ -22,9 +22,9 @@ public class Dijkstra implements SearchAlgo {
     Vertice goal;
 
     /**
-     * Initialise search algorithm with a graph. 
-     * 
-     * @param graph The graph to be searched 
+     * Initialise search algorithm with a graph.
+     *
+     * @param graph The graph to be searched
      */
     public Dijkstra(Graph graph) {
         name = "Dijkstra";
@@ -38,6 +38,7 @@ public class Dijkstra implements SearchAlgo {
     }
 
     void initialiseSingleSource(Vertice vertice) {
+        graph.resetGraph();
         vertice.setDistToStart(0);
         heap.reset();
     }
@@ -54,7 +55,7 @@ public class Dijkstra implements SearchAlgo {
     }
 
     /**
-     * Execute shortest route search from start vertice to goal vertice. 
+     * Execute shortest route search from start vertice to goal vertice.
      *
      * @param start The start Vertice
      * @param goal The goal Vertice
@@ -69,6 +70,10 @@ public class Dijkstra implements SearchAlgo {
 
         while (heap.size() > 0) {
             Vertice vert = (Vertice) heap.poll();
+            // Stop when goal vertice removed from the heap. Goal distance is final.
+            if (vert.getId() == goal.getId()) {
+                return;
+            }
             Edge[] edges = vert.getEdges();
             for (int i = 0; i < vert.getNumberOfEdges(); i++) {
                 double oldDistance = edges[i].getTo().getDistToStart();
@@ -82,17 +87,12 @@ public class Dijkstra implements SearchAlgo {
                     }
 
                 }
-                // Stop when goal vertice found and the edge leading to it
-                // relaxed for the first time.
-                if (to.getId() == goal.getId()) {
-                    return;
-                }
             }
         }
     }
 
     /**
-     * Returns the length of the shortest path from an executed search. 
+     * Returns the length of the shortest path from an executed search.
      *
      * @return double The length of the shortest path from start to goal
      */
@@ -108,7 +108,7 @@ public class Dijkstra implements SearchAlgo {
      * Returns the shortest path of an executed search as a DynamicList of
      * Vertices.
      *
-     * @return DynamicList A DynamicList with shortest path vertices from start 
+     * @return DynamicList A DynamicList with shortest path vertices from start
      * to goal.
      */
     @Override
@@ -134,7 +134,7 @@ public class Dijkstra implements SearchAlgo {
     }
 
     /**
-     * Returns the current size of the heap associated with the search. 
+     * Returns the current size of the heap associated with the search.
      *
      * @return int Heap size
      */

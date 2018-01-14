@@ -35,7 +35,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author mkotola
+ * @author Mikko Kotola
  */
 public class GraphTest {
 
@@ -52,18 +52,18 @@ public class GraphTest {
         double yllcorner = 0;
         double cellsize = 2.0;
         double NODATA_value = -9999.000;
-        double[][] altitudes = new double[4][4];
-        altitudes[1][0] = 123.055;
-        altitudes[1][1] = 122.765;
-        altitudes[1][2] = 122.722;
-        altitudes[2][0] = 128.055;
-        altitudes[2][1] = 128.888;
-        altitudes[2][2] = 128.900;
-        altitudes[3][0] = 123.055;
-        altitudes[3][1] = 122.200;
-        altitudes[3][2] = 120.300;
+        double[][] altitudes = new double[3][3];
+        altitudes[0][0] = 123.055;
+        altitudes[0][1] = 122.765;
+        altitudes[0][2] = 122.722;
+        altitudes[1][0] = 128.055;
+        altitudes[1][1] = 128.888;
+        altitudes[1][2] = 128.900;
+        altitudes[2][0] = 123.055;
+        altitudes[2][1] = 122.200;
+        altitudes[2][2] = 120.300;
         AltitudeMap map = new AltitudeMap("testmap.asc", ncols, nrows, xllcorner, yllcorner, cellsize, NODATA_value, altitudes);
-        MovementModel movementModel = new MovementModel();
+        MovementModel movementModel = new MovementModel(cellsize);
         this.graph = new Graph(map, movementModel);
     }
 
@@ -95,12 +95,12 @@ public class GraphTest {
 
     @Test
     public void getVerticesSizeCorrect() {
-        assertTrue(graph.getVertices().length == 4);
+        assertTrue(graph.getVertices().length == 3);
     }
 
     @Test
     public void getVerticeAltitudeCorrect() {
-        assertTrue(graph.getVertice(3, 3).getZ() - 120.300 < accuracy);
+        assertTrue(graph.getVertice(2, 2).getZ() - 120.300 < accuracy);
     }
 
 }

@@ -69,18 +69,18 @@ public class DijkstraTest {
         double yllcorner = 0;
         double cellsize = 2.0;
         double NODATA_value = -9999.000;
-        double[][] altitudes = new double[4][4];
-        altitudes[1][1] = 123.055;
-        altitudes[1][2] = 123.060;
-        altitudes[1][3] = 123.070;
-        altitudes[2][1] = 128.055;
-        altitudes[2][2] = 128.888;
-        altitudes[2][3] = 128.900;
-        altitudes[3][1] = 123.055;
-        altitudes[3][2] = 122.200;
-        altitudes[3][3] = 120.300;
+        double[][] altitudes = new double[3][3];
+        altitudes[0][0] = 123.055;
+        altitudes[0][1] = 123.060;
+        altitudes[0][2] = 123.070;
+        altitudes[1][0] = 128.055;
+        altitudes[1][1] = 128.888;
+        altitudes[1][2] = 128.900;
+        altitudes[2][0] = 123.055;
+        altitudes[2][1] = 122.200;
+        altitudes[2][2] = 120.300;
         AltitudeMap map = new AltitudeMap("testmap.asc", ncols, nrows, xllcorner, yllcorner, cellsize, NODATA_value, altitudes);
-        movementModel = new MovementModel();
+        movementModel = new MovementModel(cellsize);
         graph = new Graph(map, movementModel);
         dijkstra = new Dijkstra(graph);
     }
@@ -96,21 +96,21 @@ public class DijkstraTest {
     
     @Test
     public void possibleShortestRouteCorrect() {
-        dijkstra.runShortestRouteFind(graph.getVertice(1, 1), graph.getVertice(3, 1));
+        dijkstra.runShortestRouteFind(graph.getVertice(0, 0), graph.getVertice(2, 0));
         double res = dijkstra.returnLengthOfShortestRoute();
         assertTrue(res - 3.0 < accuracy);
     }
 
     @Test
     public void impossibleRouteCorrect() {
-        dijkstra.runShortestRouteFind(graph.getVertice(1, 1), graph.getVertice(1, 2));
+        dijkstra.runShortestRouteFind(graph.getVertice(0, 0), graph.getVertice(0, 1));
         double res = dijkstra.returnLengthOfShortestRoute();
         assertTrue(res == -1);
     }
 
     @Test
     public void shortestRouteLegCorrect() {
-        dijkstra.runShortestRouteFind(graph.getVertice(1, 1), graph.getVertice(3, 1));
+        dijkstra.runShortestRouteFind(graph.getVertice(0, 0), graph.getVertice(2, 0));
         DynamicList<Vertice> res = dijkstra.returnShortestPath();
         assertTrue(res.get(1).getZ() - 123.060 < accuracy);
     }

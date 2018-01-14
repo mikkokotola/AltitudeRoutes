@@ -56,23 +56,23 @@ public class Graph {
     public Graph(AltitudeMap map, MovementModel movementModel) {
         this.map = map;
         this.movementModel = movementModel;
-        this.vertices = new Vertice[map.getNrows()+1][map.getNcols()+1];
+        this.vertices = new Vertice[map.getNrows()][map.getNcols()];
         createVerticeGraphFromMap();
     }
 
     // Constructor's utility method.
     private void createVerticeGraphFromMap() {
         // Create vertices.
-        for (int i = 1; i < map.getAltitudes().length; i++) {
-            for (int j = 1; j < map.getAltitudes()[0].length; j++) {
+        for (int i = 0; i < map.getAltitudes().length; i++) {
+            for (int j = 0; j < map.getAltitudes()[0].length; j++) {
                 Vertice newV= new Vertice(j, i, map.getAltitude(i, j));
                 vertices[i][j] = newV;
             }
         }
         
         // Add edges to vertices.
-        for (int i = 1; i < map.getAltitudes().length; i++) {
-            for (int j = 1; j < map.getAltitudes()[0].length; j++) {
+        for (int i = 0; i < map.getAltitudes().length; i++) {
+            for (int j = 0; j < map.getAltitudes()[0].length; j++) {
                 addDepartingEdgesToVertice(vertices[i][j]);
             }
         }
@@ -92,28 +92,28 @@ public class Graph {
     }
     
     private void addEdgeToAbove(Vertice vertice) {
-        if (vertice.getY() > 1) {
+        if (vertice.getY() > 0) {
             Vertice neighbour = vertices[vertice.getY()-1][vertice.getX()];
             addEdge(vertice, neighbour);
         }
     }
 
     private void addEdgeToBelow(Vertice vertice) {
-        if (vertice.getY() < map.getNrows()) {
+        if (vertice.getY() < map.getNrows()-1) {
             Vertice neighbour = vertices[vertice.getY()+1][vertice.getX()];
             addEdge(vertice, neighbour);
         }
     }
     
     private void addEdgeToLeft(Vertice vertice) {
-        if (vertice.getX() > 1) {
+        if (vertice.getX() > 0) {
             Vertice neighbour = vertices[vertice.getY()][vertice.getX()-1];
             addEdge(vertice, neighbour);
         }
     }
     
     private void addEdgeToRight(Vertice vertice) {
-        if (vertice.getX() < map.getNcols()) {
+        if (vertice.getX() < map.getNcols()-1) {
             Vertice neighbour = vertices[vertice.getY()][vertice.getX()+1];
             addEdge(vertice, neighbour);
         }
@@ -159,8 +159,8 @@ public class Graph {
      * performed without creating a new graph.
      */
     public void resetGraph() {
-        for (int i = 1; i < map.getAltitudes().length; i++) {
-            for (int j = 1; j < map.getAltitudes()[0].length; j++) {
+        for (int i = 0; i < map.getAltitudes().length; i++) {
+            for (int j = 0; j < map.getAltitudes()[0].length; j++) {
                 vertices[i][j].setDistToStart(Double.MAX_VALUE);
                 vertices[i][j].setDistToGoal(0);
                 vertices[i][j].setPath(null);
@@ -176,8 +176,8 @@ public class Graph {
      */
     public int countOpened() {
         int count = 0;
-        for (int i = 1; i < map.getAltitudes().length; i++) {
-            for (int j = 1; j < map.getAltitudes()[0].length; j++) {
+        for (int i = 0; i < map.getAltitudes().length; i++) {
+            for (int j = 0; j < map.getAltitudes()[0].length; j++) {
                 if (vertices[i][j].getPath() != null) {
                     count++;
                 }

@@ -54,20 +54,20 @@ public class AltitudeMapTest {
     public void setUp() {
         int ncols = 3;
         int nrows = 3;
-        double xllcorner = 0;
-        double yllcorner = 0;
+        double xllcorner = 428000.000000000000;
+        double yllcorner = 6762000.000000000000;
         double cellsize = 2.0;
         double NODATA_value = -9999.000;
-        double[][] altitudes = new double[4][4];
-        altitudes[1][1] = 123.055;
-        altitudes[1][2] = 123.060;
-        altitudes[1][3] = 123.070;
-        altitudes[2][1] = 128.055;
-        altitudes[2][2] = 128.888;
-        altitudes[2][3] = 128.900;
-        altitudes[3][1] = 123.055;
-        altitudes[3][2] = 122.200;
-        altitudes[3][3] = 120.300;
+        double[][] altitudes = new double[3][3];
+        altitudes[0][0] = 123.055;
+        altitudes[0][1] = 123.060;
+        altitudes[0][2] = 123.070;
+        altitudes[1][0] = 128.055;
+        altitudes[1][1] = 128.888;
+        altitudes[1][2] = 128.900;
+        altitudes[2][0] = 123.055;
+        altitudes[2][1] = 122.200;
+        altitudes[2][2] = 120.300;
         map = new AltitudeMap("testmap.asc", ncols, nrows, xllcorner, yllcorner, cellsize, NODATA_value, altitudes);
     }
     
@@ -92,12 +92,12 @@ public class AltitudeMapTest {
     
     @Test
     public void xllcornerCorrect() {
-        assertTrue(map.getXllcorner() == 0);
+        assertTrue(map.getXllcorner() - 428000 < accuracy);
     }
     
     @Test
     public void yllcornerCorrect() {
-        assertTrue(map.getYllcorner() == 0);
+        assertTrue(map.getYllcorner() - 6762000 < accuracy);
     }
     
     @Test
@@ -112,35 +112,70 @@ public class AltitudeMapTest {
     
     @Test
     public void altitudesCorrectAfterSet() {
-        double[][] newAltitudes = new double[4][4];
+        double[][] newAltitudes = new double[3][3];
+        newAltitudes[0][0] = 100.000;
+        newAltitudes[0][1] = 100.000;
+        newAltitudes[0][2] = 100.000;
+        newAltitudes[1][0] = 100.000;
         newAltitudes[1][1] = 100.000;
         newAltitudes[1][2] = 100.000;
-        newAltitudes[1][3] = 100.000;
-        newAltitudes[2][1] = 100.000;
-        newAltitudes[2][2] = 100.000;
-        newAltitudes[2][3] = 100.000;
-        newAltitudes[3][1] = 100.000;
-        newAltitudes[3][2] = 200.000;
-        newAltitudes[3][3] = 300.000;
+        newAltitudes[2][0] = 100.000;
+        newAltitudes[2][1] = 200.000;
+        newAltitudes[2][2] = 300.000;
         map.setAltitudes(newAltitudes);
-        assertTrue(map.getAltitudes()[3][3] - 300.000 < accuracy);
+        assertTrue(map.getAltitudes()[2][2] - 300.000 < accuracy);
     }
     
     @Test
     public void singleAltitudeCorrectAfterSet() {
-        map.setAltitude(3, 2, 250.000);
-        assertTrue(map.getAltitude(3, 2) - 250.000 < accuracy);
+        map.setAltitude(2, 1, 250.000);
+        assertTrue(map.getAltitude(2, 1) - 250.000 < accuracy);
     }
     
     @Test
-    public void getXbyCoordinatesCorrect() {
-        assertTrue(map.getXbyCoordinates(4.500) == 2);
+    public void getMapXByEtrsXCorrect() {
+        assertTrue(map.getMapXByEtrsX(428000) == 0);
     }
     
     @Test
-    public void getYbyCoordinatesCorrect() {
-        assertTrue(map.getYbyCoordinates(2.500) == 2);
+    public void getMapXByEtrsXCorrect2() {
+        assertTrue(map.getMapXByEtrsX(428001.7) == 1);
     }
+    
+    @Test
+    public void getMapXByEtrsXCorrect3() {
+        assertTrue(map.getMapXByEtrsX(428002.3) == 1);
+    }
+    
+    @Test
+    public void getMapXByEtrsXCorrect4() {
+        assertTrue(map.getMapXByEtrsX(428004.9) == 2);
+    }
+    
+    @Test
+    public void getMapYByEtrsYCorrect() {
+        assertTrue(map.getMapYByEtrsY(6762000) == 2);
+    }
+    
+    @Test
+    public void getMapYByEtrsYCorrect2() {
+        assertTrue(map.getMapYByEtrsY(6762000.5) == 2);
+    }
+    
+    @Test
+    public void getMapYByEtrsYCorrect3() {
+        assertTrue(map.getMapYByEtrsY(6762002.8) == 1);
+    }
+    
+    @Test
+    public void getMapYByEtrsYCorrect4() {
+        assertTrue(map.getMapYByEtrsY(6762003.9) == 0);
+    }
+    
+//    @Test
+//    public void getEtrsXByMapXCorrect() {
+//        assertTrue(map.getEtrsXByMapX() == 2);
+//    }
     
     
 }

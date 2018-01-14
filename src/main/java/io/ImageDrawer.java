@@ -52,35 +52,36 @@ public class ImageDrawer {
      * opened and investigated vertices and shortest route.
      *
      * @param graph The graph used in the search
-     * @param shortestPath The shortest path to be drawn
+     * @param shortestRoute The shortest path to be drawn
      * @param filename The name of the file to which the image is to be written
      *
      */
-    public void draw(Graph graph, DynamicList<Vertice> shortestPath, String filename) {
+    public void draw(Graph graph, DynamicList<Vertice> shortestRoute, SearchAlgo searchAlgo, String filename, String coordinateSystem) {
         try {
-            int width = graph.getMap().getNcols(), height = graph.getMap().getNrows();
-
+            int width = graph.getMap().getNcols() + 500;
+            int height = graph.getMap().getNrows();
+            
+            // If image too small, set height to 280 to have room for legend
+            if (graph.getMap().getNrows() < 280 ) {
+               height = 280; 
+            }
+            
             // TYPE_INT_ARGB specifies the image format: 8-bit RGBA packed
             // into integer pixels
             BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+                       
 
             Graphics2D graphic = bi.createGraphics();
-
-            // Parameters for writing text if needed.
-            //Font font = new Font("TimesRoman", Font.BOLD, 20);
-            //graphic.setFont(font);
-            //String message = "www.java2s.com!";
-            //FontMetrics fontMetrics = graphic.getFontMetrics();
-            //int stringWidth = fontMetrics.stringWidth(message);
-            //int stringHeight = fontMetrics.getAscent();
-            //graphic.setPaint(Color.black);
-            graphic.setBackground(Color.BLACK);
+            graphic.setBackground(Color.WHITE);
+            graphic.setColor(Color.WHITE);
+            graphic.fillRect(0,0, width, height);
+            
 
             // Define the lowest and highest point.
             double lowest = Double.MAX_VALUE;
             double highest = Double.MIN_VALUE;
-            for (int i = 1; i <= graph.getMap().getNcols(); i++) {
-                for (int j = 1; j <= graph.getMap().getNrows(); j++) {
+            for (int i = 0; i < graph.getMap().getNcols(); i++) {
+                for (int j = 0; j < graph.getMap().getNrows(); j++) {
                     if (graph.getVertice(i, j).getZ() < lowest) {
                         lowest = graph.getVertice(i, j).getZ();
                     }
@@ -92,33 +93,12 @@ public class ImageDrawer {
 
             double range = highest - lowest;
 
-            for (int i = 1; i <= graph.getMap().getNcols(); i++) {
-                for (int j = 1; j <= graph.getMap().getNrows(); j++) {
-                    // The higher the point, the smaller the toneval
-                    double toneVal = (highest - graph.getVertice(i, j).getZ()) * (235 / range);
-                    if (graph.getVertice(i, j).getHeapRef() == -2) {
-                        // Found and investigated vertices get values in the dark range. Lowest points get darkest colors.
-                        graphic.setColor(new Color((int) Math.floor(245 - toneVal), 0, 0));
-                    } else if (graph.getVertice(i, j).getHeapRef() > 0) {
-                        // Found but not investigated vertices get values in the blue-green tones. Lowest points get greenest colors.
-                        graphic.setColor(new Color(0, 150, (int) Math.floor(245 - toneVal)));
-                    } else {
-                        // Not found vertices get colors in the yellow-red tones. Lowest points get reddest colors.
-                        graphic.setColor(new Color(245, (int) Math.floor(245 - toneVal), 0));
-                    }
-
-                    graphic.drawLine(i - 1, j - 1, i - 1, j - 1);
-                }
-            }
-
-            graphic.setColor(Color.cyan);
-            for (int k = 0; k < shortestPath.size(); k++) {
-                int i = shortestPath.get(k).getX();
-                int j = shortestPath.get(k).getY();
-                graphic.drawLine(i - 1, j - 1, i - 1, j - 1);
-
-            }
-
+            drawMapAndRoute(graph, highest, range, graphic, shortestRoute);
+            
+            int pX = writePictureInfoToLegend(graphic, graph, filename, shortestRoute, searchAlgo);
+            
+            drawColorScale(graphic, highest, pX, lowest);
+            
             // Alternative picture formats.
             ImageIO.write(bi, "PNG", new File("images/" + filename + ".PNG"));
             //ImageIO.write(bi, "JPEG", new File("images/" + filename + ".JPG"));
@@ -129,5 +109,70 @@ public class ImageDrawer {
             ie.printStackTrace();
         }
 
+    }
+
+    private void drawMapAndRoute(Graph graph, double highest, double range, Graphics2D graphic, DynamicList<Vertice> shortestRoute) {
+        for (int i = 0; i < graph.getMap().getNcols(); i++) {
+            for (int j = 0; j < graph.getMap().getNrows(); j++) {
+                // The higher the point, the smaller the toneval
+                double toneVal = (highest - graph.getVertice(i, j).getZ()) * (235 / range);
+                if (graph.getVertice(i, j).getHeapRef() == -2) {
+                    // Found and investigated vertices get values in the violet-dark blue range. Lowest points get darkest colors.
+                    graphic.setColor(new Color((int) Math.floor(245 - toneVal), 0, 200));
+                } else if (graph.getVertice(i, j).getHeapRef() > 0) {
+                    // Found but not investigated vertices get values in the light blue-green tones. Lowest points get greenest colors.
+                    graphic.setColor(new Color(0, 150, (int) Math.floor(245 - toneVal)));
+                } else {
+                    // Not found vertices get colors in the yellow-red tones. Lowest points get reddest colors.
+                    graphic.setColor(new Color(245, (int) Math.floor(245 - toneVal), 0));
+                }
+                
+                graphic.drawLine(i, j, i, j);
+            }
+        }
+        
+        graphic.setColor(Color.cyan);
+        for (int k = 0; k < shortestRoute.size(); k++) {
+            int i = shortestRoute.get(k).getX();
+            int j = shortestRoute.get(k).getY();
+            graphic.drawLine(i, j, i, j);
+            
+        }
+    }
+
+    private int writePictureInfoToLegend(Graphics2D graphic, Graph graph, String filename, DynamicList<Vertice> shortestRoute, SearchAlgo searchAlgo) {
+        // Write the picture information to legend as text.
+        Font font = new Font("TimesRoman", Font.PLAIN, 10);
+        graphic.setFont(font);
+        graphic.setPaint(Color.BLACK);
+        int pX = graph.getMap().getNcols() + 20;
+        graphic.drawString("* AltitudeRoutes *",pX ,20);
+        graphic.drawString("File: " + filename + ".PNG",pX ,35);
+        graphic.drawString("From: map-relative " + shortestRoute.get(0).getX() + ", " + shortestRoute.get(0).getY() + "; ETRS-TM35FIN " + graph.getMap().getEtrsXByMapX(shortestRoute.get(0).getX()) + ", " + graph.getMap().getEtrsYByMapY(shortestRoute.get(0).getY()), pX , 50);
+        graphic.drawString("To: map-relative " + shortestRoute.get(shortestRoute.size()-1).getX() + ", " + shortestRoute.get(shortestRoute.size()-1).getY()+ "; ETRS-TM35FIN " + graph.getMap().getEtrsXByMapX(shortestRoute.get(shortestRoute.size()-1).getX()) + ", " + graph.getMap().getEtrsYByMapY(shortestRoute.get(shortestRoute.size()-1).getY()), pX , 65);
+        graphic.drawString("Algorithm: " + searchAlgo.getName(), pX, 80);
+        graphic.drawString("Length of shortest path: " + searchAlgo.returnLengthOfShortestRoute(), pX, 95);
+        int opened = graph.countOpened();
+        graphic.drawString("Vertices found during search: " + opened, pX, 110);
+        graphic.drawString("Vertices investigated during search: " + (opened - searchAlgo.heapSize()), pX, 125);
+        return pX;
+    }
+
+    private void drawColorScale(Graphics2D graphic, double highest, int pX, double lowest) {
+        // Draw color scale
+        graphic.drawString("Highest altitude : " + highest + " m", pX + 180, 160);
+        graphic.drawString("Lowest altitude : " + lowest + " m", pX + 180, 244);
+        graphic.drawString("Not found", pX, 145);
+        graphic.drawString("Found", pX + 60, 145);
+        graphic.drawString("Investigated", pX + 120, 145);
+        for (int i = 0; i < 48; i++) {
+            graphic.setColor(new Color(245, 245-(i*5), 0));
+            graphic.fillRect(pX, 150 + i*2, 50, 2);
+            graphic.setColor(new Color(0, 150, 245-(i*5)));
+            graphic.fillRect(pX+60, 150 + i*2, 50, 2);
+            graphic.setColor(new Color(245-(i*5), 0, 200));
+            graphic.fillRect(pX+120, 150 + i*2, 50 ,2);
+            
+        }
     }
 }

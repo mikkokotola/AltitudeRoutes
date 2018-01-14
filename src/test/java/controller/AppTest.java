@@ -71,14 +71,15 @@ public class AppTest {
         stubUI.addOutput("testMap3");
         stubUI.addOutput("D");
         stubUI.addOutput("M");
-        stubUI.addOutput("16");
-        stubUI.addOutput("14");
-        stubUI.addOutput("16");
-        stubUI.addOutput("18");
+        stubUI.addOutput("15");
+        stubUI.addOutput("13");
+        stubUI.addOutput("15");
+        stubUI.addOutput("17");
         stubUI.addOutput("n");
         stubUI.addOutput("n");
+        stubUI.addOutput("");
         app.run();
-        assertTrue(stubUI.getIn().get(38).equals("Length of shortest path: 10.0"));
+        assertTrue(stubUI.getIn().get(42).equals("Length of shortest path: 10.0"));
     }
     
     @Test
@@ -86,14 +87,15 @@ public class AppTest {
         stubUI.addOutput("testMap3");
         stubUI.addOutput("A");
         stubUI.addOutput("M");
-        stubUI.addOutput("16");
-        stubUI.addOutput("14");
-        stubUI.addOutput("16");
-        stubUI.addOutput("18");
+        stubUI.addOutput("15");
+        stubUI.addOutput("13");
+        stubUI.addOutput("15");
+        stubUI.addOutput("17");
         stubUI.addOutput("n");
         stubUI.addOutput("n");
+        stubUI.addOutput("");
         app.run();
-        assertTrue(stubUI.getIn().get(38).equals("Length of shortest path: 10.0"));
+        assertTrue(stubUI.getIn().get(42).equals("Length of shortest path: 10.0"));
     }
     
 }

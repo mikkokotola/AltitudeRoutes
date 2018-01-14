@@ -56,15 +56,15 @@ public class App {
      * @param args Does not take any command line arguments
      */
     public static void main(String[] args) {
-        ConsoleUI ui = new ConsoleUI();
-        App app = new App(ui);
-        app.run();
+        //ConsoleUI ui = new ConsoleUI();
+        //App app = new App(ui);
+        //app.run();
 
         // RUN PERFORMANCE TEST ROUTINES. 
         // Uncomment the first line and the test routine you wish to run.
         // To go straight to the performance testing, comment the 3 lines above.
-        //PerformanceTester tester = new PerformanceTester();
-        //tester.runPerformanceTests();
+        PerformanceTester tester = new PerformanceTester();
+        tester.runPerformanceTests();
         //tester.runPerformanceTests2();
         //tester.runPerformanceTests3();
     }
@@ -83,71 +83,77 @@ public class App {
         ui.print("The application uses location data produced by the National Land Survey of Finland (Maanmittauslaitoksen maastotietokannan 12/2017 aineistoa).");
 
         AltitudeMap map = readMapByFileName(ui);
-        MovementModel movementModel = new MovementModel();
+        MovementModel movementModel = new MovementModel(map.getCellsize());
 
         if (map != null) {
+            printMapDetails(map);
             ui.print("Creating graph...");
             Graph graph = new Graph(map, movementModel);
+            
+            boolean quit = false;
+            while (!quit) {
+                SearchAlgo searchAlgo = readAlgo(graph);
+                if (searchAlgo == null) {
+                    quit = true;
+                } else {
+                    String routeAlgorithmName = searchAlgo.getName();
 
-            SearchAlgo searchAlgo = readAlgo(graph);
-            if (searchAlgo != null) {
-                String routeAlgorithmName = searchAlgo.getName();
+                    String coordinateSystem = readCoordinateSystem();
 
-                printMapDetails(map);
+                    int xLowerLimit = 0;
+                    int xHigherLimit = 0;
+                    int yLowerLimit = 0;
+                    int yHigherLimit = 0;
 
-                String coordinateSystem = readCoordinateSystem();
+                    if (coordinateSystem.equals("etrsTm35Fin")) {
+                        xLowerLimit = map.getEtrsXByMapX(0); // (int) Math.ceil(map.getEtrsXByMapX(0))
+                        xHigherLimit = map.getEtrsXByMapX(map.getNcols() - 1); // (int) Math.floor(map.getEtrsXByMapX(map.getNcols()-1))
+                        yLowerLimit = map.getEtrsYByMapY(map.getNrows() - 1); // (int) Math.ceil(map.getYllcorner())
+                        yHigherLimit = map.getEtrsYByMapY(0); // (int) Math.floor(map.getEtrsYByMapY(0))
+                    } else if (coordinateSystem.equals("mapSpecific")) {
+                        xLowerLimit = 0;
+                        xHigherLimit = map.getNcols() - 1;
+                        yLowerLimit = 0;
+                        yHigherLimit = map.getNrows() - 1;
+                    }
+                    ui.print("Enter x-coordinate of start: (" + xLowerLimit + "-" + xHigherLimit + ")");
+                    int startX = readCoordinate(ui, xLowerLimit, xHigherLimit);
+                    ui.print("Enter y-coordinate of start: (" + yLowerLimit + "-" + yHigherLimit + ")");
+                    int startY = readCoordinate(ui, yLowerLimit, yHigherLimit);
+                    ui.print("Enter x-coordinate of goal: (" + xLowerLimit + "-" + xHigherLimit + ")");
+                    int goalX = readCoordinate(ui, xLowerLimit, xHigherLimit);
+                    ui.print("Enter y-coordinate of goal: (" + yLowerLimit + "-" + yHigherLimit + ")");
+                    int goalY = readCoordinate(ui, yLowerLimit, yHigherLimit);
 
-                int xLowerLimit = 0;
-                int xHigherLimit = 0;
-                int yLowerLimit = 0;
-                int yHigherLimit = 0;
-                
-                if (coordinateSystem.equals("etrsTm35Fin")) {
-                    xLowerLimit = (int) Math.ceil(map.getXllcorner());
-                    xHigherLimit = (int) Math.floor(map.getXllcorner() + map.getNcols()*2);
-                    yLowerLimit = (int) Math.ceil(map.getYllcorner());
-                    yHigherLimit = (int) Math.floor(map.getYllcorner() + map.getNrows()*2);
-                } else if (coordinateSystem.equals("mapSpecific")) {
-                    xLowerLimit = 0;
-                    xHigherLimit = map.getNcols();
-                    yLowerLimit = 0;
-                    yHigherLimit = map.getNrows();
+                    printSearchDetails(startX, startY, goalX, goalY, routeAlgorithmName);
+
+                    // Coordinate conversion if needed.
+                    if (coordinateSystem.equals("etrsTm35Fin")) {
+                        startX = map.getMapXByEtrsX(startX);
+                        startY = map.getMapYByEtrsY(startY);
+                        goalX = map.getMapXByEtrsX(goalX);
+                        goalY = map.getMapYByEtrsY(goalY);
+                    }
+
+                    long timeStart = System.currentTimeMillis();
+                    searchAlgo.runShortestRouteFind(graph.getVertice(startX, startY), graph.getVertice(goalX, goalY));
+                    long timeEnd = System.currentTimeMillis();
+                    ui.print("Search complete");
+                    ui.print("Running time of search: " + (timeEnd - timeStart) + "ms.");
+
+                    double lengthOfShortestPath = searchAlgo.returnLengthOfShortestRoute();
+                    DynamicList<Vertice> shortestPath = searchAlgo.returnShortestPath();
+
+                    printShortestPathAsVerticeList(graph, searchAlgo, lengthOfShortestPath, shortestPath, coordinateSystem);
+
+                    exportMapImage(map, searchAlgo, startX, startY, goalX, goalY, graph, shortestPath, coordinateSystem);
+                    
+                    ui.print("");
+                    ui.print("Search complete, entering new search within the selected map.");
                 }
-                ui.print("Enter x-coordinate of start: (" + xLowerLimit + "-" + xHigherLimit + ")");
-                int startX = readCoordinate(ui, xLowerLimit, xHigherLimit);
-                ui.print("Enter y-coordinate of start: (" + yLowerLimit + "-" + yHigherLimit + ")");
-                int startY = readCoordinate(ui, yLowerLimit, yHigherLimit);
-                ui.print("Enter x-coordinate of goal: (" + xLowerLimit + "-" + xHigherLimit + ")");
-                int goalX = readCoordinate(ui, xLowerLimit, xHigherLimit);
-                ui.print("Enter y-coordinate of goal: (" + yLowerLimit + "-" + yHigherLimit + ")");
-                int goalY = readCoordinate(ui, yLowerLimit, yHigherLimit);
-
-                printSearchDetails(startX, startY, goalX, goalY, routeAlgorithmName);
-
-                // Coordinate conversion if needed.
-                if (coordinateSystem.equals("etrsTm35Fin")) {
-                    startX = map.getXbyCoordinates(startX);
-                    startY = map.getYbyCoordinates(startY);
-                    goalX = map.getXbyCoordinates(goalX);
-                    goalY = map.getYbyCoordinates(goalY);
-                }
-                
-                long timeStart = System.currentTimeMillis();
-                searchAlgo.runShortestRouteFind(graph.getVertice(startX, startY), graph.getVertice(goalX, goalY));
-                long timeEnd = System.currentTimeMillis();
-                ui.print("Search complete");
-                ui.print("Running time of search: " + (timeEnd - timeStart) + "ms.");
-
-                double lengthOfShortestPath = searchAlgo.returnLengthOfShortestRoute();
-                DynamicList<Vertice> shortestPath = searchAlgo.returnShortestPath();
-
-                printShortestPathAsVerticeList(graph, searchAlgo, lengthOfShortestPath, shortestPath);
-
-                exportMapImage(map, searchAlgo, startX, startY, goalX, goalY, graph, shortestPath);
             }
-
         }
-
+        ui.print("");
         ui.print("* Thank you, run again! *");
 
     }
@@ -179,7 +185,7 @@ public class App {
         ui.print("Searching...");
     }
 
-    private void exportMapImage(AltitudeMap map, SearchAlgo searchAlgo, int startX, int startY, int goalX, int goalY, Graph graph, DynamicList<Vertice> shortestPath) {
+    private void exportMapImage(AltitudeMap map, SearchAlgo searchAlgo, int startX, int startY, int goalX, int goalY, Graph graph, DynamicList<Vertice> shortestPath, String coordinateSystem) {
         ui.print("");
 
         ui.print("Export map image (y/n)?");
@@ -188,11 +194,11 @@ public class App {
         if (answer.equals("y") || answer.equals("yes")) {
             String picFileName = map.getFilename().substring(0, map.getFilename().indexOf(".")) + "_" + searchAlgo.getName() + "_" + startX + "-" + startY + "_" + goalX + "-" + goalY;
             ui.print("Exporting image to " + picFileName + ".PNG ...");
-            drawMapImage(graph, shortestPath, picFileName);
+            drawMapImage(graph, shortestPath, searchAlgo, picFileName, coordinateSystem);
         }
     }
 
-    private void printShortestPathAsVerticeList(Graph graph, SearchAlgo searchAlgo, double lengthOfShortestPath, DynamicList<Vertice> shortestPath) {
+    private void printShortestPathAsVerticeList(Graph graph, SearchAlgo searchAlgo, double lengthOfShortestPath, DynamicList<Vertice> shortestPath, String coordinateSystem) {
         ui.print("");
         String answer;
         if (lengthOfShortestPath > 0) {
@@ -200,9 +206,23 @@ public class App {
             answer = ui.readLine();
             if (answer.equals("y") || answer.equals("yes")) {
                 ui.print("Path:");
+                if (coordinateSystem.equals("etrsTm35Fin")) {
+                    ui.print("Coordinate system: ETRS-TM35FIN");
+                } else if (coordinateSystem.equals("mapSpecific")) {
+                    ui.print("Coordinate system: map-relative (0,0) in top left corner");
+                }
                 for (int i = 0; i < shortestPath.size(); i++) {
                     Vertice v = shortestPath.get(i);
-                    ui.print("(" + v.getX() + ", " + v.getY() + ", " + v.getZ() + "), cumulative distance from start " + v.getDistToStart());
+                    int xToPrint = v.getX();
+                    int yToPrint = v.getY();
+
+                    // Coordinate conversion if needed.
+                    if (coordinateSystem.equals("etrsTm35Fin")) {
+                        xToPrint = graph.getMap().getEtrsXByMapX(xToPrint);
+                        yToPrint = graph.getMap().getEtrsYByMapY(yToPrint);
+                    }
+
+                    ui.print("(" + xToPrint + ", " + yToPrint + ", " + v.getZ() + "), cumulative distance from start " + v.getDistToStart());
                 }
                 ui.print("");
             }
@@ -233,7 +253,11 @@ public class App {
         String algoName = null;
         while (true) {
             ui.print("");
-            ui.print("Enter search algorithm (D = Dijkstra, A = Astar):");
+            ui.print("***");
+            ui.print("");
+            ui.print("New search");
+            ui.print("Selected map file: " + graph.getMap().getFilename());
+            ui.print("Enter search algorithm (D = Dijkstra, A = Astar, enter to quit):");
             algoName = ui.readLine();
             if (algoName.toLowerCase().equals("dijkstra") || algoName.toLowerCase().equals("d")) {
                 ui.print("Dijkstra selected.");
@@ -250,11 +274,11 @@ public class App {
         }
     }
 
-    private static void drawMapImage(Graph graph, DynamicList<Vertice> shortestPath, String picFileName) {
+    private static void drawMapImage(Graph graph, DynamicList<Vertice> shortestPath, SearchAlgo searchAlgo, String picFileName, String coordinateSystem) {
         ImageDrawer imDrawer = new ImageDrawer();
 
         try {
-            imDrawer.draw(graph, shortestPath, picFileName);
+            imDrawer.draw(graph, shortestPath, searchAlgo, picFileName, coordinateSystem);
         } catch (Exception e) {
         }
     }
@@ -273,7 +297,7 @@ public class App {
                 ui.print("No map entered, quitting.");
                 return null;
             }
-            
+
             ui.print("Selected map file: " + fileName);
             ui.print("");
             ui.print("Reading in AltitudeMap...");

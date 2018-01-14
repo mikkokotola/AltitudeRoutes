@@ -50,7 +50,7 @@ public class PerformanceTester {
      */
     public void runPerformanceTests() {
         String filename = "M4313A";
-        MovementModel movementModel = new MovementModel();
+        MovementModel movementModel = new MovementModel(2.0);
         int startX = 500;
         int startY = 500;
         int goalX = 1000;
@@ -67,7 +67,7 @@ public class PerformanceTester {
      */
     public void runPerformanceTests2() {
         String filename = "M4313A";
-        MovementModel movementModel = new MovementModel();
+        MovementModel movementModel = new MovementModel(2.0);
         int startX = 700;
         int startY = 1500;
         int goalX = 1500;
@@ -84,7 +84,7 @@ public class PerformanceTester {
      */
     public void runPerformanceTests3() {
         String filename = "M4313A";
-        MovementModel movementModel = new MovementModel();
+        MovementModel movementModel = new MovementModel(2.0);
         int startX = 100;
         int startY = 2900;
         int goalX = 2900;
@@ -144,7 +144,7 @@ public class PerformanceTester {
         // Run a performance test a number of time for each searchalgo on the list.
         for (int i = 0; i < timesToRun; i++) {
             for (int j = 0; j < numberOfAlgos; j++) {
-                graph.resetGraph();
+                //graph.resetGraph(); Moved inside SearchAlgo routine
                 resultTimes.get(j).add((Long) runPerformanceTest(searchAlgos.get(j), graph, startX, startY, goalX, goalY));
                 int opened = graph.countOpened();
                 resultOpened.get(j).add(opened);

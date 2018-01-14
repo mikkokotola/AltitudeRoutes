@@ -162,12 +162,12 @@ public class AltitudeMap {
      * coordinate (coordinate system etrs-tm35fin 
      * https://fi.wikipedia.org/wiki/ETRS-TM35FIN).
      * 
-     * @param xCoordinate X-coordinate of point in etrs-tm35fin
+     * @param xCoordinate X coordinate of point in etrs-tm35fin
      * 
-     * @return int X coordinate value on the map (0,0) is top left corner
+     * @return int X coordinate value on the map where (0,0) is top left corner
      */
-    public int getXbyCoordinates(double xCoordinate) {
-        return ((int)((xCoordinate - xllcorner)/cellsize));
+    public int getMapXByEtrsX(double xCoordinate) {
+        return ((int)Math.round((xCoordinate - xllcorner)/cellsize));
     }
     
     /**
@@ -175,12 +175,36 @@ public class AltitudeMap {
      * coordinate (coordinate system etrs-tm35fin 
      * https://fi.wikipedia.org/wiki/ETRS-TM35FIN).
      * 
-     * @param yCoordinate Y-coordinate of point in etrs-tm35fin
+     * @param yCoordinate Y coordinate of point in etrs-tm35fin
      * 
-     * @return int Y coordinate value on the map (0,0) is top left corner
+     * @return int Y coordinate value on the map where (0,0) is top left corner
      */
-    public int getYbyCoordinates(double yCoordinate) {
-        return (nrows-((int)((yCoordinate - yllcorner)/cellsize)));
+    public int getMapYByEtrsY(double yCoordinate) {
+        return ((nrows-1)-((int)Math.round((yCoordinate - yllcorner)/cellsize)));
+    }
+    
+    /**
+     * Returns the etrs-tm35fin system longitude (x) coordinate that
+     * corresponds to the map-specific x value given as a parameter
+     * 
+     * @param xCoordinate X coordinate value on the map where (0,0) is top left corner
+     * 
+     * @return int X coordinate of point in etrs-tm35fin
+     */
+    public int getEtrsXByMapX(int xCoordinate) {
+        return ((int)Math.round((xCoordinate*cellsize)+xllcorner));
+    }
+    
+    /**
+     * Returns the etrs-tm35fin system latitude (y) coordinate that
+     * corresponds to the map-specific y value given as a parameter
+     * 
+     * @param yCoordinate Y coordinate value on the map where (0,0) is top left corner
+     * 
+     * @return int Y coordinate of point in etrs-tm35fin
+     */
+    public int getEtrsYByMapY(int yCoordinate) {
+        return ((int)Math.round(yllcorner+((nrows-1)*cellsize)-(yCoordinate*cellsize)));
     }
     
     /**
