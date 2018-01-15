@@ -28,8 +28,8 @@ import graph.Vertice;
 import java.util.ArrayList;
 
 /**
- *
- * @author mkotola
+ * Interface of search algorithms.
+ * @author Mikko Kotola
  */
 public interface SearchAlgo {
 

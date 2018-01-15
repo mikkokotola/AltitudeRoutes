@@ -24,7 +24,7 @@
 package ui;
 
 /**
- *
+ * Interface for user interfaces.
  * @author Mikko Kotola
  */
 public interface UI {

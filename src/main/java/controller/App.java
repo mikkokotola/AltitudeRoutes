@@ -56,15 +56,15 @@ public class App {
      * @param args Does not take any command line arguments
      */
     public static void main(String[] args) {
-        //ConsoleUI ui = new ConsoleUI();
-        //App app = new App(ui);
-        //app.run();
+        ConsoleUI ui = new ConsoleUI();
+        App app = new App(ui);
+        app.run();
 
         // RUN PERFORMANCE TEST ROUTINES. 
         // Uncomment the first line and the test routine you wish to run.
         // To go straight to the performance testing, comment the 3 lines above.
-        PerformanceTester tester = new PerformanceTester();
-        tester.runPerformanceTests();
+        //PerformanceTester tester = new PerformanceTester();
+        //tester.runPerformanceTests();
         //tester.runPerformanceTests2();
         //tester.runPerformanceTests3();
     }

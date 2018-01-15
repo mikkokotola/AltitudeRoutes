@@ -61,9 +61,9 @@ public class ImageDrawer {
             int width = graph.getMap().getNcols() + 500;
             int height = graph.getMap().getNrows();
             
-            // If image too small, set height to 280 to have room for legend
-            if (graph.getMap().getNrows() < 280 ) {
-               height = 280; 
+            // If image too small, set height to 360 to have room for legend
+            if (graph.getMap().getNrows() < 360 ) {
+               height = 360; 
             }
             
             // TYPE_INT_ARGB specifies the image format: 8-bit RGBA packed
@@ -155,6 +155,13 @@ public class ImageDrawer {
         int opened = graph.countOpened();
         graphic.drawString("Vertices found during search: " + opened, pX, 110);
         graphic.drawString("Vertices investigated during search: " + (opened - searchAlgo.heapSize()), pX, 125);
+        
+        graphic.drawString("Map details",pX, 270);
+        graphic.drawString("Columns: " + graph.getMap().getNcols(),pX, 285);
+        graphic.drawString("Rows: " + graph.getMap().getNrows(),pX, 300);
+        graphic.drawString("Map cell size: " + graph.getMap().getCellsize(),pX, 315);
+        graphic.drawString("X of lower left corner (ETRS-TM35FIN): " + graph.getMap().getXllcorner(),pX, 330);
+        graphic.drawString("Y of lower left corner (ETRS-TM35FIN): " + graph.getMap().getYllcorner(),pX, 345);
         return pX;
     }
 
