@@ -61,9 +61,9 @@ public class ImageDrawer {
             int width = graph.getMap().getNcols() + 500;
             int height = graph.getMap().getNrows();
             
-            // If image too small, set height to 360 to have room for legend
-            if (graph.getMap().getNrows() < 360 ) {
-               height = 360; 
+            // If image too small, set height to 380 to have room for legend
+            if (graph.getMap().getNrows() < 380 ) {
+               height = 380; 
             }
             
             // TYPE_INT_ARGB specifies the image format: 8-bit RGBA packed
@@ -162,6 +162,7 @@ public class ImageDrawer {
         graphic.drawString("Map cell size: " + graph.getMap().getCellsize(),pX, 315);
         graphic.drawString("X of lower left corner (ETRS-TM35FIN): " + graph.getMap().getXllcorner(),pX, 330);
         graphic.drawString("Y of lower left corner (ETRS-TM35FIN): " + graph.getMap().getYllcorner(),pX, 345);
+        graphic.drawString("Map source data: National Land Survey of Finland", pX, 360);
         return pX;
     }
 
