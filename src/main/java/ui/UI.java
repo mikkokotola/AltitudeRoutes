@@ -29,8 +29,16 @@ package ui;
  */
 public interface UI {
 
+    /**
+     * Prints the parameter string to the UI as a line.
+     * @param s A line of output
+     */
     void print(String s);
 
+    /**
+     * Reads and returns a line from the UI.
+     * @return A line of input
+     */
     String readLine();
     
 }

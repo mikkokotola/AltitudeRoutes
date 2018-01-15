@@ -36,6 +36,13 @@ public class Edge {
     private double weight;
     private long id;
 
+    /**
+     * Creates a new edge with the given to and from vertices and weight.
+     *
+     * @param from The from vertice
+     * @param to The to vertice
+     * @param weight The weight of the edge
+     */
     public Edge(Vertice from,Vertice to, double weight) {
         this.from = from;
         this.to = to;
@@ -43,22 +50,42 @@ public class Edge {
         this.id = (from.getId()*9000000)+to.getId();
     }
 
+    /**
+     * Returns the from vertice.
+     * @return The from vertice
+     */
     public Vertice getFrom() {
         return from;
     }
 
+    /**
+     * Returns the to vertice.
+     * @return The to vertice
+     */
     public Vertice getTo() {
         return to;
     }
 
+    /**
+     * Returns the id of the edge.
+     * @return The id of the edge
+     */
     public long getId() {
         return id;
     }
     
+    /**
+     * Returns the weight of the edge.
+     * @return The weight of the edge
+     */
     public double getWeight() {
         return weight;
     }
 
+    /**
+     * Sets the weight of the edge.
+     * @param weight
+     */
     public void setWeight(double weight) {
         this.weight = weight;
     }

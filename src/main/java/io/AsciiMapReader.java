@@ -48,6 +48,11 @@ public class AsciiMapReader {
 
     private String filename;
 
+    /**
+     * Creates a new AsciiMapReader with the given filename of the source ascii
+     * map.
+     * @param filename
+     */
     public AsciiMapReader(String filename) {
         this.filename = filename;
     }

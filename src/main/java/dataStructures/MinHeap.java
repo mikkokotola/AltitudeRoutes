@@ -27,7 +27,7 @@ import graph.Vertice;
 
 /**
  * MinHeap is a minimum heap for vertices. It supports the normal heap
- * operations and a change-priority-operation, which changes the vertice's
+ * operations and both change-priority-operations, which change the vertice's
  * (identified by its key) priority in the heap.
  *
  * @author Mikko Kotola
@@ -227,10 +227,5 @@ public class MinHeap {
             }
             array = newArray;
         } 
-//        else {
-//            array = new MinHeapVertice[1];
-//        }
-
     }
-
 }

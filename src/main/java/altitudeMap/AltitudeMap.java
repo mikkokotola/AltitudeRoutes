@@ -47,11 +47,11 @@ public class AltitudeMap {
      * @param filename Name of map file
      * @param ncols Number of columns
      * @param nrows Number of rows
-     * @param xllcorner X-coordinate of the map's lower left hand corner
-     * @param yllcorner Y-coordinate of the map's lower left hand corner
+     * @param xllcorner X-coordinate (etrs-tm35fin) of the map's lower left hand corner
+     * @param yllcorner Y-coordinate (etrs-tm35fin) of the map's lower left hand corner
      * @param cellsize Map cell size in meters
      * @param NODATA_value Value used for missing altitude data in the map
-     * @param altitudes Altitudes of y-x-points on the map. Y is the first coordinate.
+     * @param altitudes Altitudes of [y][x]-points on the map with (0,0) top left corner.
      */
     public AltitudeMap(String filename, int ncols, int nrows, double xllcorner, double yllcorner, double cellsize, double NODATA_value, double[][] altitudes) {
         this.filename = filename;
@@ -94,7 +94,7 @@ public class AltitudeMap {
     /**
      * Returns the x coordinate of the lower left corner of the map.
      * 
-     * @return double The x coordinate of the lower left corner of the map
+     * @return double The x coordinate (etrs-tm35fin) of the lower left corner of the map
      */
     public double getXllcorner() {
         return xllcorner;
@@ -103,7 +103,7 @@ public class AltitudeMap {
     /**
      * Returns the y coordinate of the lower left corner of the map.
      * 
-     * @return double The y coordinate of the lower left corner of the map
+     * @return double The y coordinate (etrs-tm35fin) of the lower left corner of the map
      */
     public double getYllcorner() {
         return yllcorner;
@@ -130,7 +130,7 @@ public class AltitudeMap {
     /**
      * Returns the altitude values of all points y-x on the map.
      * 
-     * @return double[][] 2d array of altitudes of y-x points
+     * @return double[y][x] 2d array of altitudes with (0,0) in the top left corner
      */
     public double[][] getAltitudes() {
         return altitudes;
@@ -139,7 +139,7 @@ public class AltitudeMap {
     /**
      * Sets the altitude values of all points y-x on the map.
      * 
-     * @param altitudes New 2d array of altitudes of y-x points
+     * @param altitudes New 2d array of altitudes of y-x points with (0,0) in the top left corner
      */
     public void setAltitudes(double[][] altitudes) {
         this.altitudes = altitudes;

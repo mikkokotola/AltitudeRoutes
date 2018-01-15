@@ -35,13 +35,17 @@ import searchAlgo.Dijkstra;
  */
 public class Astar extends Dijkstra {
     
+    /**
+     * Initialise search algorithm with a graph.
+     * @param graph The graph to be searched
+     */
     public Astar(Graph graph) {
         super(graph);
         this.name = "Astar";
     }
     
     @Override
-    public void initialiseSingleSource(Vertice vertice) {
+    void initialiseSingleSource(Vertice vertice) {
         graph.resetGraph();
         vertice.setDistToStart(0);
         heap.reset();

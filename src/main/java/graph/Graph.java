@@ -145,16 +145,28 @@ public class Graph {
         return movementModel;
     }
 
+    /**
+     * Returns the vertice lists (2D array Vertice[y][x] with coordinates map 
+     * relative, (0,0) in the top left corner).
+     * @return 2D array [y][x] with coordinates map relative, (0,0) in the top left corner
+     */
     public Vertice[][] getVertices() {
         return vertices;
     }
 
+    /**
+     * Returns a single vertice in the given coordinates (map relative,
+     * (0,0) in the top left corner)).
+     * @param x X-coordinate map relative (0,0) in top left corner
+     * @param y Y-coordinate map relative (0,0) in top left corner
+     * @return The vertice
+     */
     public Vertice getVertice(int x, int y) {
         return vertices[y][x];
     }
     
     /**
-     * Resets the graph. A reset graph is in the same state as a new map
+     * Resets the graph. A reset graph is in the same state as a new graph
      * created from a given map. This enables consecutive searches to be
      * performed without creating a new graph.
      */

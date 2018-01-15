@@ -26,30 +26,57 @@ package dataStructures;
 import graph.Vertice;
 
 /**
- *
+ *  MinHeapVertice is a class used by the MinHeap for storing vertices.
  * @author Mikko Kotola
  */
 class MinHeapVertice {
     private double key;
     private Vertice vertice;
 
+    /**
+     * Creates a new MinHeapVertice with the given key and Vertice reference.
+     *
+     * @param key The key used for the heap prioritization
+     * @param vertice The vertice reference
+     */
+
     public MinHeapVertice(double key, Vertice vertice) {
         this.key = key;
         this.vertice = vertice;
     }
 
+    /**
+     * Return the key.
+     *
+     * @return double The key used for the heap prioritization
+     */
     public double getKey() {
         return key;
     }
 
+    /**
+     * Sets a new key.
+     *
+     * @param key The key used for the heap prioritization
+     */
     public void setKey(double key) {
         this.key = key;
     }
 
+    /**
+     * Return the vertice reference.
+     *
+     * @return Vertice The vertice
+     */
     public Vertice getVertice() {
         return vertice;
     }
 
+    /**
+     * Sets a new vertice reference.
+     *
+     * @param vertice The vertice
+     */
     public void setVertice(Vertice vertice) {
         this.vertice = vertice;
     }

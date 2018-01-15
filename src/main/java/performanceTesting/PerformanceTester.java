@@ -28,13 +28,14 @@ import controller.App;
 import dataStructures.DynamicList;
 import graph.Graph;
 import io.AsciiMapReader;
-import java.io.FileNotFoundException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import movementModel.MovementModel;
 import searchAlgo.Astar;
 import searchAlgo.Dijkstra;
 import searchAlgo.SearchAlgo;
+
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Routines for performance testing of search algorithms.
@@ -122,14 +123,12 @@ public class PerformanceTester {
         // Number of algos in use.
         int numberOfAlgos = searchAlgos.size();
         
-        
         DynamicList<DynamicList<Long>> resultTimes = new DynamicList<>();
         DynamicList<DynamicList<Integer>> resultOpened = new DynamicList<>();
         DynamicList<DynamicList<Integer>> resultInvestigated = new DynamicList<>();
 
         long[] timeSums = new long[numberOfAlgos];
         int[] openedSums = new int[numberOfAlgos];
-        //int[] investigatedSums = new int[numberOfAlgos];
         DynamicList<Long> fastest = new DynamicList<>();
         DynamicList<Long> slowest = new DynamicList<>();
         DynamicList<Long> most = new DynamicList<>();
@@ -144,7 +143,6 @@ public class PerformanceTester {
         // Run a performance test a number of time for each searchalgo on the list.
         for (int i = 0; i < timesToRun; i++) {
             for (int j = 0; j < numberOfAlgos; j++) {
-                //graph.resetGraph(); Moved inside SearchAlgo routine
                 resultTimes.get(j).add((Long) runPerformanceTest(searchAlgos.get(j), graph, startX, startY, goalX, goalY));
                 int opened = graph.countOpened();
                 resultOpened.get(j).add(opened);
@@ -175,8 +173,6 @@ public class PerformanceTester {
                 if (currentOpened < leastVert) {
                     leastVert = currentOpened;
                 }
-//                int currentInvestigated = resultInvestigated.get(i).get(j);
-//                investigatedSums[i] += currentInvestigated;
             }
             fastest.add(fastestTime);
             slowest.add(slowestTime);
@@ -184,6 +180,11 @@ public class PerformanceTester {
             least.add(leastVert);
         }
 
+        printPerformanceTestResultsToConsole(filename, startX, startY, goalX, goalY, timesToRun, numberOfAlgos, searchAlgos, timeSums, resultTimes, slowest, fastest, resultOpened, resultInvestigated);
+
+    }
+
+    private void printPerformanceTestResultsToConsole(String filename, int startX, int startY, int goalX, int goalY, int timesToRun, int numberOfAlgos, DynamicList<SearchAlgo> searchAlgos, long[] timeSums, DynamicList<DynamicList<Long>> resultTimes, DynamicList<Long> slowest, DynamicList<Long> fastest, DynamicList<DynamicList<Integer>> resultOpened, DynamicList<DynamicList<Integer>> resultInvestigated) {
         // Print performance test results to console
         System.out.println("");
         System.out.println("* Performance test results *");
@@ -198,15 +199,9 @@ public class PerformanceTester {
             System.out.println("  Median running time: " + medianLong(resultTimes.get(i)) + " ms");
             System.out.println("  Slowest running time: " + slowest.get(i) + " ms");
             System.out.println("  Fastest running time: " + fastest.get(i) + " ms");
-            //System.out.println("  Average opened vertices: " + (double) openedSums[i] / resultOpened.get(i).size());
             System.out.println("  Median opened vertices: " + medianInt(resultOpened.get(i)));
-            //System.out.println("  Most opened vertices: " + most.get(i));
-            //System.out.println("  Least opened vertices: " + least.get(i));
             System.out.println("  Median investigated vertices: " + medianInt(resultInvestigated.get(i)));
-            
-
         }
-
     }
 
     private double medianLong(DynamicList<Long> result) {

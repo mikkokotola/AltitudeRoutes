@@ -28,6 +28,7 @@ package dataStructures;
  * behaviour and is implemented as an array.
  *
  * @author Mikko Kotola
+ * @param <E> Reference-type object type for the list
  */
 public class DynamicList<E> {
 
@@ -35,7 +36,8 @@ public class DynamicList<E> {
     private Object[] elements;
 
     /**
-     * Creates a new DynamicList and initiates the array.
+     * Creates a new DynamicList and initiates the array. Initial backing array 
+     * size 10. Initial DynamicList size 0.
      */
     public DynamicList() {
         elements = new Object[10];
@@ -44,7 +46,7 @@ public class DynamicList<E> {
     
     
     /**
-     * Adds and element to the end of the list. List size grows by one.
+     * Adds an element to the end of the list. List size grows by one.
      * 
      * @param e Element to be appended to this list.
      */
@@ -114,7 +116,7 @@ public class DynamicList<E> {
     }
 
     /**
-     * Clears the list.
+     * Clears the list. Backing array size set to 10 and DynamicList size to 0.
      */
     public void clear() {
         elements = new Object[10];
@@ -138,8 +140,8 @@ public class DynamicList<E> {
     }
     
     /**
-     * Returns the number of elements on the list.
-     * @return boolean Returns true if the size of the list is zero.
+     * Returns true if the list size is zero, false otherwise.
+     * @return boolean Returns true if the size of the list is zero, false if not.
      */
     public boolean isEmpty() {
         if (size == 0) {

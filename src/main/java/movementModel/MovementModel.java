@@ -42,8 +42,9 @@ public class MovementModel {
 
     /**
      * Constructor with no parameters sets default values for the uphill and
-     * downhill speed factors and the map cell size to 2.0 metres. The basic
+     * downhill speed factors and the given map cell size. The basic
      * speed is set to 2.0 (a rough equivalent of meters per second).
+     * @param mapCellSize
      */
     public MovementModel(double mapCellSize) {
         this.speedFactorUphillSteep = 0.3;
@@ -55,6 +56,20 @@ public class MovementModel {
         this.impassableEdgeWeight = Double.MAX_VALUE;
     }
 
+    /**
+     * Constructor with parameters creates a MovementModel with the given
+     * parameters. Steepness = altitudeChange / mapCellSize. Steepness of over
+     * 1.5 or under -1.5 is inpassable. Speedfactor of -0.1 < steepness <= 0.1 is
+     * considered flat and given an speedfactor 1.0.
+     * @param speedFactorUphillSteep Speedfactor of steep uphill (0.7 <= steepness <= 1.5)
+     * @param speedFactorUphill Speedfactor of uphill (0.1 <= steepness < 0.7)
+     * @param speedFactorDownhill Speedfactor of downhill (-0.7 <= steepness < -0.1)
+     * @param speedFactorDownhillSteep Speedfactor of steep downhill (-1.5 <= steepness < -0.7)
+     * @param mapCellSize Map cell size in meters
+     * @param basicSpeed Basic speed, rough equivalent of meters per second
+     * @param impassableEdgeWeight The impassable steepness edge weight, e.g. 
+     * Double.MAX_VALUE
+     */
     public MovementModel(double speedFactorUphillSteep, double speedFactorUphill, double speedFactorDownhill, double speedFactorDownhillSteep, double mapCellSize, double basicSpeed, double impassableEdgeWeight) {
         this.speedFactorUphillSteep = speedFactorUphillSteep;
         this.speedFactorUphill = speedFactorUphill;
@@ -65,30 +80,58 @@ public class MovementModel {
         this.impassableEdgeWeight = impassableEdgeWeight;
     }
 
+    /**
+     * Returns the speedfactor of steep uphill (0.7 <= steepness <= 1.5)
+     * @return Speedfactor of steep uphill (0.7 <= steepness <= 1.5)
+     */
     public double getSpeedFactorUphillSteep() {
         return speedFactorUphillSteep;
     }
 
+    /**
+     * Returns the speedfactor of uphill (0.1 <= steepness < 0.7)
+     * @return Speedfactor of uphill (0.1 <= steepness < 0.7)
+     */
     public double getSpeedFactorUphill() {
         return speedFactorUphill;
     }
 
+    /**
+     * Returns the speedfactor of downhill (-0.7 <= steepness < -0.1)
+     * @return Speedfactor of downhill (-0.7 <= steepness < -0.1)
+     */
     public double getSpeedFactorDownhill() {
         return speedFactorDownhill;
     }
 
+    /**
+     * Returns the speedfactor of steep downhill (-1.5 <= steepness < -0.7)
+     * @return Speedfactor of steep downhill (-1.5 <= steepness < -0.7)
+     */
     public double getSpeedFactorDownhillSteep() {
         return speedFactorDownhillSteep;
     }
 
+    /**
+     * Returns the basic speed, in rough equivalent of meters per second
+     * @return The basic speed, in rough equivalent of meters per second
+     */
     public double getBasicSpeed() {
         return basicSpeed;
     }
 
+    /**
+     * Return the edge weight of impassable edges (steepness < -1.5 or > 1.5)
+     * @return Edge weight of impassable edges (steepness < -1.5 or > 1.5)
+     */
     public double getImpassableEdgeWeight() {
         return impassableEdgeWeight;
     }
     
+    /**
+     * Returns the map cell size in meters
+     * @return The map cell size in meters
+     */
     public double getMapCellSize() {
         return mapCellSize;
     }

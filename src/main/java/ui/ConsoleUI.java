@@ -26,21 +26,32 @@ package ui;
 import java.util.Scanner;
 
 /**
- *
+ * ConsoleUI is a basic console user interface.
  * @author Mikko Kotola
  */
 public class ConsoleUI implements UI {
     Scanner scanner;
 
+    /**
+     * Creates new ConsoleUI.
+     */
     public ConsoleUI() {
         scanner = new Scanner(System.in);
     }
     
+    /**
+     * Prints the parameter string to the UI as a line.
+     * @param s A line of output
+     */
     @Override
     public void print(String s) {
         System.out.println(s);
     }
     
+    /**
+     * Reads and returns a line from the UI.
+     * @return A line of input
+     */
     @Override
     public String readLine() {
         return scanner.nextLine();
