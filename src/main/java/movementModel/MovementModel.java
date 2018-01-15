@@ -60,7 +60,8 @@ public class MovementModel {
      * Constructor with parameters creates a MovementModel with the given
      * parameters. Steepness = altitudeChange / mapCellSize. Steepness of over
      * 1.5 or under -1.5 is inpassable. Speedfactor of -0.1 < steepness <= 0.1 is
-     * considered flat and given an speedfactor 1.0.
+     * considered flat and given an speedfactor 1.0. NOTE: All speedfactors must
+     * be <= 1 for goal-estimating algorithms' heuristics to be admissible!
      * @param speedFactorUphillSteep Speedfactor of steep uphill (0.7 <= steepness <= 1.5)
      * @param speedFactorUphill Speedfactor of uphill (0.1 <= steepness < 0.7)
      * @param speedFactorDownhill Speedfactor of downhill (-0.7 <= steepness < -0.1)

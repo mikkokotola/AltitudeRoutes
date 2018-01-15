@@ -45,7 +45,7 @@ import java.util.logging.Logger;
 public class PerformanceTester {
 
     /**
-     * Runs the default performance tests. Map 4313A, default MovementModel,
+     * Runs the default performance tests. Map M4313A, default MovementModel,
      * start (500, 500), goal (1000, 1000), times to run 10. Uses all algorithms
      * available. Prints out the results in the console.
      */
@@ -62,7 +62,7 @@ public class PerformanceTester {
     }
     
     /**
-     * Runs the second set of default performance tests. Map 4313A, default MovementModel,
+     * Runs the second set of default performance tests. Map M4313A, default MovementModel,
      * start (700, 1500), goal (1500, 50), times to run 10. Uses all algorithms
      * available. Prints out the results in the console.
      */
@@ -79,7 +79,7 @@ public class PerformanceTester {
     }
     
     /**
-     * Runs the third set of default performance tests. Map 4313A, default MovementModel,
+     * Runs the third set of default performance tests. Map M4313A, default MovementModel,
      * start (100, 2900), goal (2900, 100), times to run 10. Uses all algorithms
      * available. Prints out the results in the console.
      */
@@ -95,6 +95,23 @@ public class PerformanceTester {
         runPerformanceTests(filename, movementModel, startX, startY, goalX, goalY, timesToRun);
     }
 
+    /**
+     * Runs the fourth set of default performance tests. Map M4313, default MovementModel,
+     * start (1200, 600), goal (2400, 1200), times to run 10. Uses all algorithms
+     * available. Prints out the results in the console.
+     */
+    public void runPerformanceTests4() {
+        String filename = "M4313";
+        MovementModel movementModel = new MovementModel(10.0);
+        int startX = 1200;
+        int startY = 600;
+        int goalX = 2399;
+        int goalY = 1199;
+        int timesToRun = 10;
+
+        runPerformanceTests(filename, movementModel, startX, startY, goalX, goalY, timesToRun);
+    }
+    
     /**
      * Runs the performance test routine with the given parameters. Uses all
      * algorithms available. Prints out the results in the console.

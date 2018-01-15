@@ -67,6 +67,7 @@ public class App {
         //tester.runPerformanceTests();
         //tester.runPerformanceTests2();
         //tester.runPerformanceTests3();
+        //tester.runPerformanceTests4();
     }
 
     public App(UI ui) {
