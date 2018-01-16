@@ -56,7 +56,9 @@ public class ImageDrawer {
      * @param filename The name of the file to which the image is to be written
      *
      */
-    public void draw(Graph graph, DynamicList<Vertice> shortestRoute, SearchAlgo searchAlgo, String filename, String coordinateSystem) {
+    public void draw(SearchAlgo searchAlgo, String filename, String coordinateSystem) {
+        Graph graph = searchAlgo.getGraph();
+        
         try {
             int width = graph.getMap().getNcols() + 500;
             int height = graph.getMap().getNrows();
@@ -93,9 +95,13 @@ public class ImageDrawer {
 
             double range = highest - lowest;
 
-            drawMapAndRoute(graph, highest, range, graphic, shortestRoute);
+            drawMap(graph, highest, range, graphic);
+            DynamicList<Vertice> shortestRoute = searchAlgo.returnShortestPath();
+            if (!shortestRoute.isEmpty()) {
+                drawRoute(graphic, shortestRoute);
+            }
             
-            int pX = writePictureInfoToLegend(graphic, graph, filename, shortestRoute, searchAlgo);
+            int pX = writePictureInfoToLegend(graphic, graph, filename, searchAlgo);
             
             drawColorScale(graphic, highest, pX, lowest);
             
@@ -111,7 +117,7 @@ public class ImageDrawer {
 
     }
 
-    private void drawMapAndRoute(Graph graph, double highest, double range, Graphics2D graphic, DynamicList<Vertice> shortestRoute) {
+    private void drawMap(Graph graph, double highest, double range, Graphics2D graphic) {
         for (int i = 0; i < graph.getMap().getNcols(); i++) {
             for (int j = 0; j < graph.getMap().getNrows(); j++) {
                 // The higher the point, the smaller the toneval
@@ -131,16 +137,21 @@ public class ImageDrawer {
             }
         }
         
+    }
+    
+    private void drawRoute(Graphics2D graphic, DynamicList<Vertice> shortestRoute) {
         graphic.setColor(Color.cyan);
         for (int k = 0; k < shortestRoute.size(); k++) {
             int i = shortestRoute.get(k).getX();
             int j = shortestRoute.get(k).getY();
             graphic.drawLine(i, j, i, j);
-            
         }
     }
+    
 
-    private int writePictureInfoToLegend(Graphics2D graphic, Graph graph, String filename, DynamicList<Vertice> shortestRoute, SearchAlgo searchAlgo) {
+    private int writePictureInfoToLegend(Graphics2D graphic, Graph graph, String filename, SearchAlgo searchAlgo) {
+        
+        DynamicList<Vertice> shortestRoute = searchAlgo.returnShortestPath();
         // Write the picture information to legend as text.
         Font font = new Font("TimesRoman", Font.PLAIN, 10);
         graphic.setFont(font);
@@ -148,8 +159,8 @@ public class ImageDrawer {
         int pX = graph.getMap().getNcols() + 20;
         graphic.drawString("* AltitudeRoutes *",pX ,20);
         graphic.drawString("File: " + filename + ".PNG",pX ,35);
-        graphic.drawString("From: map-relative " + shortestRoute.get(0).getX() + ", " + shortestRoute.get(0).getY() + "; ETRS-TM35FIN " + graph.getMap().getEtrsXByMapX(shortestRoute.get(0).getX()) + ", " + graph.getMap().getEtrsYByMapY(shortestRoute.get(0).getY()), pX , 50);
-        graphic.drawString("To: map-relative " + shortestRoute.get(shortestRoute.size()-1).getX() + ", " + shortestRoute.get(shortestRoute.size()-1).getY()+ "; ETRS-TM35FIN " + graph.getMap().getEtrsXByMapX(shortestRoute.get(shortestRoute.size()-1).getX()) + ", " + graph.getMap().getEtrsYByMapY(shortestRoute.get(shortestRoute.size()-1).getY()), pX , 65);
+        graphic.drawString("From: map-relative " + searchAlgo.getStart().getX() + ", " + searchAlgo.getStart().getY() + "; ETRS-TM35FIN " + graph.getMap().getEtrsXByMapX(searchAlgo.getStart().getX()) + ", " + graph.getMap().getEtrsYByMapY(searchAlgo.getStart().getY()), pX , 50);
+        graphic.drawString("To: map-relative " + searchAlgo.getGoal().getX() + ", " + searchAlgo.getGoal().getY()+ "; ETRS-TM35FIN " + graph.getMap().getEtrsXByMapX(searchAlgo.getGoal().getX()) + ", " + graph.getMap().getEtrsYByMapY(searchAlgo.getGoal().getY()), pX , 65);
         graphic.drawString("Algorithm: " + searchAlgo.getName(), pX, 80);
         graphic.drawString("Length of shortest path: " + searchAlgo.returnLengthOfShortestRoute(), pX, 95);
         int opened = graph.countOpened();

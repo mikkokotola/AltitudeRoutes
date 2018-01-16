@@ -24,6 +24,7 @@
 package searchAlgo;
 
 import dataStructures.DynamicList;
+import graph.Graph;
 import graph.Vertice;
 import java.util.ArrayList;
 
@@ -71,5 +72,27 @@ public interface SearchAlgo {
      * @return int Current size of heap of search algorithm
      */
     int heapSize();
+    
+    /**
+     * Returns the graph this search is conducted on.
+     *
+     * @return The graph this search is conducted on
+     */
+    public Graph getGraph();
 
+    /**
+     * Returns the start vertice of this search.
+     *
+     * @return Start vertice of this search
+     */
+    public Vertice getStart();
+    
+    /**
+     * Returns the goal vertice of this search.
+     *
+     * @return Goal vertice of this search
+     */
+    public Vertice getGoal();
+    
+    
 }

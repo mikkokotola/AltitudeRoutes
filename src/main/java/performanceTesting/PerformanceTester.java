@@ -45,11 +45,11 @@ import java.util.logging.Logger;
 public class PerformanceTester {
 
     /**
-     * Runs the default performance tests. Map M4313A, default MovementModel,
+     * Runs set 1 of default performance tests. Map M4313A, default MovementModel,
      * start (500, 500), goal (1000, 1000), times to run 10. Uses all algorithms
      * available. Prints out the results in the console.
      */
-    public void runPerformanceTests() {
+    public void runPerformanceTests1() {
         String filename = "M4313A";
         MovementModel movementModel = new MovementModel(2.0);
         int startX = 500;
@@ -62,7 +62,7 @@ public class PerformanceTester {
     }
     
     /**
-     * Runs the second set of default performance tests. Map M4313A, default MovementModel,
+     * Runs set 2 of default performance tests. Map M4313A, default MovementModel,
      * start (700, 1500), goal (1500, 50), times to run 10. Uses all algorithms
      * available. Prints out the results in the console.
      */
@@ -79,7 +79,7 @@ public class PerformanceTester {
     }
     
     /**
-     * Runs the third set of default performance tests. Map M4313A, default MovementModel,
+     * Runs set 3 of default performance tests. Map M4313A, default MovementModel,
      * start (100, 2900), goal (2900, 100), times to run 10. Uses all algorithms
      * available. Prints out the results in the console.
      */
@@ -96,7 +96,7 @@ public class PerformanceTester {
     }
 
     /**
-     * Runs the fourth set of default performance tests. Map M4313, default MovementModel,
+     * Runs set 4 of default performance tests. Map M4313, default MovementModel,
      * start (1200, 600), goal (2400, 1200), times to run 10. Uses all algorithms
      * available. Prints out the results in the console.
      */
@@ -111,6 +111,59 @@ public class PerformanceTester {
 
         runPerformanceTests(filename, movementModel, startX, startY, goalX, goalY, timesToRun);
     }
+
+    /**
+     * Runs set 5 of default performance tests. Map testMap3, default MovementModel,
+     * start (5, 5), goal (17, 17), times to run 10. Uses all algorithms
+     * available. Prints out the results in the console.
+     */
+    public void runPerformanceTests5() {
+        String filename = "testMap3";
+        MovementModel movementModel = new MovementModel(2.0);
+        int startX = 5;
+        int startY = 5;
+        int goalX = 17;
+        int goalY = 17;
+        int timesToRun = 10;
+
+        runPerformanceTests(filename, movementModel, startX, startY, goalX, goalY, timesToRun);
+    }
+
+    /**
+     * Runs set 6 of default performance tests. Map testMap3, default MovementModel,
+     * start (5, 5), goal (16, 16), times to run 10. Uses all algorithms
+     * available. Prints out the results in the console. NOTE: there exist no
+     * route for this search.
+     */
+    public void runPerformanceTests6() {
+        String filename = "testMap3";
+        MovementModel movementModel = new MovementModel(2.0);
+        int startX = 5;
+        int startY = 5;
+        int goalX = 16;
+        int goalY = 16;
+        int timesToRun = 10;
+
+        runPerformanceTests(filename, movementModel, startX, startY, goalX, goalY, timesToRun);
+    }
+
+    /**
+     * Runs set 7 of default performance tests. Map M4313, default MovementModel,
+     * start (100, 1100), goal (2300, 100), times to run 10. Uses all algorithms
+     * available. Prints out the results in the console.
+     */
+    public void runPerformanceTests7() {
+        String filename = "M4313";
+        MovementModel movementModel = new MovementModel(10.0);
+        int startX = 100;
+        int startY = 1100;
+        int goalX = 2300;
+        int goalY = 100;
+        int timesToRun = 10;
+
+        runPerformanceTests(filename, movementModel, startX, startY, goalX, goalY, timesToRun);
+    }
+    
     
     /**
      * Runs the performance test routine with the given parameters. Uses all
@@ -223,7 +276,9 @@ public class PerformanceTester {
 
     private double medianLong(DynamicList<Long> result) {
         if (result.size() % 2 == 0) {
-            return ((result.get((int) Math.floor(result.size() / 2)) + result.get((int) Math.ceil(result.size() / 2))) / 2);
+            double lower = result.get((int) Math.floor((result.size()-1) / 2));
+            double higher = result.get((int) Math.ceil((result.size()-1) / 2));
+            return ((lower + higher) / 2);
         }
 
         return (result.get((int) Math.floor(result.size() / 2)));
@@ -231,7 +286,7 @@ public class PerformanceTester {
     
     private double medianInt(DynamicList<Integer> result) {
         if (result.size() % 2 == 0) {
-            return ((result.get((int) Math.floor(result.size() / 2)) + result.get((int) Math.ceil(result.size() / 2))) / 2);
+            return ((result.get((int) Math.floor((result.size()-1) / 2)) + result.get((int) Math.ceil((result.size()-1) / 2))) / 2);
         }
 
         return (result.get((int) Math.floor(result.size() / 2)));

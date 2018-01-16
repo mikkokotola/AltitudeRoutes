@@ -114,4 +114,23 @@ public class DijkstraTest {
         DynamicList<Vertice> res = dijkstra.returnShortestPath();
         assertTrue(res.get(1).getZ() - 123.060 < accuracy);
     }
+    
+    @Test
+    public void graphCorrect() {
+        assertTrue(dijkstra.getGraph().getMap().getAltitude(0, 0) == 123.055);
+    }
+    
+    @Test
+    public void startCorrect() {
+        dijkstra.runShortestRouteFind(graph.getVertice(0, 0), graph.getVertice(2, 0));
+        assertTrue(dijkstra.getStart().getId() == graph.getVertice(0, 0).getId());
+    }
+    
+    @Test
+    public void goalCorrect() {
+        dijkstra.runShortestRouteFind(graph.getVertice(0, 0), graph.getVertice(2, 0));
+        assertTrue(dijkstra.goal.getId() == graph.getVertice(2, 0).getId());
+    }
+    
+    
 }

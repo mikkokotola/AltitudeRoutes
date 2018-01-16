@@ -142,4 +142,31 @@ public class Dijkstra implements SearchAlgo {
     public int heapSize() {
         return heap.size();
     }
+
+    /**
+     * Returns the graph this search is conducted on.
+     *
+     * @return The graph this search is conducted on
+     */
+    public Graph getGraph() {
+        return graph;
+    }
+
+    /**
+     * Returns the start vertice of this search.
+     *
+     * @return Start vertice of this search
+     */
+    public Vertice getStart() {
+        return start;
+    }
+
+    /**
+     * Returns the goal vertice of this search.
+     *
+     * @return Goal vertice of this search
+     */
+    public Vertice getGoal() {
+        return goal;
+    }
 }

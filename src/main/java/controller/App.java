@@ -61,13 +61,16 @@ public class App {
         app.run();
 
         // RUN PERFORMANCE TEST ROUTINES. 
-        // Uncomment the first line and the test routine you wish to run.
-        // To go straight to the performance testing, comment the 3 lines above.
+        // Uncomment the first line below and the test routine you wish to run.
+        // To go straight to the performance testing, comment the lines above.
         //PerformanceTester tester = new PerformanceTester();
         //tester.runPerformanceTests();
         //tester.runPerformanceTests2();
         //tester.runPerformanceTests3();
         //tester.runPerformanceTests4();
+        //tester.runPerformanceTests5();
+        //tester.runPerformanceTests6();
+        //tester.runPerformanceTests7();
     }
 
     public App(UI ui) {
@@ -147,7 +150,7 @@ public class App {
 
                     printShortestPathAsVerticeList(graph, searchAlgo, lengthOfShortestPath, shortestPath, coordinateSystem);
 
-                    exportMapImage(map, searchAlgo, startX, startY, goalX, goalY, graph, shortestPath, coordinateSystem);
+                    exportMapImage(map, searchAlgo, startX, startY, goalX, goalY, graph, coordinateSystem);
                     
                     ui.print("");
                     ui.print("Search complete, entering new search within the selected map.");
@@ -186,7 +189,7 @@ public class App {
         ui.print("Searching...");
     }
 
-    private void exportMapImage(AltitudeMap map, SearchAlgo searchAlgo, int startX, int startY, int goalX, int goalY, Graph graph, DynamicList<Vertice> shortestPath, String coordinateSystem) {
+    private void exportMapImage(AltitudeMap map, SearchAlgo searchAlgo, int startX, int startY, int goalX, int goalY, Graph graph, String coordinateSystem) {
         ui.print("");
 
         ui.print("Export map image (y/n)?");
@@ -195,7 +198,7 @@ public class App {
         if (answer.equals("y") || answer.equals("yes")) {
             String picFileName = map.getFilename().substring(0, map.getFilename().indexOf(".")) + "_" + searchAlgo.getName() + "_" + startX + "-" + startY + "_" + goalX + "-" + goalY;
             ui.print("Exporting image to " + picFileName + ".PNG ...");
-            drawMapImage(graph, shortestPath, searchAlgo, picFileName, coordinateSystem);
+            drawMapImage(searchAlgo, picFileName, coordinateSystem);
         }
     }
 
@@ -275,11 +278,11 @@ public class App {
         }
     }
 
-    private static void drawMapImage(Graph graph, DynamicList<Vertice> shortestPath, SearchAlgo searchAlgo, String picFileName, String coordinateSystem) {
+    private static void drawMapImage(SearchAlgo searchAlgo, String picFileName, String coordinateSystem) {
         ImageDrawer imDrawer = new ImageDrawer();
 
         try {
-            imDrawer.draw(graph, shortestPath, searchAlgo, picFileName, coordinateSystem);
+            imDrawer.draw(searchAlgo, picFileName, coordinateSystem);
         } catch (Exception e) {
         }
     }
