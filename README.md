@@ -31,7 +31,7 @@ Sovellukseen voi hakea lähdeaineistoksi Maanmittauslaitoksen 2 m tai 10 m korke
 
 ## Dokumentit
 <ul>
-  <li>[Javadoc](https://mikkokotola.github.io/AltitudeRoutes/index.html)</li>
+  <li><a href="https://mikkokotola.github.io/AltitudeRoutes/index.html">Javadoc</a></li>
   <li><a href="https://github.com/mikkokotola/AltitudeRoutes/blob/master/documentation/Maarittelydokumentti_Tiralabra_Kotola.pdf">Määrittelydokumentti</a></li>
   <li><a href="https://github.com/mikkokotola/AltitudeRoutes/blob/master/documentation/Toteutusdokumentti_Tiralabra_Kotola.pdf">Toteutusdokumentti</a></li>
   <li><a href="https://github.com/mikkokotola/AltitudeRoutes/blob/master/documentation/Testausdokumentti_Tiralabra_Kotola.pdf">Testausdokumentti</a></li>
