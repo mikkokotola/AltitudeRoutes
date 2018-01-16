@@ -74,7 +74,7 @@ public class StubUI implements UI {
     
     /**
      * Adds a new string to the end of the output list.
-     * @param output
+     * @param output The output string
      */
     public void addOutput(String output) {
         out.add(output);

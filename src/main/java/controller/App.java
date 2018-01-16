@@ -73,6 +73,10 @@ public class App {
         //tester.runPerformanceTests7();
     }
 
+    /**
+     * Main app class. Takes the ui as parameter.
+     * @param ui The ui to be used in the app
+     */
     public App(UI ui) {
         this.ui = ui;
     }
@@ -150,7 +154,7 @@ public class App {
 
                     printShortestPathAsVerticeList(graph, searchAlgo, lengthOfShortestPath, shortestPath, coordinateSystem);
 
-                    exportMapImage(map, searchAlgo, startX, startY, goalX, goalY, graph, coordinateSystem);
+                    exportMapImage(map, searchAlgo, startX, startY, goalX, goalY, graph);
                     
                     ui.print("");
                     ui.print("Search complete, entering new search within the selected map.");
@@ -189,7 +193,7 @@ public class App {
         ui.print("Searching...");
     }
 
-    private void exportMapImage(AltitudeMap map, SearchAlgo searchAlgo, int startX, int startY, int goalX, int goalY, Graph graph, String coordinateSystem) {
+    private void exportMapImage(AltitudeMap map, SearchAlgo searchAlgo, int startX, int startY, int goalX, int goalY, Graph graph) {
         ui.print("");
 
         ui.print("Export map image (y/n)?");
@@ -198,7 +202,7 @@ public class App {
         if (answer.equals("y") || answer.equals("yes")) {
             String picFileName = map.getFilename().substring(0, map.getFilename().indexOf(".")) + "_" + searchAlgo.getName() + "_" + startX + "-" + startY + "_" + goalX + "-" + goalY;
             ui.print("Exporting image to " + picFileName + ".PNG ...");
-            drawMapImage(searchAlgo, picFileName, coordinateSystem);
+            drawMapImage(searchAlgo, picFileName);
         }
     }
 
@@ -278,11 +282,11 @@ public class App {
         }
     }
 
-    private static void drawMapImage(SearchAlgo searchAlgo, String picFileName, String coordinateSystem) {
+    private static void drawMapImage(SearchAlgo searchAlgo, String picFileName) {
         ImageDrawer imDrawer = new ImageDrawer();
 
         try {
-            imDrawer.draw(searchAlgo, picFileName, coordinateSystem);
+            imDrawer.draw(searchAlgo, picFileName);
         } catch (Exception e) {
         }
     }

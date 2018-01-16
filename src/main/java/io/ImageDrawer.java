@@ -51,12 +51,12 @@ public class ImageDrawer {
      * Draws an image of the parameter graph including search information: 
      * opened and investigated vertices and shortest route.
      *
-     * @param graph The graph used in the search
-     * @param shortestRoute The shortest path to be drawn
+     * @param searchAlgo The searchAlgo for which the map and route is to be 
+     * drawn
      * @param filename The name of the file to which the image is to be written
      *
      */
-    public void draw(SearchAlgo searchAlgo, String filename, String coordinateSystem) {
+    public void draw(SearchAlgo searchAlgo, String filename) {
         Graph graph = searchAlgo.getGraph();
         
         try {

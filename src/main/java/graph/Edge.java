@@ -84,7 +84,7 @@ public class Edge {
 
     /**
      * Sets the weight of the edge.
-     * @param weight
+     * @param weight The weight of the edge
      */
     public void setWeight(double weight) {
         this.weight = weight;
