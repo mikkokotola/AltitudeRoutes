@@ -5,13 +5,13 @@
 
 AltitudeRoutes on sovellus lyhimmän reitin etsimiseen maaston korkeusmallissa. Sovellus käyttää reitinhakuun A*- ja Dijkstran algoritmeja ja vertailee niiden suorituskykyä reitinhaussa.
 
-Sovellus käyttää lähdeaineistona Maanmittauslaitoksen avoimena datana tarjoamia 2 metrin resoluutiolla toteutettuja korkeusmalleja, jotka sisältävä 3000 x 3000 -resoluutioisen korkeusmallin 6 km x 6 km -maastoalueesta (Maanmittauslaitoksen Maastotietokannan 12/2017 aineistoa). Sovellus tukee myös MML:n 10 m -korkeusmallitiedostoja.
+Sovellus käyttää lähdeaineistona Maanmittauslaitoksen avoimena datana tarjoamia 2 metrin resoluutiolla toteutettuja korkeusmalleja, jotka sisältävä 3000 x 3000 -resoluutioisen korkeusmallin 6 km x 6 km -maastoalueesta. Sovellus tukee myös MML:n 10 m -korkeusmallitiedostoja.
 
 Toteutin sovelluksen HY:n tietojenkäsittelytieteen aineopintojen tietorakenteet ja algoritmit -harjoitustyönä 12/2017-1/2018.
 
 ## Käyttöohje
 
-Lataa tiedosto [AltitudeRoutes.zip](https://github.com/mikkokotola/AltitudeRoutes/blob/master/downloads/AltitudeRoutes.zip) koneellesi haluamaasi hakemistoon ja pura se. Tiedosto sisältää jar-ohjelman ja alikansiot /altitudefiles ja /images. Mukana on yksi MML:n karttatiedosto (M4313A.asc).
+Lataa tiedosto [AltitudeRoutes.zip](https://github.com/mikkokotola/AltitudeRoutes/blob/master/downloads/AltitudeRoutes.zip) koneellesi haluamaasi hakemistoon ja pura se. Tiedosto sisältää jar-ohjelman ja alikansiot /altitudefiles ja /images. Mukana on kaksi MML:n karttatiedosto (M4313A.asc ja M4313.asc; Maanmittauslaitoksen Maastotietokannan 1/2018 aineistoa).
 
 Tallenna haluamasi karttatiedosto kansioon /altituderoutes. Katso karttatiedostojen hakemisesta erillinen ohje alla.
 
