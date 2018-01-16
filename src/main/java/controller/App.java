@@ -42,7 +42,7 @@ import ui.ConsoleUI;
 import ui.UI;
 
 /**
- * App. The main controller class.
+ * App. The main controller class of AltitudeRoutes.
  *
  * @author Mikko Kotola
  */
@@ -51,7 +51,7 @@ public class App {
     private UI ui;
 
     /**
-     * Main method.
+     * Main method of AltitudeRoutes.
      *
      * @param args Does not take any command line arguments
      */

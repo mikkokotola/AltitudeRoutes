@@ -51,8 +51,8 @@ public class Astar extends Dijkstra {
         heap.reset();
         
         Vertice[][] vertices = this.graph.getVertices();
-        for (int i = 1; i <  vertices.length; i++) {
-            for (int j = 1; j < vertices[0].length; j++) {
+        for (int i = 0; i <  vertices.length; i++) {
+            for (int j = 0; j < vertices[0].length; j++) {
                 estimateDistToGoal(vertices[i][j]);
             }
         }
@@ -67,8 +67,11 @@ public class Astar extends Dijkstra {
      * @param vertice The vertice for which the goal distance is to be estimated
      */
     public void estimateDistToGoal(Vertice vertice) {
-        double distanceToGoal = (Math.abs(this.goal.getX()-vertice.getX()) 
-                + Math.abs(this.goal.getY()-vertice.getY()));
+        double smallestPossibleEdgeWeight = graph.getMovementModel().getMapCellSize()/graph.getMovementModel().getBasicSpeed();
+        double distanceToGoal = 
+                (Math.abs(this.goal.getX()-vertice.getX())
+                + Math.abs(this.goal.getY()-vertice.getY()))
+                * smallestPossibleEdgeWeight;
         vertice.setDistToGoal(distanceToGoal);
     }
     
