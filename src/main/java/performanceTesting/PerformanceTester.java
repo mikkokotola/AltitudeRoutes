@@ -97,7 +97,7 @@ public class PerformanceTester {
 
     /**
      * Runs set 4 of default performance tests. Map M4313, default MovementModel,
-     * start (1200, 600), goal (2400, 1200), times to run 10. Uses all algorithms
+     * start (1200, 600), goal (2399, 1199), times to run 10. Uses all algorithms
      * available. Prints out the results in the console.
      */
     public void runPerformanceTests4() {

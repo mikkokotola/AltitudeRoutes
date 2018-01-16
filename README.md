@@ -9,7 +9,13 @@ Sovellus käyttää lähdeaineistona Maanmittauslaitoksen avoimena datana tarjoa
 
 ## Käyttöohje
 
+Lataa tiedosto AltitudeRoutes.zip koneellesi haluamaasi hakemistoon ja pura se. Tiedosto sisältää jar-ohjelman ja alikansiot /altitudefiles ja /images.
 
+Tallenna haluamasi karttatiedosto kansioon /altituderoutes. Katso karttatiedostojen hakemisesta erillinen ohje alla.
+
+Käynnistä ohjelma komentoriviltä kirjoittamalla "java -jar AltitudeRoutes.jar" ja seuraa ohjeita. Voit toteuttaa useita hakuja samaan karttatiedostoon ohjelman suorituksen aikana. Jos haluat vaihtaa karttaa, lopeta ohjelma ja käynnistä se uudelleen.
+
+Ohjelma tallentaa tulostetut kuvatiedostot hauista kansioon /images.
 
 ### Karttatiedostojen hakeminen
 
@@ -25,8 +31,8 @@ Toteutan sovelluksen HY:n tietojenkäsittelytieteen aineopintojen tietorakenteet
 ## Dokumentit
 <ul>
   <li><a href="https://github.com/mikkokotola/AltitudeRoutes/blob/master/documentation/Maarittelydokumentti_Tiralabra_Kotola.pdf">Määrittelydokumentti</a></li>
-  <li><a href="https://github.com/mikkokotola/AltitudeRoutes/blob/master/documentation/Toteutusdokumentti_Tiralabra_Kotola.pdf">Toteutusdokumentti (työversio)</a></li>
-  <li><a href="https://github.com/mikkokotola/AltitudeRoutes/blob/master/documentation/Testausdokumentti_Tiralabra_Kotola.pdf">Testausdokumentti (työversio)</a></li>
+  <li><a href="https://github.com/mikkokotola/AltitudeRoutes/blob/master/documentation/Toteutusdokumentti_Tiralabra_Kotola.pdf">Toteutusdokumentti</a></li>
+  <li><a href="https://github.com/mikkokotola/AltitudeRoutes/blob/master/documentation/Testausdokumentti_Tiralabra_Kotola.pdf">Testausdokumentti</a></li>
 </ul>
 
 ## Viikkoraportit
