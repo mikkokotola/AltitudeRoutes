@@ -13,7 +13,7 @@ Toteutin sovelluksen HY:n tietojenkäsittelytieteen aineopintojen tietorakenteet
 
 Lataa tiedosto [AltitudeRoutes.zip](https://github.com/mikkokotola/AltitudeRoutes/blob/master/downloads/AltitudeRoutes.zip) koneellesi haluamaasi hakemistoon ja pura se. Tiedosto sisältää jar-ohjelman ja alikansiot /altitudefiles ja /images. 
 
-Tallenna haluamasi karttatiedosto kansioon /altituderoutes. Katso karttatiedostojen hakemisesta erillinen ohje alla. Zip-tiedosossa on mukana on yksi mallitiedosto (testMap3.asc), joka vastaa MML:n korkeusmallitiedostoja, mutta ei ole todellinen korkeusmalli.
+Tallenna haluamasi karttatiedosto kansioon /altituderoutes. Katso karttatiedostojen hakemisesta erillinen ohje alla. Zip-tiedostossa on mukana on yksi mallitiedosto (testMap3.asc), joka vastaa MML:n korkeusmallitiedostoja, mutta ei ole todellinen korkeusmalli.
 
 Käynnistä ohjelma komentoriviltä kirjoittamalla "java -jar AltitudeRoutes.jar" ja seuraa ohjeita. Voit toteuttaa useita hakuja samaan karttatiedostoon ohjelman suorituksen aikana. Jos haluat vaihtaa karttaa, lopeta ohjelma ja käynnistä se uudelleen.
 
