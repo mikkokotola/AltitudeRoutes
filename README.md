@@ -28,6 +28,11 @@ Sovellukseen voi hakea lähdeaineistoksi Maanmittauslaitoksen 2 m tai 10 m korke
 * Klikkaa haluamaasi korkeusmalliruutua kartalta
 * Tilaa ja lataa tiedosto ilmaiseksi ohjeiden mukaan (edellyttää nimen ja s-postiosoitteen antamisen)
 
+## Käyttö Dockerin kautta
+Sovellusta voi ajaa myös [Docker-imagella](https://cloud.docker.com/repository/registry-1.docker.io/mikkokotola/altituderoutes). Tämä edellyttää Dockerin asentamista.
+
+Dockerista ajettaessa kansiot /altitudefiles ja /images tuli upottaa (bind mount) säiliöön luomalla kyseisen nimiset kansiot työhakemistoon, sijoittamalla karttatiedostot kansioon /altitudefiles ja ajamalla ohjelmaa komennolla:
+`docker run -it -v "%cd%/altitudefiles":/usr/AltitudeRoutes/altitudefiles -v "%cd%/images":/usr/AltitudeRoutes/images altituderoutes`
 
 ## Dokumentit
 <ul>
